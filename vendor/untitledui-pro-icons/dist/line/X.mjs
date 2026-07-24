@@ -1,0 +1,1 @@
+import*as e from"react";const i=({size:r=24,color:t="currentColor",...o})=>e.createElement("svg",{viewBox:"0 0 24 24",fill:"none",width:r,height:r,color:t,"aria-hidden":"true",...o},e.createElement("path",{d:"M17 7 7 17M7 7l10 10",stroke:"currentColor",strokeWidth:o.strokeWidth||2,strokeLinecap:"round",strokeLinejoin:"round"}));i.displayName="X";export{i as X};

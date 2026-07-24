@@ -1,0 +1,1 @@
+import*as e from"react";const n=({size:r=24,color:t="currentColor",...o})=>e.createElement("svg",{viewBox:"0 0 24 24",fill:"none",width:r,height:r,color:t,"aria-hidden":"true",...o},e.createElement("path",{d:"M3 12h18M3 6h18M3 18h18",stroke:"currentColor",strokeWidth:o.strokeWidth||2,strokeLinecap:"round",strokeLinejoin:"round"}));n.displayName="Menu01";export{n as Menu01};
