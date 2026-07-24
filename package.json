@@ -4,6 +4,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "dev": "astro dev --host",
+    "start": "astro dev --host",
     "build": "astro build",
     "check": "astro check",
     "quality:lint": "node scripts/client-quality.mjs",
