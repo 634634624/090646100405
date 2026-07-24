@@ -1,0 +1,1249 @@
+/**
+ * toolkit/microinteractions/motion.css — the motion token scale + reusable,
+ * rule-following microinteraction utilities. Import once per page.
+ *
+ * Grounded in Apple HIG (Motion/Feedback), Material 3 (duration/easing tokens),
+ * NN/g timing, WCAG 2.3.3 + prefers-reduced-motion. Every utility obeys
+ * RULES.md — transform/opacity only, reduced-motion-safe, no polarity cross-fade,
+ * no layout animation, SSR-safe. Bind all component motion to these tokens (one knob).
+ */
+
+:root {
+  /* Duration — pick by MOMENT (RULES §5). 400ms is the hard interaction ceiling. */
+  --motion-duration-instant: 0ms;      /* state flips that must stay truthful */
+  --motion-duration-fast: 100ms;       /* taps, toggles, checkboxes, hover tint */
+  --motion-duration-base: 180ms;       /* fades, dropdowns, tooltips, accordions */
+  --motion-duration-slow: 240ms;       /* cards, popovers, small enters */
+  --motion-duration-transition: 320ms; /* larger in-page transitions */
+  --motion-duration-drawer: 400ms;     /* full drawers / modals (ceiling) */
+
+  /* Easing — ENTER=out, EXIT=in, MOVE=standard (Material 3 curves). */
+  --motion-ease-out: cubic-bezier(0, 0, 0, 1);
+  --motion-ease-in: cubic-bezier(0.3, 0, 1, 1);
+  --motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-emphasized: cubic-bezier(0.05, 0.7, 0.1, 1);
+  /* spring-ish (playful only: drag release, like-burst) — a linear() spring */
+  --motion-spring: linear(0, 0.006, 0.025, 0.101, 0.539, 0.826, 0.967, 1.037, 1.06, 1.058, 1.04, 1.02, 1.005, 0.999, 1);
+
+  /* ── Spring scale (Apple-parity M1) — mirror of src/styles/global.css so pages that
+     only import motion.css get the same tokens. SwiftUI .smooth/.snappy/.bouncy
+     (response 0.5s; dampingFraction 1.0/0.85/0.7). Fallback aliases below; the real
+     linear()-sampled curves override under @supports. The tokens are CURVES, not
+     motion — consumers keep their own RM gates (RULES §2/§3).
+     refs: https://www.joshwcomeau.com/animation/linear-timing-function/ ·
+           https://www.kvin.me/css-springs */
+  --spring-smooth: var(--motion-ease-emphasized);
+  /* NOT var(--motion-spring): that is itself a linear() — useless as a no-linear()
+     fallback. Same overshoot bezier as global.css --ease-spring. */
+  --spring-snappy: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --spring-bouncy: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --spring-smooth-duration: 320ms;
+  --spring-snappy-duration: 320ms;
+  --spring-bouncy-duration: 400ms;
+}
+
+@supports (animation-timing-function: linear(0, 1)) {
+  :root {
+    /* 51-point sampled springs; durations = settle to |1-x| < 0.001 (arrival ≈ 300ms,
+       tail sub-pixel — §5 stays honest). Keep byte-identical to global.css. */
+    --spring-smooth: linear(0, 0.0151, 0.0536, 0.1071, 0.1694, 0.2362, 0.304, 0.3707, 0.4347, 0.495, 0.5511, 0.6026, 0.6495, 0.6919, 0.7299, 0.7639, 0.7941, 0.8209, 0.8444, 0.8651, 0.8833, 0.8992, 0.913, 0.925, 0.9355, 0.9445, 0.9524, 0.9592, 0.965, 0.97, 0.9744, 0.9781, 0.9813, 0.984, 0.9864, 0.9884, 0.9901, 0.9916, 0.9928, 0.9939, 0.9948, 0.9956, 0.9963, 0.9968, 0.9973, 0.9977, 0.9981, 0.9984, 0.9986, 0.9988, 1);
+    --spring-snappy: linear(0, 0.014, 0.0507, 0.1032, 0.1661, 0.235, 0.3065, 0.378, 0.4476, 0.514, 0.5762, 0.6336, 0.6859, 0.7331, 0.7752, 0.8125, 0.8451, 0.8734, 0.8978, 0.9186, 0.9362, 0.9509, 0.9632, 0.9732, 0.9814, 0.988, 0.9931, 0.9972, 1.0002, 1.0025, 1.0041, 1.0052, 1.0059, 1.0062, 1.0063, 1.0062, 1.0059, 1.0056, 1.0052, 1.0048, 1.0043, 1.0039, 1.0034, 1.003, 1.0026, 1.0023, 1.0019, 1.0016, 1.0014, 1.0012, 1);
+    --spring-bouncy: linear(0, 0.0193, 0.0698, 0.1418, 0.2273, 0.3198, 0.4142, 0.5064, 0.5936, 0.674, 0.7461, 0.8096, 0.8641, 0.91, 0.9476, 0.9778, 1.0012, 1.0187, 1.0311, 1.0393, 1.044, 1.0459, 1.0456, 1.0437, 1.0407, 1.0369, 1.0328, 1.0284, 1.0241, 1.02, 1.0162, 1.0128, 1.0097, 1.0071, 1.0048, 1.003, 1.0015, 1.0003, 0.9994, 0.9987, 0.9983, 0.998, 0.9979, 0.9979, 0.998, 0.9981, 0.9982, 0.9984, 0.9986, 0.9988, 1);
+    --spring-smooth-duration: 740ms;
+    --spring-snappy-duration: 700ms;
+    --spring-bouncy-duration: 820ms;
+  }
+}
+
+/* ── Press (buttons / rows): transform only; the colour flip stays instant (§1). */
+.mi-press {
+  transition: transform var(--motion-duration-fast) var(--motion-ease-out);
+}
+.mi-press:active {
+  transform: scale(0.97);
+}
+
+/* ── Hover-lift (cards): translate + a pre-rendered shadow overlay (§10 — no
+      box-shadow transition on large areas). Pair focus-visible (§4). */
+.mi-lift {
+  transition:
+    transform var(--motion-duration-slow) var(--motion-ease-out),
+    box-shadow var(--motion-duration-slow) var(--motion-ease-out);
+}
+.mi-lift:hover,
+.mi-lift:focus-visible,
+.mi-lift:focus-within {
+  transform: translateY(-2px);
+}
+
+/* ── Selection accent bar: grows via scaleX — NO colour cross-fade, NO layout (§1,§6).
+      The item's own bg/text flip instantly; only this bar animates. */
+.mi-accent {
+  position: relative;
+}
+.mi-accent::before {
+  content: "";
+  position: absolute;
+  inset-block: 12%;
+  inset-inline-start: 0;
+  width: 3px;
+  border-radius: 9999px;
+  background: var(--color-bg-brand-solid);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-duration-base) var(--motion-ease-out);
+}
+.mi-accent[aria-current="page"]::before,
+.mi-accent.is-active::before {
+  transform: scaleX(1);
+}
+
+/* ── Fade — the reduced-motion-safe, meaning-carrying opacity tween (§2). */
+.mi-fade {
+  transition: opacity var(--motion-duration-base) linear;
+}
+
+/* ── Scroll reveal — SSR-SAFE (§7): visible + in-flow by default. The hidden START
+      state only applies under .js-motion (a JS/hydration signal). No-JS = final. */
+.js-motion .mi-reveal {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.js-motion .mi-reveal.mi-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--motion-duration-slow) var(--motion-ease-out),
+    transform var(--motion-duration-slow) var(--motion-ease-out);
+}
+
+/* ── Skeleton — opacity pulse only (§2 RM-safe; §11 loading affordance). */
+.mi-skeleton {
+  background: var(--color-bg-secondary);
+  border-radius: 0.5rem;
+  animation: mi-pulse 1.4s ease-in-out infinite;
+}
+@keyframes mi-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+/* ── Spinner — rotation (movement → off under RM). */
+.mi-spinner {
+  display: inline-block;
+  border-radius: 9999px;
+  border: 2px solid color-mix(in oklab, currentColor 25%, transparent);
+  border-top-color: currentColor;
+  animation: mi-spin 0.7s linear infinite;
+}
+@keyframes mi-spin { to { transform: rotate(360deg); } }
+
+/* ── Progress fill — scaleX from a truthful final width (§8). transform-origin left. */
+.mi-progress-fill {
+  transform-origin: left center;
+  transition: transform var(--motion-duration-transition) var(--motion-ease-out);
+}
+
+/* ── Ripple ink (Material state layer). Composited scale+opacity. */
+.mi-ripple {
+  position: relative;
+  overflow: hidden;
+}
+.mi-ripple-ink {
+  position: absolute;
+  border-radius: 9999px;
+  background: currentColor;
+  opacity: 0.16;
+  transform: scale(0);
+  pointer-events: none;
+  animation: mi-ripple var(--motion-duration-transition) var(--motion-ease-out) forwards;
+}
+@keyframes mi-ripple {
+  to { transform: scale(2.4); opacity: 0; }
+}
+
+/* ── Like burst (playful spring; §9 one accent). */
+.mi-like { transition: transform var(--motion-duration-fast) var(--motion-ease-out); }
+.mi-like:active { transform: scale(0.9); }
+.mi-like.mi-liked .mi-like-icon { animation: mi-pop var(--motion-duration-transition) var(--motion-spring); }
+@keyframes mi-pop { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
+
+/* ── Haptic-analog tick (Apple-parity M3) — discrete state-CROSSING feedback:
+      detent snap, segmented-thumb landing, threshold cross, toggle commit.
+      110ms blip on the standalone `scale` property so it COMPOSES with any
+      inline `transform` (e.g. the SegmentedControl indicator's translateX).
+      Apply via tick(el) in lib/microinteractions.ts. NO glow — pure scale;
+      reduced motion swaps it for the colour flash below. */
+.mi-tick {
+  animation: mi-tick 110ms var(--motion-ease-out);
+}
+@keyframes mi-tick {
+  50% { scale: 1.04; }
+}
+/* RM substitute — a non-vestibular one-beat colour flash (§2): brightness/
+   saturation dip via `filter` (compositor-cheap, §10), zero movement. */
+@keyframes mi-tick-flash {
+  50% { filter: brightness(0.85) saturate(1.4); }
+}
+
+/* ── Toast / popover pop (enter: opacity+translate). */
+.mi-pop-enter {
+  animation: mi-pop-in var(--motion-duration-base) var(--motion-ease-out);
+}
+@keyframes mi-pop-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ── Chevron / disclosure rotate. */
+.mi-chevron { transition: transform var(--motion-duration-base) var(--motion-ease-standard); }
+[aria-expanded="true"] > .mi-chevron,
+[open] > summary .mi-chevron { transform: rotate(180deg); }
+
+/* ── Count-up number: reserve width so it can't jitter (§8). */
+.mi-countup { font-variant-numeric: tabular-nums; }
+
+/* ── Symbol effects (Apple-parity M4) — SF Symbols-like one-shot effects on any
+      @untitledui-pro/icons/line icon. Wrapper carries data-symbol-effect="bounce|
+      pulse|wiggle"; playSymbolEffect() (lib/microinteractions.ts) sets
+      data-symbol-play for one run and removes it on animationend so it can replay.
+      The inner svg animates (transform-origin center). One accent per moment (§9);
+      reduced-motion → static (backlog M4 contract, RM rules below). */
+[data-symbol-effect] svg {
+  transform-origin: center;
+}
+[data-symbol-effect="bounce"][data-symbol-play] svg {
+  animation: mi-symbol-bounce var(--motion-duration-transition) var(--motion-spring);
+}
+[data-symbol-effect="pulse"][data-symbol-play] svg {
+  animation: mi-symbol-pulse var(--motion-duration-drawer) var(--motion-ease-standard);
+}
+[data-symbol-effect="wiggle"][data-symbol-play] svg {
+  animation: mi-symbol-wiggle var(--motion-duration-drawer) var(--motion-ease-standard);
+}
+@keyframes mi-symbol-bounce {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.28); }
+  70% { transform: scale(0.94); }
+  100% { transform: scale(1); }
+}
+@keyframes mi-symbol-pulse {
+  0%, 100% { opacity: 1; }
+  40% { opacity: 0.3; }
+}
+@keyframes mi-symbol-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-14deg); }
+  40% { transform: rotate(11deg); }
+  60% { transform: rotate(-7deg); }
+  80% { transform: rotate(3deg); }
+}
+
+/* ── Symbol replace (M4 "replace" effect) — two stacked icons, .mi-swapped flips
+      which shows. Outgoing shrinks+fades, incoming springs in. Not a §1 polarity
+      cross-fade (that rule is bg/text inversion) — same pattern as the copy→check
+      swap. Reduced motion: transitions killed below → instant truthful flip. */
+.mi-symbol-swap {
+  display: inline-grid;
+  place-items: center;
+}
+.mi-symbol-swap > svg {
+  grid-area: 1 / 1;
+  transform-origin: center;
+  transition:
+    transform var(--motion-duration-slow) var(--spring-snappy),
+    opacity var(--motion-duration-base) var(--motion-ease-out);
+}
+.mi-symbol-swap > svg:last-child,
+.mi-symbol-swap.mi-swapped > svg:first-child {
+  opacity: 0;
+  transform: scale(0.5);
+}
+.mi-symbol-swap.mi-swapped > svg:last-child {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── UseAnimations → Untitled UI icon adapter. The original react-useanimations
+      package ships Lottie JSON icons. In this toolkit the icon remains a real
+      @untitledui-pro/icons/line component; only the interaction grammar is
+      ported. Wrapper carries data-ua-effect="<recipe>"; playUseAnimationIcon()
+      toggles data-ua-play for one run. */
+[data-ua-effect] svg {
+  overflow: visible;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+[data-ua-effect] svg * {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+[data-ua-effect] :is(path, line, polyline, polygon, circle, rect) {
+  stroke-dasharray: var(--mi-ua-length, initial);
+}
+
+[data-ua-play][data-ua-effect="pulse"] svg,
+[data-ua-play][data-ua-effect="screen"] svg,
+[data-ua-play][data-ua-effect="blink"] svg,
+[data-ua-play][data-ua-effect="mail"] svg,
+[data-ua-play][data-ua-effect="volume"] svg {
+  animation: mi-ua-pulse var(--motion-duration-transition) var(--motion-ease-standard);
+}
+[data-ua-play][data-ua-effect="pop"] svg,
+[data-ua-play][data-ua-effect="bounce"] svg,
+[data-ua-play][data-ua-effect="open"] svg,
+[data-ua-play][data-ua-effect="lock"] svg,
+[data-ua-play][data-ua-effect="share"] svg {
+  animation: mi-ua-pop var(--motion-duration-transition) var(--motion-spring);
+}
+[data-ua-play][data-ua-effect="shake"] svg,
+[data-ua-play][data-ua-effect="error"] svg,
+[data-ua-play][data-ua-effect="trash"] svg {
+  animation: mi-ua-shake var(--motion-duration-transition) var(--motion-ease-standard);
+}
+[data-ua-play][data-ua-effect="ring"] svg {
+  animation: mi-ua-ring var(--motion-duration-drawer) var(--motion-ease-standard);
+}
+[data-ua-play][data-ua-effect="spin"] svg,
+[data-ua-play][data-ua-effect="loop"] svg {
+  animation: mi-ua-spin var(--motion-duration-drawer) linear;
+}
+[data-ua-play][data-ua-effect="slide-down"] svg { animation: mi-ua-slide-down var(--motion-duration-slow) var(--motion-ease-out); }
+[data-ua-play][data-ua-effect="slide-up"] svg { animation: mi-ua-slide-up var(--motion-duration-slow) var(--motion-ease-out); }
+[data-ua-play][data-ua-effect="slide-left"] svg { animation: mi-ua-slide-left var(--motion-duration-slow) var(--motion-ease-out); }
+[data-ua-play][data-ua-effect="slide-right"] svg { animation: mi-ua-slide-right var(--motion-duration-slow) var(--motion-ease-out); }
+[data-ua-play][data-ua-effect="drop"] svg,
+[data-ua-play][data-ua-effect="download"] svg {
+  animation: mi-ua-download var(--motion-duration-drawer) var(--motion-ease-emphasized);
+}
+[data-ua-play][data-ua-effect="draw"] :is(path, line, polyline, polygon, circle, rect),
+[data-ua-play][data-ua-effect="check"] :is(path, line, polyline, polygon, circle, rect) {
+  animation: mi-ua-draw var(--motion-duration-drawer) var(--motion-ease-out);
+}
+[data-ua-play][data-ua-effect="check"] svg {
+  animation: mi-ua-pop var(--motion-duration-transition) var(--motion-spring);
+}
+[data-ua-play][data-ua-effect="menu"] svg,
+[data-ua-play][data-ua-effect="toggle"] svg,
+[data-ua-play][data-ua-effect="media"] svg,
+[data-ua-play][data-ua-effect="search"] svg,
+[data-ua-play][data-ua-effect="swap"] svg {
+  animation: mi-ua-toggle var(--motion-duration-transition) var(--motion-ease-emphasized);
+}
+[data-ua-play][data-ua-effect="expand"] svg,
+[data-ua-play][data-ua-effect="zoom-in"] svg {
+  animation: mi-ua-zoom-in var(--motion-duration-transition) var(--motion-spring);
+}
+[data-ua-play][data-ua-effect="collapse"] svg,
+[data-ua-play][data-ua-effect="zoom-out"] svg {
+  animation: mi-ua-zoom-out var(--motion-duration-transition) var(--motion-ease-emphasized);
+}
+
+@keyframes mi-ua-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  45% { opacity: 0.48; transform: scale(1.12); }
+}
+@keyframes mi-ua-pop {
+  0% { transform: scale(1); }
+  38% { transform: scale(1.28); }
+  72% { transform: scale(0.94); }
+  100% { transform: scale(1); }
+}
+@keyframes mi-ua-shake {
+  0%, 100% { transform: translateX(0); }
+  18% { transform: translateX(-3px) rotate(-4deg); }
+  38% { transform: translateX(3px) rotate(4deg); }
+  58% { transform: translateX(-2px) rotate(-2deg); }
+  78% { transform: translateX(1px) rotate(1deg); }
+}
+@keyframes mi-ua-ring {
+  0%, 100% { transform: rotate(0deg); }
+  15% { transform: rotate(-14deg); }
+  30% { transform: rotate(12deg); }
+  45% { transform: rotate(-8deg); }
+  60% { transform: rotate(5deg); }
+}
+@keyframes mi-ua-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes mi-ua-slide-down {
+  0% { transform: translateY(-5px); opacity: 0.45; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes mi-ua-slide-up {
+  0% { transform: translateY(5px); opacity: 0.45; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes mi-ua-slide-left {
+  0% { transform: translateX(5px); opacity: 0.45; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes mi-ua-slide-right {
+  0% { transform: translateX(-5px); opacity: 0.45; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes mi-ua-download {
+  0% { transform: translateY(-6px); opacity: 0.35; }
+  54% { transform: translateY(2px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes mi-ua-draw {
+  0% { stroke-dashoffset: var(--mi-ua-length, 24); opacity: 0.35; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+@keyframes mi-ua-toggle {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(45deg) scale(0.92); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+@keyframes mi-ua-zoom-in {
+  0% { transform: scale(0.78); opacity: 0.4; }
+  70% { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes mi-ua-zoom-out {
+  0% { transform: scale(1.18); opacity: 0.45; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ── Custom UUI icon microinteractions — original recipes for @untitledui-pro
+      line icons. Wrapper carries data-uui-effect="<recipe>"; optional
+      data-uui-magnetic adds pointer proximity via JS vars. Built for short,
+      semantic UI feedback, never decorative loops. */
+[data-uui-effect] {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  --mi-pointer-x: 0px;
+  --mi-pointer-y: 0px;
+}
+[data-uui-effect] svg {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+[data-uui-effect] svg * {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+[data-uui-effect]::before,
+[data-uui-effect]::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+}
+[data-uui-effect] :is(path, line, polyline, polygon, circle, rect) {
+  stroke-dasharray: var(--mi-line-length, initial);
+}
+
+/* Legacy custom/reference recipe block removed: semantic recipes below are the single source of truth. */
+
+/* ── Semantic choreography pass. Each recipe maps to one UI event:
+      confirm, scan, route, send, secure, validate, reveal. No generic
+      "everything pops" layer. Lab visibility stays inside the 400ms UI ceiling. */
+[data-uui-effect] {
+  --mi-cue-fast: 240ms;
+  --mi-cue: 320ms;
+  --mi-cue-strong: 400ms;
+  --mi-ease-productive: cubic-bezier(0.2, 0, 0.38, 0.9);
+  --mi-ease-expressive: cubic-bezier(0.4, 0.14, 0.3, 1);
+}
+[data-uui-play][data-uui-effect] svg,
+[data-uui-play][data-uui-effect]::before,
+[data-uui-play][data-uui-effect]::after,
+[data-uui-play][data-uui-effect] :is(path, line, polyline, polygon, circle, rect) {
+  animation-fill-mode: both;
+}
+
+[data-uui-play][data-uui-effect="magnetic-dock"] svg {
+  animation: mi-sem-magnetic-dock var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="scan-reveal"]::before {
+  animation: mi-sem-scan-beam var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="scan-reveal"] svg {
+  animation: mi-sem-scan-focus var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="radial-confirm"]::before {
+  animation: mi-sem-confirm-ring var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="radial-confirm"] svg {
+  animation: mi-sem-confirm-check var(--mi-cue) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="elastic-toggle"]::before {
+  inset: 15px 12px;
+  z-index: 0;
+  width: 13px;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: mi-sem-toggle-knob var(--mi-cue) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="elastic-toggle"] svg {
+  animation: mi-sem-toggle-body var(--mi-cue) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="soft-error"]::before {
+  animation: mi-sem-error-tint var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="soft-error"] svg {
+  animation: mi-sem-error-refuse var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="path-write"] svg {
+  animation: mi-sem-write-hand var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="notification-peek"]::before {
+  animation: mi-sem-notification-wave var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="notification-peek"] svg {
+  animation: mi-sem-bell-ring var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="stack-lift"]::before {
+  animation: mi-sem-stack-back var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="stack-lift"]::after {
+  animation: mi-sem-stack-mid var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="stack-lift"] svg {
+  animation: mi-sem-stack-front var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="handoff-dot"]::after {
+  animation: mi-sem-handoff-packet var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="handoff-dot"] svg {
+  animation: mi-sem-handoff-origin var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="focus-bloom"]::before {
+  animation: mi-sem-focus-ring var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="focus-bloom"]::after {
+  left: calc(50% - 3px);
+  top: calc(50% - 3px);
+  z-index: 2;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: mi-sem-focus-dot var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="focus-bloom"] svg {
+  animation: mi-sem-focus-icon var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="threshold-snap"]::before {
+  animation: mi-sem-threshold-lock var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="threshold-snap"] svg {
+  animation: mi-sem-threshold-target var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="queue-shift"]::before,
+[data-uui-play][data-uui-effect="queue-shift"]::after {
+  left: 14px;
+  right: 14px;
+  z-index: 0;
+  height: 2px;
+  border-radius: 9999px;
+  background: currentColor;
+}
+[data-uui-play][data-uui-effect="queue-shift"]::before {
+  top: 18px;
+  animation: mi-sem-queue-prior var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="queue-shift"]::after {
+  bottom: 18px;
+  animation: mi-sem-queue-next var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="queue-shift"] svg {
+  animation: mi-sem-queue-active var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="secure-seal"]::before {
+  animation: mi-sem-secure-seal var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="secure-seal"] svg {
+  animation: mi-sem-lock-latch var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="data-packet"]::after {
+  animation: mi-sem-data-packet var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="data-packet"] svg {
+  animation: mi-sem-send-origin var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="orbit-select"]::after {
+  animation: mi-sem-select-orbit var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="orbit-select"] svg {
+  animation: mi-sem-select-anchor var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="count-tick"]::before {
+  animation: mi-sem-count-ring var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="count-tick"] svg {
+  animation: mi-sem-count-increment var(--mi-cue) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="upload-rise"]::before {
+  animation: mi-sem-upload-platform var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="upload-rise"] svg {
+  animation: mi-sem-upload-arrow var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="filter-settle"]::before,
+[data-uui-play][data-uui-effect="filter-settle"]::after {
+  left: 13px;
+  right: 13px;
+  z-index: 0;
+  height: 2px;
+  border-radius: 9999px;
+  background: currentColor;
+}
+[data-uui-play][data-uui-effect="filter-settle"]::before {
+  top: 19px;
+  animation: mi-sem-filter-top var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="filter-settle"]::after {
+  bottom: 19px;
+  animation: mi-sem-filter-bottom var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="filter-settle"] svg {
+  animation: mi-sem-filter-commit var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="preview-wink"]::before {
+  animation: mi-sem-preview-scan var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="preview-wink"] svg {
+  animation: mi-sem-preview-eye var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="sync-merge"]::before {
+  animation: mi-sem-sync-left var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="sync-merge"]::after {
+  animation: mi-sem-sync-right var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="sync-merge"] svg {
+  animation: mi-sem-sync-complete var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+
+[data-uui-play][data-uui-effect="precision-path"] svg {
+  animation: mi-sem-precision-anchor var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="variable-draw"] svg {
+  animation: mi-sem-variable-pressure var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="magic-replace"]::before {
+  animation: mi-sem-magic-sweep var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="magic-replace"] svg {
+  animation: mi-sem-magic-pivot var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="variable-color"]::before,
+[data-uui-play][data-uui-effect="variable-color"]::after {
+  inset: 8px;
+  z-index: 0;
+  border: 1.5px solid currentColor;
+  border-radius: 9999px;
+}
+[data-uui-play][data-uui-effect="variable-color"]::before {
+  animation: mi-sem-variable-priority-a var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="variable-color"]::after {
+  animation: mi-sem-variable-priority-b var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="variable-color"] :is(path, line, polyline, polygon, circle, rect) {
+  animation: mi-sem-variable-stroke var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="shared-axis-x"]::before,
+[data-uui-play][data-uui-effect="shared-axis-y"]::before {
+  z-index: 0;
+  border-radius: 9999px;
+  background: currentColor;
+}
+[data-uui-play][data-uui-effect="shared-axis-x"]::before {
+  left: 9px;
+  right: 9px;
+  top: calc(50% - 1px);
+  height: 2px;
+  animation: mi-sem-axis-x-rail var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="shared-axis-x"] svg {
+  animation: mi-sem-axis-x-icon var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="shared-axis-y"]::before {
+  left: calc(50% - 1px);
+  top: 9px;
+  bottom: 9px;
+  width: 2px;
+  animation: mi-sem-axis-y-rail var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="shared-axis-y"] svg {
+  animation: mi-sem-axis-y-icon var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="container-transform"]::before {
+  animation: mi-sem-container-surface var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="container-transform"] svg {
+  animation: mi-sem-container-content var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="fade-through"]::before {
+  inset: 9px;
+  z-index: 0;
+  border-radius: 0.75rem;
+  background: currentColor;
+  animation: mi-sem-fade-bridge var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="fade-through"] svg {
+  animation: mi-sem-fade-refresh var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="productive-press"] svg {
+  animation: mi-sem-press-contact var(--mi-cue-fast) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="expressive-burst"]::after {
+  animation: mi-sem-star-burst var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="expressive-burst"] svg {
+  animation: mi-sem-star-emphasis var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="spin-snap"] svg {
+  animation: mi-sem-refresh-cycle var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="heartbeat"] svg {
+  animation: mi-sem-heart-accept var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="two-tone-fill"]::before {
+  animation: mi-sem-fill-wash var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="stagger-draw"] :is(path, line, polyline):nth-child(odd) {
+  animation: mi-sem-stagger-draw-a var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="stagger-draw"] :is(path, line, polyline):nth-child(even) {
+  animation: mi-sem-stagger-draw-b var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="bar-grow"] :is(path, line, polyline):nth-child(odd) {
+  animation: mi-sem-bar-grow-a var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="bar-grow"] :is(path, line, polyline):nth-child(even) {
+  animation: mi-sem-bar-grow-b var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="gear-rotate"] svg {
+  animation: mi-sem-gear-commit var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="mail-flap"] svg {
+  animation: mi-sem-mail-envelope var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="page-turn"] svg {
+  animation: mi-sem-page-corner var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="menu-compress"] svg {
+  animation: mi-sem-menu-compress var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="chevron-stretch"] svg {
+  animation: mi-sem-chevron-stretch var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="dot-pop"]::after {
+  animation: mi-sem-unread-dot var(--mi-cue) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="float-rest"] svg {
+  animation: mi-sem-feature-float var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="swing-rest"] svg {
+  animation: mi-sem-announcement-swing var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="flip-rest"] svg {
+  animation: mi-sem-state-flip var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="rubber-pop"] svg {
+  animation: mi-sem-impact-squash var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="tada-pop"] svg {
+  animation: mi-sem-celebrate-mark var(--mi-cue-strong) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="focus-nudge"] svg {
+  animation: mi-sem-focus-nudge var(--mi-cue-fast) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="success-tick"]::before {
+  animation: mi-sem-success-ring var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="success-tick"] svg {
+  animation: mi-sem-success-check var(--mi-cue) var(--mi-ease-expressive);
+}
+[data-uui-play][data-uui-effect="entrance-fade-up"] svg {
+  animation: mi-sem-enter-up var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="burger-fade"]::before,
+[data-uui-play][data-uui-effect="burger-fade"]::after {
+  left: 14px;
+  right: 14px;
+  z-index: 2;
+  height: 2px;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: mi-sem-burger-stroke var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="burger-fade"]::before { top: 18px; }
+[data-uui-play][data-uui-effect="burger-fade"]::after {
+  bottom: 18px;
+  animation-direction: reverse;
+}
+[data-uui-play][data-uui-effect="burger-fade"] svg {
+  animation: mi-sem-burger-anchor var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="inview-gate"] svg {
+  animation: mi-sem-inview-ack var(--mi-cue) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="validation-pulse"]::before {
+  animation: mi-sem-validation-ring var(--mi-cue-strong) var(--mi-ease-productive);
+}
+[data-uui-play][data-uui-effect="validation-pulse"] svg {
+  animation: mi-sem-validation-alert var(--mi-cue-strong) var(--mi-ease-productive);
+}
+
+@keyframes mi-sem-magnetic-dock {
+  0%, 100% { transform: translate(var(--mi-pointer-x), var(--mi-pointer-y)) scale(1); }
+  45% { transform: translate(calc(var(--mi-pointer-x) * 1.7), calc(var(--mi-pointer-y) * 1.7)) scale(0.94); }
+  72% { transform: translate(0, 0) scale(1.04); }
+}
+@keyframes mi-sem-scan-beam {
+  0% { opacity: 0; transform: translateX(0) skewX(-14deg) scaleY(0.72); }
+  25%, 62% { opacity: 0.9; }
+  100% { opacity: 0; transform: translateX(260%) skewX(-14deg) scaleY(1.12); }
+}
+@keyframes mi-sem-scan-focus {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  48% { opacity: 0.62; transform: scale(1.04); }
+}
+@keyframes mi-sem-confirm-ring {
+  0% { opacity: 0; transform: rotate(-90deg) scale(0.82); }
+  24%, 70% { opacity: 0.78; }
+  100% { opacity: 0; transform: rotate(270deg) scale(1.05); }
+}
+@keyframes mi-sem-confirm-check {
+  0% { transform: scale(0.86); opacity: 0.45; }
+  56% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes mi-sem-toggle-knob {
+  0% { opacity: 0; transform: translateX(-5px) scale(0.76); }
+  42% { opacity: 0.38; transform: translateX(8px) scale(1.06); }
+  100% { opacity: 0; transform: translateX(16px) scale(0.82); }
+}
+@keyframes mi-sem-toggle-body {
+  0%, 100% { transform: scaleX(1) scaleY(1); }
+  34% { transform: scaleX(0.86) scaleY(1.08); }
+  68% { transform: scaleX(1.04) scaleY(0.98); }
+}
+@keyframes mi-sem-error-tint {
+  0%, 100% { opacity: 0; transform: scaleX(0.82); }
+  34% { opacity: 0.95; transform: scaleX(1); }
+}
+@keyframes mi-sem-error-refuse {
+  0%, 100% { transform: translateX(0); }
+  18% { transform: translateX(-3px); }
+  36% { transform: translateX(3px); }
+  58% { transform: translateX(-1px); }
+}
+@keyframes mi-sem-write-hand {
+  0% { transform: translate(-2px, 2px) rotate(-2deg); }
+  62% { transform: translate(2px, -1px) rotate(1deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@keyframes mi-sem-notification-wave {
+  0% { opacity: 0.62; transform: scale(0.74); }
+  100% { opacity: 0; transform: scale(1.62); }
+}
+@keyframes mi-sem-bell-ring {
+  0%, 100% { transform: rotate(0deg); }
+  16% { transform: rotate(-13deg); }
+  32% { transform: rotate(10deg); }
+  50% { transform: rotate(-6deg); }
+  68% { transform: rotate(2deg); }
+}
+@keyframes mi-sem-stack-back {
+  0%, 100% { opacity: 0.12; transform: translateY(0) scale(1); }
+  48% { opacity: 0.32; transform: translateY(-7px) scale(1.06); }
+}
+@keyframes mi-sem-stack-mid {
+  0%, 100% { opacity: 0.1; transform: translateY(0) scale(1); }
+  48% { opacity: 0.26; transform: translateY(-3px) scale(1.04); }
+}
+@keyframes mi-sem-stack-front {
+  0%, 100% { transform: translateY(0); }
+  48% { transform: translateY(-5px); }
+}
+@keyframes mi-sem-handoff-packet {
+  0% { opacity: 0; transform: translate(0, -50%) scale(0.55); }
+  18%, 72% { opacity: 1; }
+  100% { opacity: 0; transform: translate(27px, -24px) scale(0.9); }
+}
+@keyframes mi-sem-handoff-origin {
+  0%, 100% { transform: translateX(0); opacity: 1; }
+  42% { transform: translateX(2px); opacity: 0.72; }
+}
+@keyframes mi-sem-focus-ring {
+  0% { opacity: 0; transform: scale(0.58); }
+  38% { opacity: 0.72; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.42); }
+}
+@keyframes mi-sem-focus-dot {
+  0%, 100% { opacity: 0; transform: scale(0.6); }
+  46% { opacity: 0.78; transform: scale(1); }
+}
+@keyframes mi-sem-focus-icon {
+  0%, 100% { transform: scale(1); }
+  46% { transform: scale(0.96); }
+}
+@keyframes mi-sem-threshold-lock {
+  0% { opacity: 0; transform: scale(1.26); }
+  42% { opacity: 0.82; transform: scale(0.9); }
+  100% { opacity: 0; transform: scale(1); }
+}
+@keyframes mi-sem-threshold-target {
+  0%, 100% { transform: scale(1); }
+  32% { transform: scale(0.92); }
+  64% { transform: scale(1.07); }
+}
+@keyframes mi-sem-queue-prior {
+  0%, 100% { opacity: 0; transform: translateX(0) scaleX(0.45); }
+  38% { opacity: 0.34; transform: translateX(-5px) scaleX(0.9); }
+}
+@keyframes mi-sem-queue-next {
+  0%, 100% { opacity: 0; transform: translateX(0) scaleX(0.45); }
+  38% { opacity: 0.28; transform: translateX(5px) scaleX(0.9); }
+}
+@keyframes mi-sem-queue-active {
+  0%, 100% { transform: translateX(0); }
+  42% { transform: translateX(4px); }
+  72% { transform: translateX(-1px); }
+}
+@keyframes mi-sem-secure-seal {
+  0% { opacity: 0; transform: scale(1.24); }
+  34% { opacity: 0.76; transform: scale(0.88); }
+  100% { opacity: 0; transform: scale(1); }
+}
+@keyframes mi-sem-lock-latch {
+  0% { transform: translateY(-2px) scale(0.98); opacity: 0.74; }
+  54% { transform: translateY(1px) scale(1.05); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes mi-sem-data-packet {
+  0% { opacity: 0; transform: translate(0, -50%) scale(0.45); }
+  18%, 74% { opacity: 1; }
+  100% { opacity: 0; transform: translate(28px, -18px) scale(0.8); }
+}
+@keyframes mi-sem-send-origin {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  46% { transform: translateX(3px) rotate(2deg); }
+}
+@keyframes mi-sem-select-orbit {
+  0% { opacity: 0; transform: translateX(-50%) rotate(-35deg) scale(0.65); }
+  18%, 76% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(-50%) rotate(325deg) scale(0.9); }
+}
+@keyframes mi-sem-select-anchor {
+  0%, 100% { transform: scale(1); }
+  52% { transform: scale(0.94); }
+}
+@keyframes mi-sem-count-ring {
+  0% { opacity: 0; transform: scale(0.72); }
+  42% { opacity: 0.62; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.24); }
+}
+@keyframes mi-sem-count-increment {
+  0% { transform: translateY(2px) scale(0.94); opacity: 0.72; }
+  58% { transform: translateY(-1px) scale(1.08); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes mi-sem-upload-platform {
+  0%, 100% { opacity: 0; transform: scaleX(0.5); }
+  45% { opacity: 0.86; transform: scaleX(1); }
+}
+@keyframes mi-sem-upload-arrow {
+  0% { transform: translateY(6px); opacity: 0.45; }
+  54% { transform: translateY(-5px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes mi-sem-filter-top {
+  0%, 100% { opacity: 0; transform: translateX(0) scaleX(0.5); }
+  46% { opacity: 0.28; transform: translateX(-5px) scaleX(0.95); }
+}
+@keyframes mi-sem-filter-bottom {
+  0%, 100% { opacity: 0; transform: translateX(0) scaleX(0.5); }
+  46% { opacity: 0.28; transform: translateX(5px) scaleX(0.95); }
+}
+@keyframes mi-sem-filter-commit {
+  0%, 100% { transform: translateY(0); }
+  42% { transform: translateY(2px); }
+  70% { transform: translateY(-1px); }
+}
+@keyframes mi-sem-preview-scan {
+  0%, 100% { opacity: 0; transform: scaleX(0.05); }
+  42% { opacity: 0.86; transform: scaleX(1); }
+}
+@keyframes mi-sem-preview-eye {
+  0%, 100% { transform: scaleY(1); opacity: 1; }
+  48% { transform: scaleY(0.78); opacity: 0.68; }
+}
+@keyframes mi-sem-sync-left {
+  0% { opacity: 0; transform: translate(0, -50%) scale(0.45); }
+  20%, 72% { opacity: 1; }
+  100% { opacity: 0; transform: translate(13px, -50%) scale(0.75); }
+}
+@keyframes mi-sem-sync-right {
+  0% { opacity: 0; transform: translate(0, -50%) scale(0.45); }
+  20%, 72% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-13px, -50%) scale(0.75); }
+}
+@keyframes mi-sem-sync-complete {
+  0%, 100% { transform: rotate(0deg); }
+  56% { transform: rotate(-42deg); }
+}
+@keyframes mi-sem-precision-anchor {
+  0% { transform: translate(-1px, 1px); opacity: 0.7; }
+  100% { transform: translate(0, 0); opacity: 1; }
+}
+@keyframes mi-sem-variable-pressure {
+  0% { transform: scale(0.96); opacity: 0.62; }
+  42% { transform: scale(1.05); opacity: 0.9; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes mi-sem-magic-sweep {
+  0% { opacity: 0; transform: rotate(-70deg) scale(0.72); }
+  28%, 68% { opacity: 0.74; }
+  100% { opacity: 0; transform: rotate(235deg) scale(1.12); }
+}
+@keyframes mi-sem-magic-pivot {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  34% { transform: rotate(-11deg) scale(0.9); }
+  68% { transform: rotate(6deg) scale(1.05); }
+}
+@keyframes mi-sem-variable-priority-a {
+  0%, 100% { opacity: 0; transform: scale(0.72); }
+  32% { opacity: 0.35; transform: scale(1); }
+}
+@keyframes mi-sem-variable-priority-b {
+  0%, 28%, 100% { opacity: 0; transform: scale(0.86); }
+  62% { opacity: 0.24; transform: scale(1.22); }
+}
+@keyframes mi-sem-variable-stroke {
+  0%, 100% { opacity: 1; }
+  28% { opacity: 0.28; }
+  62% { opacity: 0.86; }
+}
+@keyframes mi-sem-axis-x-rail {
+  0% { opacity: 0; transform: translateX(-12px) scaleX(0.12); }
+  38% { opacity: 0.3; transform: translateX(0) scaleX(1); }
+  100% { opacity: 0; transform: translateX(13px) scaleX(0.18); }
+}
+@keyframes mi-sem-axis-x-icon {
+  0% { opacity: 0.24; transform: translateX(-10px); }
+  64% { opacity: 1; transform: translateX(3px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes mi-sem-axis-y-rail {
+  0% { opacity: 0; transform: translateY(-12px) scaleY(0.12); }
+  38% { opacity: 0.3; transform: translateY(0) scaleY(1); }
+  100% { opacity: 0; transform: translateY(13px) scaleY(0.18); }
+}
+@keyframes mi-sem-axis-y-icon {
+  0% { opacity: 0.24; transform: translateY(-10px); }
+  64% { opacity: 1; transform: translateY(3px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes mi-sem-container-surface {
+  0% { opacity: 0.7; transform: scale(0.46); }
+  72% { opacity: 0.2; transform: scale(1.1); }
+  100% { opacity: 0; transform: scale(1.18); }
+}
+@keyframes mi-sem-container-content {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  42% { transform: scale(0.96); opacity: 0.72; }
+}
+@keyframes mi-sem-fade-bridge {
+  0%, 100% { opacity: 0; transform: scale(0.86); }
+  46% { opacity: 0.16; transform: scale(1); }
+}
+@keyframes mi-sem-fade-refresh {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  42%, 52% { opacity: 0; transform: scale(0.92); }
+}
+@keyframes mi-sem-press-contact {
+  0%, 100% { transform: scale(1); }
+  46% { transform: scale(0.88); }
+}
+@keyframes mi-sem-star-burst {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); box-shadow: 0 0 currentColor, 0 0 currentColor, 0 0 currentColor, 0 0 currentColor; }
+  40% { opacity: 0.84; transform: translate(-50%, -50%) scale(1); box-shadow: 0 -13px currentColor, 12px 0 currentColor, 0 13px currentColor, -12px 0 currentColor; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.28); box-shadow: 0 -18px currentColor, 17px 0 currentColor, 0 18px currentColor, -17px 0 currentColor; }
+}
+@keyframes mi-sem-star-emphasis {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  38% { transform: scale(1.12) rotate(7deg); }
+}
+@keyframes mi-sem-refresh-cycle {
+  0% { transform: rotate(0deg); opacity: 0.7; }
+  82% { transform: rotate(340deg); opacity: 1; }
+  100% { transform: rotate(360deg); opacity: 1; }
+}
+@keyframes mi-sem-heart-accept {
+  0%, 100% { transform: scale(1); }
+  22% { transform: scale(1.14); }
+  38% { transform: scale(0.96); }
+  58% { transform: scale(1.08); }
+}
+@keyframes mi-sem-fill-wash {
+  0%, 100% { opacity: 0; transform: scale(0.68); }
+  42% { opacity: 0.2; transform: scale(1); }
+}
+@keyframes mi-sem-stagger-draw-a {
+  0% { stroke-dashoffset: var(--mi-line-length, 24); opacity: 0.32; }
+  62% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+@keyframes mi-sem-stagger-draw-b {
+  0%, 18% { stroke-dashoffset: var(--mi-line-length, 24); opacity: 0.18; }
+  78% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+@keyframes mi-sem-bar-grow-a {
+  0% { transform: scaleY(0.35); opacity: 0.45; }
+  68% { transform: scaleY(1.16); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+@keyframes mi-sem-bar-grow-b {
+  0% { transform: scaleY(0.62); opacity: 0.45; }
+  68% { transform: scaleY(1.34); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+@keyframes mi-sem-gear-commit {
+  0% { transform: rotate(0deg); }
+  76% { transform: rotate(88deg); }
+  100% { transform: rotate(90deg); }
+}
+@keyframes mi-sem-mail-envelope {
+  0%, 100% { transform: perspective(90px) rotateX(0deg); }
+  42% { transform: perspective(90px) rotateX(-24deg) translateY(1px); }
+  72% { transform: perspective(90px) rotateX(4deg); }
+}
+@keyframes mi-sem-page-corner {
+  0%, 100% { transform: perspective(100px) rotateY(0deg); }
+  46% { transform: perspective(100px) rotateY(-22deg) translateX(-1px); }
+}
+@keyframes mi-sem-menu-compress {
+  0%, 100% { transform: scaleX(1); }
+  44% { transform: scaleX(0.82) translateX(1px); }
+  72% { transform: scaleX(1.04); }
+}
+@keyframes mi-sem-chevron-stretch {
+  0%, 100% { transform: scaleX(1) translateX(0); }
+  46% { transform: scaleX(1.18) translateX(2px); }
+  74% { transform: scaleX(0.96) translateX(0); }
+}
+@keyframes mi-sem-unread-dot {
+  0% { opacity: 0; transform: scale(0.2); }
+  58% { opacity: 1; transform: scale(1.28); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes mi-sem-feature-float {
+  0%, 100% { transform: translateY(0); }
+  46% { transform: translateY(-6px); }
+  72% { transform: translateY(1px); }
+}
+@keyframes mi-sem-announcement-swing {
+  0%, 100% { transform: rotate(0deg); }
+  18% { transform: rotate(12deg); }
+  38% { transform: rotate(-8deg); }
+  58% { transform: rotate(4deg); }
+}
+@keyframes mi-sem-state-flip {
+  0% { transform: perspective(100px) rotateY(0deg); opacity: 1; }
+  48% { transform: perspective(100px) rotateY(180deg) scale(0.94); opacity: 0.58; }
+  100% { transform: perspective(100px) rotateY(360deg); opacity: 1; }
+}
+@keyframes mi-sem-impact-squash {
+  0%, 100% { transform: scale(1); }
+  28% { transform: scale(1.14, 0.86); }
+  58% { transform: scale(0.96, 1.08); }
+}
+@keyframes mi-sem-celebrate-mark {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  24% { transform: rotate(-7deg) scale(0.96); }
+  48% { transform: rotate(8deg) scale(1.12); }
+  72% { transform: rotate(-3deg) scale(1.03); }
+}
+@keyframes mi-sem-focus-nudge {
+  0%, 100% { transform: translateX(0); }
+  52% { transform: translateX(3px); }
+}
+@keyframes mi-sem-success-ring {
+  0% { opacity: 0; transform: scale(0.72); }
+  42% { opacity: 0.62; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.28); }
+}
+@keyframes mi-sem-success-check {
+  0% { transform: scale(0.86); opacity: 0.5; }
+  58% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes mi-sem-enter-up {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes mi-sem-burger-stroke {
+  0%, 100% { opacity: 0; transform: translateY(0) scaleX(0.42); }
+  46% { opacity: 0.88; transform: translateY(4px) scaleX(1); }
+}
+@keyframes mi-sem-burger-anchor {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  46% { opacity: 0.58; transform: scale(0.96); }
+}
+@keyframes mi-sem-inview-ack {
+  0% { opacity: 0; transform: scale(0.94); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes mi-sem-validation-ring {
+  0% { opacity: 0; transform: scale(0.72); }
+  36% { opacity: 0.72; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.36); }
+}
+@keyframes mi-sem-validation-alert {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-2px); }
+  42% { transform: translateX(2px); }
+  64% { transform: translateX(-1px); }
+}
+
+/* ── Focus ring — consistent, focus-visible only (§4). */
+.mi-focus:focus-visible {
+  outline: 2px solid var(--color-focus-ring, var(--color-bg-brand-solid));
+  outline-offset: 2px;
+  border-radius: inherit;
+}
+
+/* ── REDUCED MOTION (§2). The toolkit ships a global reset that zeroes transitions;
+      here we (a) hard-stop every MOVEMENT/loop so nothing translates/scales/spins,
+      and (b) RE-ENABLE the meaning-carrying opacity fades (non-vestibular). */
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion="force"]) .mi-press:active,
+  :root:not([data-motion="force"]) .mi-lift:hover,
+  :root:not([data-motion="force"]) .mi-lift:focus-visible,
+  :root:not([data-motion="force"]) .mi-lift:focus-within,
+  :root:not([data-motion="force"]) .mi-like:active { transform: none !important; }
+  :root:not([data-motion="force"]) .mi-accent::before { transition: none !important; }
+  :root:not([data-motion="force"]) .mi-skeleton,
+  :root:not([data-motion="force"]) .mi-spinner,
+  :root:not([data-motion="force"]) .mi-like.mi-liked .mi-like-icon,
+  :root:not([data-motion="force"]) .mi-ripple-ink,
+  :root:not([data-motion="force"]) .mi-pop-enter { animation: none !important; }
+  /* tick keeps firing, but as the colour flash — the crossing feedback survives RM. */
+  :root:not([data-motion="force"]) .mi-tick { animation: mi-tick-flash 110ms linear !important; }
+  /* symbol effects → static (M4 contract); replace flips instantly, still truthful. */
+  :root:not([data-motion="force"]) [data-symbol-effect][data-symbol-play] svg { animation: none !important; }
+  :root:not([data-motion="force"]) .mi-symbol-swap > svg { transition: none !important; }
+  :root:not([data-motion="force"]) [data-ua-effect][data-ua-play] svg,
+  :root:not([data-motion="force"]) [data-ua-effect][data-ua-play] :is(path, line, polyline, polygon, circle, rect),
+  :root:not([data-motion="force"]) [data-uui-effect][data-uui-play] svg,
+  :root:not([data-motion="force"]) [data-uui-effect][data-uui-play]::before,
+  :root:not([data-motion="force"]) [data-uui-effect][data-uui-play]::after,
+  :root:not([data-motion="force"]) [data-uui-effect][data-uui-play] :is(path, line, polyline, polygon, circle, rect) { animation: none !important; }
+  /* keep the informative fades (opacity only, no transform) */
+  :root:not([data-motion="force"]) .mi-fade { transition: opacity var(--motion-duration-base) linear !important; }
+  :root:not([data-motion="force"]) .js-motion .mi-reveal { opacity: 1 !important; transform: none !important; }
+  :root:not([data-motion="force"]) .js-motion .mi-reveal.mi-in { transition: opacity var(--motion-duration-fast) linear !important; }
+}

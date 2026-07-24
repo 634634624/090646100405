@@ -12,20 +12,30 @@
  *
  * IMPORTANT: Use @theme { } to define colors for Tailwind autocomplete!
  * This creates utility classes like: bg-mycolor, text-mycolor, border-mycolor
- * 
+ *
  * ============================================================
  */
 
 /*
  * Override existing theme colors or add new ones:
- * 
+ *
  * @theme {
  *   --color-primary: #your-custom-color;
  *   --color-brand: #ff6b6b;
  *   --color-highlight: #ffd93d;
  * }
- * 
+ *
  * Then use: bg-brand, text-highlight, border-primary, etc.
  */
 
 /* Add your custom theme overrides below */
+
+/* Recolor .prose (blog) + repo tokens to the brand palette (cream + dark green) */
+:root {
+  --color-content: #1e2b23;
+  --color-content-light: #5e6b61;
+  --color-primary: #2f5a44;
+  --color-primary-dark: #244736;
+  --color-surface-alt: #f1e9d8;
+  --color-outline: #e6dac4;
+}

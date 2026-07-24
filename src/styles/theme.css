@@ -2,11 +2,11 @@
  * ============================================================
  * THEME TOKENS - Generated based on selected theme
  * ============================================================
- * 
+ *
  * Using Tailwind v4 @theme directive for design tokens.
  * This creates utility classes like:
  *   bg-primary, bg-secondary, bg-surface, text-content, border-outline, etc.
- * 
+ *
  * Theme Studio reads and writes this file. Edit token values here
  * when changing the project theme.
  * Use theme_child.css only for explicit overrides that should live
@@ -47,18 +47,18 @@
         --color-info: #3b82f6;
         --color-info-light: #dbeafe;
         --color-info-dark: #1e40af;
-  
+
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  
+
   /* Border Radius */
   --radius-sm: 0.25rem;
   --radius-md: 0.375rem;
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
-  
+
   /* Custom Spacing (uses --space-* to avoid conflicting with Tailwind's --spacing-*) */
   --space-xs: 0.5rem;
   --space-sm: 0.75rem;

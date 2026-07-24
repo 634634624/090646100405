@@ -1,0 +1,16 @@
+[
+  {
+    "capabilityId": "payments-checkout",
+    "mode": "mock",
+    "note": "Deterministic mock mode is build-ready; configure the pinned Shopify provider in Agency delivery before launch.",
+    "providerId": "shopify-storefront",
+    "status": "configured"
+  },
+  {
+    "capabilityId": "transactional-email",
+    "mode": "mock",
+    "note": "Deterministic mock mode is build-ready; configure the pinned Shopify provider in Agency delivery before launch.",
+    "providerId": "shopify-notifications",
+    "status": "configured"
+  }
+]

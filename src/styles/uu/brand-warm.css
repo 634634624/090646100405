@@ -1,0 +1,130 @@
+/* ============================================================
+ * brand-warm.css — Példa Kft. brand: KRÉM háttér + SÖTÉTZÖLD (logó színei)
+ * + meleg terrakotta accent. UU lila → ez. Import AFTER uu/theme.css.
+ * UU recolor gotcha #3: a base (--color-*) ÉS a namespaced (--background-color-* / --text-color-* / --border-color-*) tokeneket is felül kell írni.
+ * ============================================================ */
+:root {
+  /* ---- BRAND ramp: erdőzöld (logó) ---- */
+  --color-brand-25: #f5f8f6;
+  --color-brand-50: #eef3ef;
+  --color-brand-100: #d9e6de;
+  --color-brand-200: #b6ccbf;
+  --color-brand-300: #8aad98;
+  --color-brand-400: #5e8b72;
+  --color-brand-500: #406e55;
+  --color-brand-600: #2f5a44;
+  --color-brand-700: #244736;
+  --color-brand-800: #1d3a2c;
+  --color-brand-900: #182f24;
+  --color-brand-950: #0e1c15;
+
+  --color-utility-brand-50: #eef3ef;  --color-utility-brand-100: #d9e6de;
+  --color-utility-brand-200: #b6ccbf; --color-utility-brand-300: #8aad98;
+  --color-utility-brand-400: #5e8b72; --color-utility-brand-500: #406e55;
+  --color-utility-brand-600: #2f5a44; --color-utility-brand-700: #244736;
+
+  /* ---- BACKGROUNDS: krém ---- */
+  --color-bg-primary: #fcf9f2;        /* kártya / világos szekció (meleg fehér) */
+  --color-bg-primary_hover: #f6f1e6;
+  --color-bg-secondary: #f1e9d8;      /* krém szekció (logó háttér) */
+  --color-bg-secondary_hover: #e9dfca;
+  --color-bg-tertiary: #e7dbc4;
+  --color-bg-quaternary: #dccdb0;
+  --color-bg-brand-primary: #eaf1ec;  /* zöld tint (ikon háttér) */
+  --color-bg-brand-secondary: #d9e6de;
+  --color-bg-brand-solid: #2f5a44;    /* gombok */
+  --color-bg-brand-solid_hover: #244736;
+  --color-bg-brand-section: #1d3a2c;  /* sötét CTA sáv */
+  --color-bg-brand-section_subtle: #244736;
+
+  /* ---- TEXT: sötétzöld-fekete ---- */
+  --color-text-primary: #1e2b23;
+  --color-text-secondary: #3c4a41;
+  --color-text-secondary_hover: #2a352e;
+  --color-text-tertiary: #5e6b61;
+  --color-text-tertiary_hover: #46504a;
+  --color-text-quaternary: #8a9384;
+  --color-text-placeholder: #6c7568; /* AA on cream (was #9aa294 = 2.5:1) */
+  --color-text-brand-primary: #182f24;
+  --color-text-brand-secondary: #244736;
+  --color-text-brand-secondary_hover: #1d3a2c;
+  --color-text-brand-tertiary: #2f5a44;
+  /* ON-BRAND (light text for dark brand bands: brand-solid / brand-section) */
+  --color-text-primary_on-brand: #ffffff;
+  --color-text-secondary_on-brand: #e3ede7;
+  --color-text-tertiary_on-brand: #c6d8cd;
+  --color-text-quaternary_on-brand: #aec6b9;
+
+  /* ---- FG (ikonok) ---- */
+  --color-fg-primary: #1e2b23;
+  --color-fg-secondary: #3c4a41;
+  --color-fg-tertiary: #5e6b61;
+  --color-fg-quaternary: #8a9384;
+  --color-fg-brand-primary: #2f5a44;
+  --color-fg-brand-secondary: #406e55;
+
+  /* ---- BORDERS: meleg ---- */
+  --color-border-primary: #d8cbb0;
+  --color-border-secondary: #e6dac4;
+  --color-border-tertiary: #efe6d4;
+  --color-border-brand: #406e55;
+
+  --color-focus-ring: #406e55;
+
+  /* ---- WARM ACCENT (terrakotta) — saját classokhoz ---- */
+  --color-accent: #d97642;
+  --color-accent-dark: #b95a2c;
+  --color-accent-soft: #fbe7da;
+  --color-accent-amber: #e8a23d;
+  --color-accent-amber-soft: #fcefce;
+
+  /* ============ NAMESPACED (amit a utility-k OLVASNAK) ============ */
+  --background-color-primary: #fcf9f2;
+  --background-color-primary_hover: #f6f1e6;
+  --background-color-primary_alt: #fcf9f2;
+  --background-color-secondary: #f1e9d8;
+  --background-color-secondary_hover: #e9dfca;
+  --background-color-secondary_alt: #f1e9d8;
+  --background-color-tertiary: #e7dbc4;
+  --background-color-quaternary: #dccdb0;
+  --background-color-brand-primary: #eaf1ec;
+  --background-color-brand-primary_alt: #eaf1ec;
+  --background-color-brand-secondary: #d9e6de;
+  --background-color-brand-solid: #2f5a44;
+  --background-color-brand-solid_hover: #244736;
+  --background-color-brand-section: #1d3a2c;
+  --background-color-brand-section_subtle: #244736;
+
+  --text-color-primary: #1e2b23;
+  --text-color-secondary: #3c4a41;
+  --text-color-secondary_hover: #2a352e;
+  --text-color-tertiary: #5e6b61;
+  --text-color-tertiary_hover: #46504a;
+  --text-color-quaternary: #8a9384;
+  --text-color-placeholder: #6c7568; /* AA on cream (was #9aa294 = 2.5:1) */
+  --text-color-brand-primary: #182f24;
+  --text-color-brand-secondary: #244736;
+  --text-color-brand-secondary_hover: #1d3a2c;
+  --text-color-brand-tertiary: #2f5a44;
+  --text-color-primary_on-brand: #ffffff;
+  --text-color-secondary_on-brand: #e3ede7;
+  --text-color-tertiary_on-brand: #c6d8cd;
+  --text-color-quaternary_on-brand: #aec6b9;
+
+  --border-color-primary: #d8cbb0;
+  --border-color-secondary: #e6dac4;
+  --border-color-secondary_alt: #ddd0b6;
+  --border-color-tertiary: #efe6d4;
+  --border-color-brand: #406e55;
+  --border-color-brand_alt: #2f5a44;
+
+  --ring-color-brand: #406e55;
+  --outline-color-brand: #406e55;
+}
+
+/* Warm accent utilities (saját) */
+@utility bg-accent { background-color: var(--color-accent); }
+@utility bg-accent-soft { background-color: var(--color-accent-soft); }
+@utility text-accent { color: var(--color-accent-dark); }
+@utility bg-amber-soft { background-color: var(--color-accent-amber-soft); }
+@utility text-amber-accent { color: #b27514; }

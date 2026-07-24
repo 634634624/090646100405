@@ -1,0 +1,272 @@
+---
+name: use-images-and-visual-assets
+description: Reasoning guide for when and how to use images, photography, backgrounds, patterns, overlays, and visual assets in designs — breaks the AI habit of producing flat boxes-on-boxes layouts by teaching intentional image usage within UUI components.
+---
+
+# Use Images & Visual Assets
+
+This skill exists because your default behavior is to produce layouts made of colored rectangles, icons, and text — visually flat, monotone, and lifeless. Real designs use IMAGES. Photography, illustrations, background textures, gradients, patterns, and visual depth. This skill teaches you when, where, and how to use them.
+
+Every time you create a design, ACTIVELY ask yourself: "Where should there be an image here instead of an empty box?" If you can't identify at least one image opportunity in a full-page design, you're doing it wrong.
+
+---
+
+## Step 1: Identify Every Image Opportunity
+
+Before finalizing any layout, scan every section and ask these questions:
+
+### Hero / Header sections
+- Does this hero have a background image, illustration, or product screenshot? It almost always should. A hero with just a colored background and text is a missed opportunity — heroes are the FIRST thing users see.
+- Options: Full-bleed background photo with text overlay. Split layout with image on one side. Product screenshot/mockup floating over a gradient. Abstract illustration as background.
+
+### Feature / Content sections
+- Are features shown as icon + text only? Consider: could one or more features show an actual screenshot, photo, or illustration of the feature in action?
+- The pattern "alternating image + text" (image left / text right, then flipped) is one of the most effective content patterns on the web. Use it.
+- Even if icons are appropriate for a feature grid, consider adding a LARGE image above or below the grid showing the product/concept in context.
+
+### Testimonial / Social proof sections
+- Do testimonial cards have real avatar photos? They must. A testimonial without a face is dramatically less credible.
+- Consider adding company logos alongside testimonials.
+- Background: subtle texture or pattern behind testimonial sections adds depth.
+
+### Team sections
+- Team members MUST have photos. A team grid without photos is just a list of names. The whole point of a team section is human connection.
+
+### Blog / Content cards
+- Every blog card should have a thumbnail image. Cards without images look like unfinished wireframes.
+- The image should be the first visual element in the card (top for vertical cards, left for horizontal cards).
+
+### About / Story sections
+- These almost always benefit from a large, atmospheric photo — office space, team at work, the product in context, the founder's story.
+
+### CTA sections
+- A CTA with just text and a button on a flat background is weak. Consider: background image with overlay, illustration, product mockup, or pattern.
+
+### Backgrounds in general
+- Full-bleed colored sections look better with subtle texture, noise grain, or a very soft gradient rather than flat solid color.
+- Alternating between white and off-white sections is fine but BORING. Consider using an image-backed section to break the rhythm every 3-4 sections.
+
+### Empty states / Illustrations
+- 404 pages, empty states, loading screens — these are prime opportunities for illustrations or playful images.
+
+---
+
+## Step 2: Choose the Right Image Type
+
+Not all images are created equal. Match the image type to the context:
+
+### Photography
+**When:** Hero backgrounds, team photos, testimonial avatars, about sections, lifestyle/context shots, blog thumbnails.
+**Mood matching:** The photography style must match the design register. A luxury brand needs high-end studio photography. A SaaS product needs clean, bright, professional shots. A creative agency needs edgy, artistic photography. Don't use generic stock photography that could belong to any brand.
+**Generate vs reference:** When creating designs, generate images that match the brand's specific aesthetic. Describe the image with detail — lighting, composition, subject, mood — not just "a photo of people working."
+
+### Product screenshots / Mockups
+**When:** Feature sections, hero areas for SaaS/apps, pricing sections (show what you get), case studies.
+**Treatment:** Screenshots should be placed in device mockups (laptop, phone, browser frame) or shown with a subtle shadow/elevation. Never paste a raw screenshot flat — it needs framing context. UUI includes screen mockup components — use them.
+
+### Illustrations
+**When:** Empty states, 404 pages, onboarding flows, feature explanations of abstract concepts, playful brands. UUI has illustration components for empty states — use them.
+**Style consistency:** All illustrations in a single design must share the same style. Don't mix line illustrations with 3D renders with flat vector art.
+
+### Icons as visual elements (not just UI icons)
+**When:** Feature grids, metric cards, process steps. UUI has featured icon components with colored backgrounds — use them to add visual weight to otherwise text-heavy sections.
+**Sizing:** Feature icons should be substantial (48-64px), not tiny. The icon IS the visual element in a feature card — treat it with prominence.
+
+### Background patterns & textures
+**When:** Section backgrounds that need depth without being distracting. UUI has background pattern components — use them.
+**Opacity:** Background patterns should be subtle — 5-15% opacity over the section background. They add texture without competing with content.
+**Types:** Dot grids, line patterns, geometric patterns, gradient meshes, noise grain. UUI provides several pattern components.
+
+### Avatars
+**When:** Testimonials, team sections, activity feeds, comments, messaging, user profiles.
+**Always use photos for avatars in marketing/public-facing designs.** Initials-only avatars are for app UIs where photos aren't available, not for designed marketing pages. UUI has avatar components — use them with photo fills.
+
+### Logos / Brand marks
+**When:** Social proof sections ("trusted by"), partner sections, press mentions, integration showcases.
+**Treatment:** Logos should be shown in a consistent style — either all monochrome/grayscale or all in brand colors. Mixed treatment looks chaotic.
+
+---
+
+## Step 3: Image Composition & Treatment
+
+### Aspect ratios matter
+- Hero images: 16:9 or wider for full-bleed, 3:2 or 4:3 for split layouts
+- Blog/card thumbnails: 16:9 or 3:2 — consistent across all cards in a grid
+- Team photos: 1:1 (square) or 3:4 (portrait) — consistent across the whole grid
+- Product screenshots: Natural device ratio (16:10 for laptops, 9:19.5 for phones)
+- ALL images in a grid MUST share the same aspect ratio. Mixed ratios in a card grid look broken.
+
+### Scale modes
+- **FILL** (default for most cases): Image fills the container, crops edges as needed. Use for hero backgrounds, card thumbnails, avatars — anywhere the image should cover the entire area.
+- **FIT**: Image fits entirely within the container, may leave gaps. Use when the entire image must be visible (logos, product screenshots where cropping would lose information).
+- **TILE**: Image repeats. Use only for background patterns.
+- **CROP**: Manually positioned fill. Use when you need specific control over which part of an image is visible.
+
+### Text over images — readability is non-negotiable
+When placing text over an image, the text MUST be readable. Strategies:
+
+1. **Dark overlay**: Place a semi-transparent dark layer (40-70% opacity black/dark gray) between the image and text. Use for hero sections with white text.
+2. **Gradient fade**: A gradient from solid color (bottom) to transparent (top) — text sits in the solid area. More elegant than a flat overlay. Useful for card images with text at the bottom.
+3. **Scrim / vignette**: Darkening only the area around the text, not the whole image. Preserves more of the image.
+4. **Text shadow**: Subtle shadow on text for light readability boost. Use sparingly — works for headings, not body text.
+5. **Contained text**: Place text in a solid or frosted container that sits on top of the image. The container provides readability, the image provides atmosphere.
+6. **Choose dark/muted images**: Select or generate images that are naturally dark enough for white text without additional overlay.
+
+**The rule:** If you can't read the text clearly over the image from arm's length, the treatment is wrong. Fix it before moving on.
+
+### Image corners and clipping
+- Images inside cards should clip to the card's border radius. If the card has radius-xl (12px), the image should respect that — either by being inside a clipping frame or by having matching corner radius.
+- Full-bleed hero images should have no radius (the section is edge-to-edge).
+- Avatar images are always circular (radius-full) or rounded-square depending on the design system — follow UUI's avatar component.
+
+### Image borders and containment
+- Product screenshots and mockups often benefit from a subtle border (1px, border-secondary) to separate them from the background, especially when the screenshot has a white background matching the page.
+- Photos generally don't need borders — the image content provides its own edge.
+
+---
+
+## Step 4: Background Treatments That Add Depth
+
+The biggest reason AI designs look flat is that every section has a solid-color background. Fix this:
+
+### Gradient backgrounds
+- A subtle gradient (e.g., bg-primary to bg-secondary, vertically) adds dimensionality without being distracting.
+- Radial gradients behind key content areas create a spotlight effect that draws attention.
+- Don't overuse — one or two gradient sections per page is enough.
+
+### Image backgrounds with overlay
+- A large atmospheric photo with a 60-80% opacity color overlay creates a rich, branded section background while keeping text readable.
+- This works especially well for CTA sections, testimonial sections, and closing sections.
+- In dark mode, use a darker overlay opacity.
+
+### Background patterns from UUI
+- UUI has background pattern components (dot patterns, line patterns, decorative patterns). These are designed to be placed behind content at low opacity.
+- Layer them: background color + pattern at 5-10% + content on top.
+- They're especially effective on hero sections and CTA sections.
+
+### Background blurs / glassmorphism
+- Frosted glass effects (background blur + semi-transparent fill) create depth for floating elements like navigation bars, modals, and cards.
+- Use sparingly — one or two glassmorphic elements per design, not everywhere.
+- Requires a visually interesting background behind the blurred element to be effective.
+
+### Noise / grain texture
+- Adding subtle noise (1-3% opacity) to solid backgrounds gives them a tactile quality that flat color lacks.
+- This is a micro-detail but it dramatically reduces the "digital flatness" of solid-color sections.
+
+---
+
+## Step 5: Visual Rhythm with Images
+
+Images don't just fill space — they create RHYTHM in the page layout:
+
+### The cadence rule
+In a long-scroll page, users should encounter a significant visual element (image, screenshot, illustration) every 2-3 sections maximum. If there are 4+ consecutive sections that are nothing but text, icons, and colored boxes, the page has a visual desert — add an image.
+
+### Alternating visual weight
+- Heavy (image-dominant) sections should alternate with light (text-dominant) sections.
+- Two image-heavy sections back-to-back feel cluttered. Two text-heavy sections back-to-back feel barren.
+- Pattern: Hero (heavy) → Features grid (light) → Screenshot showcase (heavy) → Testimonials (light) → CTA with background image (heavy) → Footer (light).
+
+### Scale contrast
+- When a page has multiple images, they should NOT all be the same size. Create scale contrast: one large hero image, medium product screenshots, small avatar thumbnails. The variety in scale creates visual interest.
+
+### Breaking the grid
+- While content should follow the grid, images can occasionally break it — a product mockup that bleeds into the next section, a photo that extends beyond the content container width, an illustration that overlaps the section boundary. These "grid breaks" create energy and prevent monotony. Use one per page maximum.
+
+---
+
+## Step 6: UUI-Specific Image Patterns
+
+These UUI components and sections are specifically designed to work with images — USE them:
+
+### Hero header sections
+- UUI hero variants support background images, split layouts with images, and centered layouts with images behind content. Never use a hero without exploring the image variant.
+
+### Blog post cards
+- Always fill the thumbnail area with a relevant image. The component expects it.
+
+### Team member components
+- Always fill with a portrait photo. Never leave the avatar as a placeholder gray circle.
+
+### Portfolio mockup components
+- UUI has device mockup frames (Macbook, phone, browser). Place product screenshots inside these — they instantly add professionalism.
+
+### Background pattern components
+- Multiple pattern options (geometric, dotted, lined, decorative). Place them behind sections at low opacity via blend mode adjustments.
+
+### Social proof / Logo sections
+- Designed for company logos. Fill with recognizable brand logos for credibility.
+
+### Card components
+- Many card variants include image placeholders. Fill them.
+
+### Featured icon components
+- These add colored-background circles/squares behind icons, making icon-based feature sections feel more visual and less like a text outline.
+
+---
+
+## Step 7: Image Generation Prompts — Be Specific
+
+When generating images for a design, vague prompts produce generic stock-photo results. Be specific:
+
+### Bad prompts
+- "A photo of people working" → Generic, could be any company
+- "Technology background" → Abstract meaningless blue gradient
+- "Happy customer" → Stock photo smile
+
+### Good prompts
+Structure: [Subject] + [Action/Context] + [Environment] + [Lighting/Mood] + [Style]
+
+- "A diverse team of software engineers collaborating around a large screen showing data visualizations, in a modern open-plan office with warm natural lighting, shot from a slightly elevated angle, editorial photography style"
+- "Close-up of hands typing on a laptop keyboard with a dashboard interface visible on screen, shallow depth of field, warm office lighting, professional product photography"
+- "Abstract geometric pattern of overlapping translucent circles in muted purple and gray tones, suitable as a subtle background texture, minimal and clean"
+
+### Match the register
+- **Minimalist register:** Clean, airy photography with lots of negative space. Muted colors. Single subjects.
+- **Editorial/Luxury register:** Rich, contrasty photography. Dramatic lighting. Cinematic compositions.
+- **Bold/Expressive register:** Saturated colors. Dynamic angles. Energetic subjects.
+- **Professional/Corporate register:** Clean, well-lit, balanced compositions. Neutral environments. Polished but not flashy.
+
+---
+
+## Step 8: Anti-Patterns — Things That Make Images Look Bad
+
+### ❌ Stretched or distorted images
+Always use FILL or FIT scale mode. Never manually stretch an image to fit a container if the aspect ratio doesn't match.
+
+### ❌ Low-contrast text over busy images
+If the image has complex detail everywhere, text becomes unreadable. Use an overlay or reposition text to a calmer area of the image.
+
+### ❌ Inconsistent image styles in a grid
+Cards in a row where one has an illustration, one has a photo, and one has a screenshot. All images in a grid must share the same visual category.
+
+### ❌ Placeholder gray boxes left in the final design
+If a component has an image slot, FILL IT. Gray placeholder rectangles scream "unfinished."
+
+### ❌ Images with no clear subject over text
+A busy image used as a text background where the viewer can't focus on either the image content or the text. Choose images with clear areas of calm for text placement, or use a stronger overlay.
+
+### ❌ Overusing the same image treatment everywhere
+Every section has a full-bleed photo with dark overlay and white text. Variety matters — mix full-bleed images with contained images, overlaid images with adjacent images.
+
+### ❌ Ignoring dark mode image behavior
+Images that look great on white backgrounds can look jarring on dark backgrounds. Consider: reducing image brightness in dark mode, adding a subtle border in dark mode, or using images with darker tonality for dark themes.
+
+### ❌ Using images as decoration instead of communication
+Every image should serve a PURPOSE — showing the product, showing the people, setting the mood, establishing credibility. If an image doesn't communicate anything specific, it's visual noise. A well-chosen icon might be better than a meaningless stock photo.
+
+---
+
+## Decision Checklist Before Finalizing Any Design
+
+Before declaring a design complete, walk through this:
+
+1. Does the hero have an image or meaningful visual element? If not, add one.
+2. Are there more than 3 consecutive sections without any image? If yes, add visual elements.
+3. Do all cards with image slots have images filled? If not, generate or place them.
+4. Do all testimonials have avatar photos? If not, add them.
+5. Is text readable over every image? If not, add overlays or adjust placement.
+6. Are all images in grids the same aspect ratio? If not, standardize them.
+7. Is there visual rhythm — alternating heavy and light sections? If not, reorganize.
+8. Have you used any UUI background patterns or visual components? If not, consider adding them for depth.
+9. Would a non-designer look at this and see a finished product — or a wireframe? Be honest.

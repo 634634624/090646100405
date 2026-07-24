@@ -1,26 +1,31 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import Header from '@/components/Header.astro';
-import Footer from '@/components/Footer.astro';
-import Section from '@/components/Section.astro';
-import Hero from '@/components/Hero.astro';
-import Features from '@/components/Features.astro';
-import CTASection from '@/components/CTASection.astro';
+import "@/styles/global.css";
+import SmallShopSection from "@/toolkit/commerce-shopify/components/SmallShopSection.astro";
 ---
 
-<BaseLayout title="Home">
-  <Header />
-  
-  <main id="main-content">
-    <!-- Hero Section -->
-    <Hero />
-    
-    <!-- Features Section -->
-    <Features />
-    
-    <!-- CTA Section -->
-    <CTASection />
-  </main>
-  
-  <Footer />
-</BaseLayout>
+<!doctype html>
+<html lang="en" data-theme="kit" data-uui-client-state="prelaunch">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="description"
+            content="Discover Fieldwork Living's small collection of complete room editions."
+        />
+        <meta name="robots" content="noindex,nofollow" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <title>Fieldwork Living — Small room editions</title>
+        <script is:inline>
+            try {
+                if (localStorage.getItem("uui-site-theme") === "dark") {
+                    document.documentElement.classList.add("dark-mode");
+                }
+            } catch {}
+        </script>
+    </head>
+    <body class="bg-primary text-primary">
+        <main>
+            <SmallShopSection brand="Fieldwork Living" view="shop" />
+        </main>
+    </body>
+</html>

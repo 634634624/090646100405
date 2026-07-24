@@ -1,0 +1,610 @@
+{
+  "approvals": {
+    "buildStart": {
+      "approvedAt": "2026-07-23T00:00:00.000Z",
+      "approvedBy": "factory-sample",
+      "evidence": "deterministic-factory-sample: Factory proof-battery sample generation",
+      "status": "approved"
+    },
+    "creativeRoute": {
+      "approvedAt": "2026-07-23T00:00:00.000Z",
+      "approvedBy": "factory-sample",
+      "evidence": "deterministic-factory-sample: Agency recipe small-shop composition map v1",
+      "status": "approved"
+    },
+    "figma": {
+      "approvedAt": "2026-07-23T00:00:00.000Z",
+      "approvedBy": "factory-sample",
+      "evidence": "deterministic-factory-sample: Prototype round intentionally skipped for the factory sample",
+      "status": "approved"
+    }
+  },
+  "assets": [],
+  "contracts": {
+    "blueprint": {
+      "fingerprint": "sha256:d906eb81b94477e68f5ed91e289d000c3d70bc47525ec7bf38ed9e5d60fed133",
+      "id": "agency-recipe-starter-map:v1"
+    },
+    "brief": {
+      "fingerprint": "sha256:126c86b277c7d3d91873849821761cfb40ec8e97e4f1a33eca14ca07096b3733",
+      "id": "agency-recipe-receipt:small-shop"
+    },
+    "prototype": {
+      "approval": {
+        "fingerprint": "sha256:08f7885da0973f966766d453aa75b4737abee034e40e0bb0dad79e4780eb4ee1",
+        "id": "prototype-approval:agency:small-shop:fieldwork-living"
+      },
+      "plan": {
+        "fingerprint": "sha256:dd3daea780e3980afa4dc8b4079e003a35812a6375ef7f908aa3568f8d4d8324",
+        "id": "prototype-plan:agency:small-shop:fieldwork-living"
+      },
+      "spec": {
+        "fingerprint": "sha256:09f09ed3d9b5b99c61a4cd0681a04bd3d4f38c21345e4fa926ed92b6e987dc07",
+        "id": "prototype-spec:agency:small-shop:fieldwork-living"
+      }
+    },
+    "selectedRouteId": "route:agency:small-shop"
+  },
+  "gates": [
+    {
+      "command": "npm run build",
+      "required": true
+    },
+    {
+      "command": "npm run check",
+      "required": true
+    },
+    {
+      "command": "npm run quality:lint",
+      "required": true
+    },
+    {
+      "command": "npm run quality:e2e",
+      "required": true
+    }
+  ],
+  "integrations": [
+    {
+      "capabilityId": "payments-checkout",
+      "mode": "mock",
+      "note": "Deterministic mock mode is build-ready; configure the pinned Shopify provider in Agency delivery before launch.",
+      "providerId": "shopify-storefront",
+      "status": "configured"
+    },
+    {
+      "capabilityId": "transactional-email",
+      "mode": "mock",
+      "note": "Deterministic mock mode is build-ready; configure the pinned Shopify provider in Agency delivery before launch.",
+      "providerId": "shopify-notifications",
+      "status": "configured"
+    }
+  ],
+  "kind": "ResolvedBuildPlanV1",
+  "provenance": {
+    "agencyRecipe": {
+      "catalogSha256": "9a4043c3d574be72993f7ab4ca24d99567f24689afbb7003c58ce5439084c26e",
+      "id": "small-shop",
+      "resolvedLibraryRefs": 10
+    },
+    "canonicalPrompts": [
+      {
+        "bytes": 9777,
+        "clientPath": ".uui/canonical-prompts/create-creatively.txt",
+        "name": "create-creatively.txt",
+        "path": "docs/design/uui-canonical-prompts/create-creatively.txt",
+        "sha256": "340e5cc5153e9887f06c00a6ea68f39915d81c66c91d955984a00eca85b0f14e"
+      },
+      {
+        "bytes": 14285,
+        "clientPath": ".uui/canonical-prompts/enforce-dashboard-layout.txt",
+        "name": "enforce-dashboard-layout.txt",
+        "path": "docs/design/uui-canonical-prompts/enforce-dashboard-layout.txt",
+        "sha256": "5638d2420a6c59e520260a200b3a1b5896d7228f4cb7b7da2ae09e60bef67823"
+      },
+      {
+        "bytes": 15046,
+        "clientPath": ".uui/canonical-prompts/enforce-layout-structure.txt",
+        "name": "enforce-layout-structure.txt",
+        "path": "docs/design/uui-canonical-prompts/enforce-layout-structure.txt",
+        "sha256": "0071b2b2a1e7e89cbbc273069ddb63dc2de8045cdc69f33962cbb3457b52ff85"
+      },
+      {
+        "bytes": 17799,
+        "clientPath": ".uui/canonical-prompts/use-visual-assets.txt",
+        "name": "use-visual-assets.txt",
+        "path": "docs/design/uui-canonical-prompts/use-visual-assets.txt",
+        "sha256": "ab49d1bc58718d9f48c8fac7121d352a06df7d719108b97a8aa4e2113fcdb487"
+      },
+      {
+        "bytes": 17954,
+        "clientPath": ".uui/canonical-prompts/visual-universal.txt",
+        "name": "visual-universal.txt",
+        "path": "docs/design/uui-canonical-prompts/visual-universal.txt",
+        "sha256": "42559260d672d639257ab857ca6b86bafd636d1451929fb62b09b83160376dc9"
+      }
+    ],
+    "compositionMap": {
+      "mappings": [
+        {
+          "capabilityId": "marketing/header-navigations#header-dropdown-simple",
+          "reason": "The UUI-native commerce section owns its responsive navigation, theme control, search entry, and interactive cart trigger so cart state is not split across islands.",
+          "route": "/shop",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "marketing/footers#footer-large-02",
+          "reason": "The focused small-shop footer is part of the same UUI-native storefront surface; it deliberately omits enterprise navigation.",
+          "route": "/shop",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "custom/trust#07-secure-checkout-badges",
+          "reason": "Hosted-checkout, delivery, and range assurances are rendered inside every relevant storefront view.",
+          "route": "/shop",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "custom/uui-prompt-ecommerce#01-editorial-storefront",
+          "reason": "Reviewed UUI-native editorial storefront equivalent with a coherent six-product range, real UUI controls, useful facets, cart persistence, and Shopify mock/live boundary.",
+          "route": "/shop",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "starter-equivalent"
+        },
+        {
+          "capabilityId": "marketing/header-navigations#header-dropdown-simple",
+          "reason": "The UUI-native commerce section owns its responsive navigation, theme control, search entry, and interactive cart trigger so cart state is not split across islands.",
+          "route": "/products/[slug]",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "marketing/footers#footer-large-02",
+          "reason": "The focused small-shop footer is part of the same UUI-native storefront surface; it deliberately omits enterprise navigation.",
+          "route": "/products/[slug]",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "custom/trust#07-secure-checkout-badges",
+          "reason": "Hosted-checkout, delivery, and range assurances are rendered inside every relevant storefront view.",
+          "route": "/products/[slug]",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "custom/uui-prompt-ecommerce#02-room-edition-product",
+          "reason": "Reviewed UUI-native product decision surface with gallery, price hierarchy, stock truth, real RadioGroup variants, delivery context, and cart action.",
+          "route": "/products/[slug]",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "starter-equivalent"
+        },
+        {
+          "capabilityId": "marketing/header-navigations#header-dropdown-simple",
+          "reason": "The UUI-native commerce section owns its responsive navigation, theme control, search entry, and interactive cart trigger so cart state is not split across islands.",
+          "route": "/cart",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "marketing/footers#footer-large-02",
+          "reason": "The focused small-shop footer is part of the same UUI-native storefront surface; it deliberately omits enterprise navigation.",
+          "route": "/cart",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "custom/trust#07-secure-checkout-badges",
+          "reason": "Hosted-checkout, delivery, and range assurances are rendered inside every relevant storefront view.",
+          "route": "/cart",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "custom/uui-prompt-ecommerce#03-considered-cart",
+          "reason": "Reviewed UUI-native cart with persistent quantities, removal, warning surface, price summary, empty state, and explicit Shopify handoff.",
+          "route": "/cart",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "starter-equivalent"
+        },
+        {
+          "capabilityId": "marketing/header-navigations#header-dropdown-simple",
+          "reason": "The UUI-native commerce section owns its responsive navigation, theme control, search entry, and interactive cart trigger so cart state is not split across islands.",
+          "route": "/checkout",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "marketing/footers#footer-large-02",
+          "reason": "The focused small-shop footer is part of the same UUI-native storefront surface; it deliberately omits enterprise navigation.",
+          "route": "/checkout",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "custom/trust#07-secure-checkout-badges",
+          "reason": "Hosted-checkout, delivery, and range assurances are rendered inside every relevant storefront view.",
+          "route": "/checkout",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "custom/uui-prompt-ecommerce#04-delivery-checkout",
+          "reason": "Secure small-shop adaptation: the local route explains and initiates Shopify hosted checkout; it never collects card, billing, or delivery data itself.",
+          "route": "/checkout",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "starter-equivalent"
+        },
+        {
+          "capabilityId": "marketing/header-navigations#header-dropdown-simple",
+          "reason": "The UUI-native commerce section owns its responsive navigation, theme control, search entry, and interactive cart trigger so cart state is not split across islands.",
+          "route": "/orders/[id]",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "marketing/footers#footer-large-02",
+          "reason": "The focused small-shop footer is part of the same UUI-native storefront surface; it deliberately omits enterprise navigation.",
+          "route": "/orders/[id]",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "custom/trust#07-secure-checkout-badges",
+          "reason": "Hosted-checkout, delivery, and range assurances are rendered inside every relevant storefront view.",
+          "route": "/orders/[id]",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "custom/uui-prompt-ecommerce#05-order-journey",
+          "reason": "Reviewed compact order journey that distinguishes sample state from provider-verified live order data.",
+          "route": "/orders/[id]",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "starter-equivalent"
+        },
+        {
+          "capabilityId": "custom/email#07-receipt",
+          "reason": "Shopify owns the authoritative order receipt; the page communicates that boundary instead of inventing a second sender.",
+          "route": "/orders/[id]",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        },
+        {
+          "capabilityId": "custom/email#08-order-shipped",
+          "reason": "Shopify and the configured fulfilment app own shipment notifications; the page renders the customer-facing journey only.",
+          "route": "/orders/[id]",
+          "starterAssetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "status": "merged"
+        }
+      ],
+      "path": "toolkit/agency/recipe-starter-map.v1.json"
+    },
+    "createdBy": "agency-recipe-plan",
+    "unresolvedCapabilities": [],
+    "wiring": {
+      "optional": [
+        "cms-content",
+        "site-search"
+      ],
+      "required": [
+        "payments-checkout",
+        "transactional-email"
+      ]
+    }
+  },
+  "registries": {
+    "browserCatalog": {
+      "revision": "sha256:0dd969a752e0088e",
+      "source": "src/catalog.generated.json"
+    },
+    "canonicalPrompts": {
+      "revision": "sha256:8d240af55929e4e6d3feb743bb0a9f2adcf6290b802da468d2d465fbcb59da4a",
+      "source": "docs/design/uui-canonical-prompts"
+    },
+    "figmaCoverage": {
+      "revision": "sha256:95a125bee7949529",
+      "source": "figma/coverage/integration.generated.json"
+    },
+    "starterAssets": {
+      "revision": "sha256:346c30178965360a28f022085c6dd4da0558261d6a5566254a7dceec2ea2edec",
+      "source": "toolkit/knowledge-graph/data/asset-manifest.generated.json"
+    },
+    "starterCapabilities": {
+      "revision": "sha256:9bf1da9ec4fa144bc9fff693454890c2ae0c2d42bd9c10cf27c7378ecc0f0c49",
+      "source": "toolkit/knowledge-graph/data/asset-capabilities.generated.json"
+    }
+  },
+  "resolutionFingerprint": "sha256:fa8de166475d55373fc852c1f0640c32ea669df658ca517f4fe246588ee706fa",
+  "routes": [
+    {
+      "components": [
+        {
+          "assetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "contentSlots": {},
+          "props": {
+            "brand": "Fieldwork Living",
+            "view": "shop"
+          },
+          "resolution": {
+            "exports": [
+              "default"
+            ],
+            "family": null,
+            "importPath": "@/toolkit/commerce-shopify/components/SmallShopSection.astro",
+            "kind": "toolkit-component",
+            "package": "commerce-shopify",
+            "propContracts": [
+              {
+                "appliesTo": [
+                  "default"
+                ],
+                "exported": false,
+                "extends": [],
+                "name": "Props",
+                "props": [
+                  {
+                    "defaultExpression": "\"Fieldwork Living\"",
+                    "hasDefault": true,
+                    "name": "brand",
+                    "required": false,
+                    "type": "string"
+                  },
+                  {
+                    "defaultExpression": "\"shop\"",
+                    "hasDefault": true,
+                    "name": "view",
+                    "required": false,
+                    "type": "SmallShopView"
+                  }
+                ],
+                "publicContract": true
+              }
+            ],
+            "runtime": "astro",
+            "slots": [],
+            "sourceHash": "sha256:67a927ba996216eefe277dddcad49d0472835ae308ab048f32c33e45544a6d52",
+            "sourcePath": "toolkit/commerce-shopify/components/SmallShopSection.astro"
+          }
+        }
+      ],
+      "path": "/shop",
+      "purpose": "Discover a small, understandable product range."
+    },
+    {
+      "components": [
+        {
+          "assetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "contentSlots": {},
+          "props": {
+            "brand": "Fieldwork Living",
+            "view": "product"
+          },
+          "resolution": {
+            "exports": [
+              "default"
+            ],
+            "family": null,
+            "importPath": "@/toolkit/commerce-shopify/components/SmallShopSection.astro",
+            "kind": "toolkit-component",
+            "package": "commerce-shopify",
+            "propContracts": [
+              {
+                "appliesTo": [
+                  "default"
+                ],
+                "exported": false,
+                "extends": [],
+                "name": "Props",
+                "props": [
+                  {
+                    "defaultExpression": "\"Fieldwork Living\"",
+                    "hasDefault": true,
+                    "name": "brand",
+                    "required": false,
+                    "type": "string"
+                  },
+                  {
+                    "defaultExpression": "\"shop\"",
+                    "hasDefault": true,
+                    "name": "view",
+                    "required": false,
+                    "type": "SmallShopView"
+                  }
+                ],
+                "publicContract": true
+              }
+            ],
+            "runtime": "astro",
+            "slots": [],
+            "sourceHash": "sha256:67a927ba996216eefe277dddcad49d0472835ae308ab048f32c33e45544a6d52",
+            "sourcePath": "toolkit/commerce-shopify/components/SmallShopSection.astro"
+          }
+        }
+      ],
+      "path": "/products/[slug]",
+      "purpose": "Choose the product configuration with clear trust and delivery information."
+    },
+    {
+      "components": [
+        {
+          "assetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "contentSlots": {},
+          "props": {
+            "brand": "Fieldwork Living",
+            "view": "cart"
+          },
+          "resolution": {
+            "exports": [
+              "default"
+            ],
+            "family": null,
+            "importPath": "@/toolkit/commerce-shopify/components/SmallShopSection.astro",
+            "kind": "toolkit-component",
+            "package": "commerce-shopify",
+            "propContracts": [
+              {
+                "appliesTo": [
+                  "default"
+                ],
+                "exported": false,
+                "extends": [],
+                "name": "Props",
+                "props": [
+                  {
+                    "defaultExpression": "\"Fieldwork Living\"",
+                    "hasDefault": true,
+                    "name": "brand",
+                    "required": false,
+                    "type": "string"
+                  },
+                  {
+                    "defaultExpression": "\"shop\"",
+                    "hasDefault": true,
+                    "name": "view",
+                    "required": false,
+                    "type": "SmallShopView"
+                  }
+                ],
+                "publicContract": true
+              }
+            ],
+            "runtime": "astro",
+            "slots": [],
+            "sourceHash": "sha256:67a927ba996216eefe277dddcad49d0472835ae308ab048f32c33e45544a6d52",
+            "sourcePath": "toolkit/commerce-shopify/components/SmallShopSection.astro"
+          }
+        }
+      ],
+      "path": "/cart",
+      "purpose": "Review the order and remove surprises before checkout."
+    },
+    {
+      "components": [
+        {
+          "assetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "contentSlots": {},
+          "props": {
+            "brand": "Fieldwork Living",
+            "view": "checkout"
+          },
+          "resolution": {
+            "exports": [
+              "default"
+            ],
+            "family": null,
+            "importPath": "@/toolkit/commerce-shopify/components/SmallShopSection.astro",
+            "kind": "toolkit-component",
+            "package": "commerce-shopify",
+            "propContracts": [
+              {
+                "appliesTo": [
+                  "default"
+                ],
+                "exported": false,
+                "extends": [],
+                "name": "Props",
+                "props": [
+                  {
+                    "defaultExpression": "\"Fieldwork Living\"",
+                    "hasDefault": true,
+                    "name": "brand",
+                    "required": false,
+                    "type": "string"
+                  },
+                  {
+                    "defaultExpression": "\"shop\"",
+                    "hasDefault": true,
+                    "name": "view",
+                    "required": false,
+                    "type": "SmallShopView"
+                  }
+                ],
+                "publicContract": true
+              }
+            ],
+            "runtime": "astro",
+            "slots": [],
+            "sourceHash": "sha256:67a927ba996216eefe277dddcad49d0472835ae308ab048f32c33e45544a6d52",
+            "sourcePath": "toolkit/commerce-shopify/components/SmallShopSection.astro"
+          }
+        }
+      ],
+      "path": "/checkout",
+      "purpose": "Collect only purchase-critical delivery and payment data."
+    },
+    {
+      "components": [
+        {
+          "assetId": "starter:toolkit/commerce-shopify/components/SmallShopSection",
+          "contentSlots": {},
+          "props": {
+            "brand": "Fieldwork Living",
+            "view": "order"
+          },
+          "resolution": {
+            "exports": [
+              "default"
+            ],
+            "family": null,
+            "importPath": "@/toolkit/commerce-shopify/components/SmallShopSection.astro",
+            "kind": "toolkit-component",
+            "package": "commerce-shopify",
+            "propContracts": [
+              {
+                "appliesTo": [
+                  "default"
+                ],
+                "exported": false,
+                "extends": [],
+                "name": "Props",
+                "props": [
+                  {
+                    "defaultExpression": "\"Fieldwork Living\"",
+                    "hasDefault": true,
+                    "name": "brand",
+                    "required": false,
+                    "type": "string"
+                  },
+                  {
+                    "defaultExpression": "\"shop\"",
+                    "hasDefault": true,
+                    "name": "view",
+                    "required": false,
+                    "type": "SmallShopView"
+                  }
+                ],
+                "publicContract": true
+              }
+            ],
+            "runtime": "astro",
+            "slots": [],
+            "sourceHash": "sha256:67a927ba996216eefe277dddcad49d0472835ae308ab048f32c33e45544a6d52",
+            "sourcePath": "toolkit/commerce-shopify/components/SmallShopSection.astro"
+          }
+        }
+      ],
+      "path": "/orders/[id]",
+      "purpose": "Confirm and communicate fulfillment state."
+    }
+  ],
+  "schemaVersion": 1,
+  "skin": {
+    "locale": "en",
+    "preset": "kit"
+  },
+  "sourcePlan": {
+    "fingerprint": "sha256:8ac22765f4c9e850acf01fee81443df2e27f766cbac97841d7a26cf6a864c8ae",
+    "id": "build-plan:agency:small-shop:fieldwork-living"
+  },
+  "target": {
+    "mode": "new-client-repo",
+    "repo": "client:fieldwork-living"
+  },
+  "workflow": {
+    "gapDecisions": [],
+    "mode": "ASSEMBLY"
+  }
+}

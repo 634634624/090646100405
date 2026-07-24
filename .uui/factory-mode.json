@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "kind": "FactoryModeReceiptV1",
+  "mode": "ASSEMBLY",
+  "sourcePlanFingerprint": "sha256:8ac22765f4c9e850acf01fee81443df2e27f766cbac97841d7a26cf6a864c8ae",
+  "resolvedBuildPlanFingerprint": "sha256:fa8de166475d55373fc852c1f0640c32ea669df658ca517f4fe246588ee706fa",
+  "gapDecisions": [],
+  "rules": {
+    "ownedSourcesImmutable": true,
+    "newClientComponentsAllowed": false,
+    "componentCreationGate": "return-to-canonical-factory"
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/shop",
+    "description": "Discover a small, understandable product range."
+  },
+  {
+    "path": "/products/[slug]",
+    "description": "Choose the product configuration with clear trust and delivery information."
+  },
+  {
+    "path": "/cart",
+    "description": "Review the order and remove surprises before checkout."
+  },
+  {
+    "path": "/checkout",
+    "description": "Collect only purchase-critical delivery and payment data."
+  },
+  {
+    "path": "/orders/[id]",
+    "description": "Confirm and communicate fulfillment state."
+  }
+]

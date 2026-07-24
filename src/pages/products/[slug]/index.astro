@@ -1,0 +1,14 @@
+---
+import "@/styles/global.css";
+import Section1 from "@/toolkit/commerce-shopify/components/SmallShopSection.astro";
+export function getStaticPaths() { return [{"params":{"slug":"listening-room"}},{"params":{"slug":"quiet-studio"}},{"params":{"slug":"soft-bedroom"}},{"params":{"slug":"green-living"}},{"params":{"slug":"reading-corner"}},{"params":{"slug":"weekend-table"}}]; }
+---
+<!doctype html>
+<html lang="en" data-theme="kit" data-uui-client-state="prelaunch">
+  <head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="description" content="Choose the product configuration with clear trust and delivery information." /><meta name="robots" content="noindex,nofollow" /><link rel="icon" href="/favicon.svg" type="image/svg+xml" /><title>Choose the product configuration with clear trust and delivery information.</title><script is:inline>try{if(localStorage.getItem("uui-site-theme")==="dark")document.documentElement.classList.add("dark-mode")}catch{}</script></head>
+  <body class="bg-primary text-primary">
+    <main>
+        <Section1 {...{"brand":"Fieldwork Living","view":"product"}} />
+    </main>
+  </body>
+</html>

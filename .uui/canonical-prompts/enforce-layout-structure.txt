@@ -1,0 +1,264 @@
+---
+name: enforce-layout-structure
+description: Audit and enforce symmetrical, consistent layout — spacing, composition, grid alignment, container sizing, font-size pairing, and structural hierarchy. Does not touch colors, shadows, or typeface choice.
+---
+
+# Enforce Layout Structure
+
+This skill audits and corrects layout, spacing, composition, structure, font sizing, grid alignment, container sizing, and structural hierarchy. It does NOT touch colors, effects/shadows, or typeface/font-family selection.
+
+---
+
+## 1. Spacing Scale — The Only Allowed Values
+
+Every gap, padding, and margin in the design MUST use one of these values. No in-between values. No arbitrary numbers. If a value does not appear in this list, it is wrong.
+
+### Semantic Spacing Tokens (use these)
+
+| Token | Value |
+|---|---|
+| spacing-none | 0px |
+| spacing-xxs | 2px |
+| spacing-xs | 4px |
+| spacing-sm | 6px |
+| spacing-md | 8px |
+| spacing-lg | 12px |
+| spacing-xl | 16px |
+| spacing-2xl | 20px |
+| spacing-3xl | 24px |
+| spacing-4xl | 32px |
+| spacing-5xl | 40px |
+| spacing-6xl | 48px |
+| spacing-7xl | 64px |
+| spacing-8xl | 80px |
+| spacing-9xl | 96px |
+| spacing-10xl | 128px |
+| spacing-11xl | 160px |
+
+### Rules
+
+- Every `itemSpacing`, `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft`, and `gap` property must resolve to one of these exact pixel values.
+- If a spacing value is found that is NOT in this list (e.g. 10px, 15px, 18px, 22px, 28px, 36px, 50px, 56px, 70px, 100px), flag it and replace it with the nearest token value.
+- Padding on all four sides of a container must use the same token OR follow a deliberate asymmetric pattern where vertical and horizontal each use a single consistent token (e.g. top/bottom = spacing-4xl, left/right = spacing-3xl).
+- Never mix raw pixel values with variable-bound values in the same component or section.
+
+---
+
+## 2. Container & Width System
+
+### Container Rules
+
+| Property | Value |
+|---|---|
+| container-padding-mobile | 16px (spacing-xl) |
+| container-padding-desktop | 32px (spacing-4xl) |
+| container-max-width-desktop | 1280px |
+
+- Every top-level page section frame must have horizontal padding equal to `container-padding-desktop` (32px) on desktop or `container-padding-mobile` (16px) on mobile.
+- The inner content area of every full-width section must not exceed `container-max-width-desktop` (1280px). Content should be centered within the section.
+- Section frames that span the full viewport width should use auto-layout with `center` alignment on the cross axis, with an inner content wrapper constrained to max-width 1280px.
+
+### Width Tokens — For Content Containers
+
+| Token | Value | Typical Use |
+|---|---|---|
+| width-xxs | 320px | Narrow sidebar, small card |
+| width-xs | 384px | Sidebar, narrow modal |
+| width-sm | 480px | Small modal, form column |
+| width-md | 560px | Medium modal, text column |
+| width-lg | 640px | Content column, wide modal |
+| width-xl | 768px | Tablet breakpoint, wide content |
+| width-2xl | 1024px | Large content area |
+| width-3xl | 1280px | Desktop max-width |
+| width-4xl | 1440px | Wide desktop |
+| width-5xl | 1600px | Extra-wide desktop |
+| width-6xl | 1920px | Full HD |
+| paragraph-max-width | 720px | Maximum width for body text blocks |
+
+### Rules
+
+- Body text blocks (paragraphs, descriptions, supporting text) must never exceed `paragraph-max-width` (720px). If a text node is wider than 720px and contains paragraph-length content, constrain it.
+- Fixed-width containers must use a width token value. No arbitrary widths like 500px, 700px, 900px, or 1100px.
+- Cards within a grid should all share the same width. Use `layoutSizingHorizontal = 'FILL'` inside auto-layout parents so cards stretch equally.
+- Modals and overlays must use a width token (width-sm for small, width-md for medium, width-lg for large).
+
+---
+
+## 3. Grid & Column System
+
+### Breakpoints
+
+| Breakpoint | Width | Columns |
+|---|---|---|
+| Desktop | 1280px | 12, 6, 5, 3, or 2 columns (auto) |
+| Tablet | 768px | Adapt column count down |
+| Mobile | 375px | 1-2 columns typically |
+
+### Rules
+
+- Desktop layouts use a 12-column grid base. Common subdivisions: 12 (full), 6 (two equal halves), 5 (unusual — verify intent), 4 (three equal thirds), 3 (four equal quarters), 2 (six equal sixths).
+- Column gutters must use a spacing token. The standard gutter is spacing-3xl (24px) or spacing-4xl (32px).
+- When multiple items sit in a row, they must be inside an auto-layout frame with `layoutMode: 'HORIZONTAL'`, equal `itemSpacing`, and children set to `layoutSizingHorizontal: 'FILL'` for equal distribution.
+- Grid items in a row must have identical heights when they share a visual baseline. Use `counterAxisAlignItems: 'MIN'` (top-align) or ensure all children grow to fill via `layoutSizingVertical: 'FILL'`.
+- In a card grid or feature grid, every row must have the same number of items, OR the last row must be left-aligned (not centered or justified) if it has fewer items.
+- Section-level horizontal padding must be consistent across ALL sections on a page. If one section uses 32px padding, every section must use 32px padding. Mixed section padding (e.g. one section at 24px, another at 32px) is a violation.
+
+---
+
+## 4. Typography Size Scale — Structural Hierarchy
+
+This skill does not change font family or font weight choice. It enforces that font sizes come from the type scale and that size hierarchy is logical.
+
+### Allowed Font Sizes
+
+| Style | Size | Line Height | Letter Spacing |
+|---|---|---|---|
+| Display 2xl | 72px | 90px | -2% |
+| Display xl | 60px | 72px | -2% |
+| Display lg | 48px | 60px | -2% |
+| Display md | 36px | 44px | -2% |
+| Display sm | 30px | 38px | — |
+| Display xs | 24px | 32px | — |
+| Text xl | 20px | 30px | — |
+| Text lg | 18px | 28px | — |
+| Text md | 16px | 24px | — |
+| Text sm | 14px | 20px | — |
+| Text xs | 12px | 18px | — |
+| Text xxs | 10px | 16px | — |
+
+### Rules
+
+- Every text node must use a font size from this scale. If a text node uses a size not in this list (e.g. 13px, 15px, 17px, 22px, 28px, 32px, 40px, 42px, 56px), flag it and suggest the nearest scale value.
+- Line heights must match the scale. A 16px text node must have 24px line height, not 20px or 22px or 28px. Mismatched line heights break vertical rhythm.
+- Letter spacing for Display sizes (24px and above) should be -2% for Display 2xl through Display md. Display sm and Display xs have no letter spacing adjustment.
+- Heading hierarchy must be strictly descending. If a page section has a heading at 48px, its subheading must be smaller (36px or 30px), and body text must be smaller still (16px or 18px). Never place a 48px heading below a 36px heading in the same visual hierarchy.
+- Within a single component or card, there should be no more than 3-4 distinct font sizes. More than 4 sizes in one component indicates poor hierarchy.
+- Labels, captions, and helper text should use Text xs (12px) or Text sm (14px). Never use Display sizes for labels.
+- Body/paragraph text should be Text md (16px) or Text lg (18px). Never use Text xs (12px) for paragraph content — it fails accessibility.
+- Section headings on marketing/landing pages typically use Display lg (48px) or Display md (36px). Using Text md (16px) for a section heading is too small; using Display 2xl (72px) for every section heading is too loud.
+
+---
+
+## 5. Border Radius Scale
+
+| Token | Value |
+|---|---|
+| radius-none | 0px |
+| radius-xxs | 2px |
+| radius-xs | 4px |
+| radius-sm | 6px |
+| radius-md | 8px |
+| radius-lg | 10px |
+| radius-xl | 12px |
+| radius-2xl | 16px |
+| radius-3xl | 20px |
+| radius-4xl | 24px |
+| radius-full | 9999px |
+
+### Rules
+
+- Every `cornerRadius` value must come from this scale. No arbitrary values like 3px, 5px, 7px, 9px, 14px, 18px, or 30px.
+- Elements of the same type must share the same radius. All cards in a grid use the same radius. All buttons use the same radius. All input fields use the same radius.
+- Nested radius rule: When a rounded container holds a rounded child, the child's radius should be `parent-radius - parent-padding` to maintain consistent visual inset curvature. If a card has radius-xl (12px) and padding of 16px, inner elements should use a smaller radius or radius-none.
+- Pill shapes (fully rounded) must use radius-full (9999px), never a large arbitrary number like 100px or 50px.
+- Radius must be consistent per component type across the entire file. If buttons use radius-md (8px), every button must use radius-md. If cards use radius-xl (12px), every card must use radius-xl.
+
+---
+
+## 6. Vertical Rhythm & Section Spacing
+
+### Rules
+
+- The vertical space between major page sections must be consistent and use a single spacing token. Standard section gaps: spacing-9xl (96px) or spacing-10xl (128px) for desktop, spacing-7xl (64px) or spacing-8xl (80px) for mobile.
+- Within a section, the space between the section heading group and the section content must be consistent across all sections. Standard: spacing-7xl (64px) or spacing-6xl (48px).
+- The space between a heading and its supporting text (subtitle/description) must be consistent. Standard: spacing-xl (16px) or spacing-2xl (20px).
+- The space between supporting text and the section's main content (cards, features, etc.) must be consistent. Standard: spacing-5xl (40px) or spacing-6xl (48px).
+- Within a card or component, internal spacing follows a tighter scale: spacing-xl (16px) or spacing-lg (12px) between content elements, spacing-md (8px) or spacing-sm (6px) between tightly related items (e.g. icon + label).
+- Navigation bars should use spacing-lg (12px) or spacing-xl (16px) between nav items.
+- Form fields should have spacing-2xl (20px) or spacing-3xl (24px) between them.
+- Button groups should have spacing-lg (12px) between buttons.
+
+### Consistency Checks
+
+- Count the unique vertical spacing values used across all sections of a page. If more than 3-4 distinct section-gap values are used, the rhythm is broken. Consolidate to 1-2 values.
+- If Section A has 96px below its heading and Section B has 64px below its heading, that is inconsistent. Pick one and apply it everywhere.
+
+---
+
+## 7. Auto-Layout Structure Requirements
+
+### Rules
+
+- Every frame that contains multiple children arranged in a row or column MUST use auto-layout (`layoutMode: 'HORIZONTAL'` or `'VERTICAL'`). Free-floating children inside a frame indicate manual positioning — convert to auto-layout.
+- Top-level page sections should be vertical auto-layout frames stacked inside a parent page frame.
+- Nested content groups (heading + text + CTA) should be vertical auto-layout.
+- Row-based content (icon + text, avatar + name, feature cards) should be horizontal auto-layout.
+- Every auto-layout frame must have `itemSpacing` set to a spacing token value. Zero spacing is acceptable only for overlapping elements or tightly grouped items.
+- Avoid absolute positioning (`layoutPositioning: 'ABSOLUTE'`) except for: overlay elements, decorative elements, floating action buttons, badges/indicators positioned over other content, and background elements.
+- Alignment in auto-layout must be intentional and consistent:
+  - Text-heavy sections: `counterAxisAlignItems: 'MIN'` (left-align) or `'CENTER'` for centered layouts
+  - Cards in a row: `counterAxisAlignItems: 'MIN'` (top-align) to maintain visual baseline
+  - CTAs and buttons: `counterAxisAlignItems: 'CENTER'` when centered in a section
+- Every page/screen root frame should be `layoutMode: 'VERTICAL'` with its children being section frames that stack vertically.
+
+---
+
+## 8. Symmetry & Alignment Rules
+
+### Rules
+
+- Horizontal padding must be symmetrical. If `paddingLeft` is 32px, `paddingRight` must be 32px. Asymmetric horizontal padding is only acceptable in specific patterns like sidebar layouts.
+- Vertical padding can be asymmetric in specific cases (more top padding than bottom for visual weight), but both values must come from the spacing scale and the pattern must be consistent across sibling elements.
+- In a grid of cards or features: all cards must have identical internal padding, identical internal spacing, and identical dimensions (or fill-based sizing).
+- When elements are visually centered on the page, they must be structurally centered — using auto-layout center alignment, not manual x-positioning.
+- Icon + text pairs must use consistent gap spacing. If one instance uses 8px between icon and label, all instances must use 8px.
+- Navigation items must be evenly spaced with identical gaps.
+- Footer columns must be evenly distributed using fill-based sizing or equal fixed widths.
+
+---
+
+## 9. Responsive Structure Patterns
+
+### Desktop (1280px container)
+
+- Full-width sections: 100% viewport width, content inside max-width 1280px wrapper, 32px horizontal padding
+- Standard text content: max-width 720px (paragraph-max-width), centered or left-aligned within the container
+- Feature/card grids: 2, 3, or 4 columns with 24px or 32px gutters
+- Hero sections: heading at Display xl (60px) or Display 2xl (72px), supporting text at Text xl (20px) or Text lg (18px)
+- Section headings: Display lg (48px) or Display md (36px)
+- Card content: headings at Display xs (24px) or Text xl (20px), body at Text md (16px)
+
+### Tablet (768px)
+
+- Container padding: 16px or 24px
+- Grids reduce columns: 4-col becomes 2-col, 3-col becomes 2-col or stacks
+- Display sizes may step down one level (Display lg → Display md)
+
+### Mobile (375px)
+
+- Container padding: 16px
+- Most grids become single-column stacks
+- Display sizes step down: Display xl → Display lg or Display md
+- Section spacing reduces by one step (96px → 64px)
+
+---
+
+## 10. Common Violations Checklist
+
+When auditing a design, check for these specific issues:
+
+1. **Orphan spacing values**: Any spacing value not in the token scale (e.g. 10px, 15px, 18px, 22px, 28px, 50px)
+2. **Inconsistent section padding**: Different horizontal padding across page sections
+3. **Content exceeding max-width**: Text blocks wider than 720px, content exceeding 1280px
+4. **Mixed spacing in siblings**: Cards in a row with different internal padding
+5. **Missing auto-layout**: Frames with manually positioned children that should be auto-layout
+6. **Font size off-scale**: Text nodes using sizes not in the type scale
+7. **Line height mismatch**: Correct font size but wrong line height
+8. **Broken heading hierarchy**: Larger headings appearing below smaller headings
+9. **Inconsistent radius**: Same element type with different corner radius values
+10. **Asymmetric horizontal padding**: Left ≠ Right padding where symmetry is expected
+11. **Unequal card sizes**: Cards in a grid with different widths or heights
+12. **Inconsistent gutters**: Different itemSpacing values in sibling grid rows
+13. **Absolute positioning misuse**: Elements positioned absolutely that should flow in auto-layout
+14. **Section gap inconsistency**: Different vertical gaps between major page sections
+15. **Too many font sizes in one component**: More than 4 distinct sizes in a single card/component

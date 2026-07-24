@@ -1,0 +1,210 @@
+---
+name: enforce-dashboard-layout
+description: Reasoning guide for auditing and building dashboard, BI, analytics, and data-heavy page layouts — teaches the AI how to think about spatial hierarchy, information density, metric placement, chart composition, and structural consistency.
+---
+
+# Dashboard Layout Reasoning Guide
+
+This skill teaches you how to THINK about dashboard and data-heavy page layout. Follow this reasoning process when creating, editing, or auditing any dashboard, analytics page, BI report, metrics view, or admin panel.
+
+You are not choosing colors, shadows, or typefaces. You are solving a spatial logic problem: how to arrange information so a user can scan, compare, and act on data efficiently.
+
+---
+
+## Step 1: Identify the Dashboard Anatomy
+
+Before touching anything, read the dashboard and classify every element into one of these roles:
+
+- **Navigation shell** — sidebar, topbar, breadcrumbs. The persistent frame around the content.
+- **Page header** — title, description, filters, date pickers, action buttons. The section that tells the user what they're looking at and lets them control scope.
+- **KPI / metric cards** — the top-line numbers. The first thing the eye should hit after the header.
+- **Primary chart area** — the largest, most important visualization. Usually a line chart, bar chart, or area chart showing a key trend.
+- **Secondary visualizations** — supporting charts, breakdowns, comparisons. Smaller than the primary.
+- **Data tables** — detailed row-level data. Usually at the bottom or in a dedicated tab.
+- **Supporting elements** — legends, tooltips, empty states, loading indicators, pagination.
+
+Ask yourself: Can I point to each of these zones clearly? If two zones blur together — if you can't tell where the metrics end and the charts begin — the spacing and hierarchy are broken.
+
+---
+
+## Step 2: Reason About the Visual Scanning Pattern
+
+Dashboards are read, not browsed. Users scan in predictable patterns:
+
+**The Z-pattern for overview dashboards:**
+- Top-left → Top-right (KPI cards scanned left to right)
+- Down to the primary chart
+- Left to right across secondary charts
+- Down to tables
+
+**The F-pattern for dense admin panels:**
+- Left sidebar navigation scanned top to bottom
+- Top header scanned left to right
+- Content area scanned in descending priority
+
+Ask yourself:
+- What does the user see FIRST? It should be the most important metric or KPI.
+- What does the user see SECOND? It should be the trend or context behind that metric.
+- Is there a clear top-to-bottom priority? High-level summary → trend visualization → detailed data.
+- If I squint at this layout, can I tell what matters most just from SIZE and POSITION alone, ignoring all text?
+
+If size and position alone don't communicate priority, the layout is wrong. Fix the hierarchy before fixing anything else.
+
+---
+
+## Step 3: Check the Structural Skeleton
+
+A well-structured dashboard is a series of nested auto-layout frames. Reason through the nesting:
+
+**Level 1 — Page frame:** The outermost container. Horizontal auto-layout if it has a sidebar; vertical if it's topbar-only.
+
+**Level 2 — Shell regions:** Sidebar (fixed width) + Main content area (fills remaining space). Or: Topbar (fixed height) + Content area (fills remaining height).
+
+**Level 3 — Content zones:** Inside the main content area, vertical auto-layout stacking: Page header → Metric row → Chart row(s) → Table section.
+
+**Level 4 — Row containers:** Each horizontal row of cards, charts, or metrics is a horizontal auto-layout frame where children fill equally or follow a deliberate width ratio.
+
+**Level 5 — Individual cards/panels:** Each card is a vertical auto-layout frame: card header → card content → card footer (optional).
+
+Ask yourself at each level:
+- Is this frame using auto-layout, or are children manually positioned? Manual positioning in a dashboard is almost always wrong.
+- Does each child know how to size itself? Fill parent width? Fixed width? Hug content?
+- If I resized the parent frame wider or narrower, would the children respond correctly, or would gaps appear or things overlap?
+
+---
+
+## Step 4: Evaluate Metric Card Layout
+
+Metric/KPI cards are the most common dashboard element and the most commonly botched. Reason through these checks:
+
+**Card row composition:**
+- How many metric cards are in the row? 3-4 is standard. 2 feels sparse. 5+ feels cramped. 6+ should split into two rows.
+- Are all cards the same width? They must be, unless one card intentionally spans double width (a "featured" metric). Equal-width cards use fill sizing inside a horizontal auto-layout parent.
+- Are all cards the same height? They must be. If one card has more content, the others should grow to match (use fill on the vertical axis), or the content should be trimmed to equalize.
+
+**Inside each card:**
+- Is there a clear hierarchy? Label (small, secondary) → Value (large, primary) → Change/trend indicator (small, contextual).
+- Is the value the visually dominant element? The number should be the largest text in the card. If the label is bigger than the value, the hierarchy is inverted.
+- Is the internal padding consistent across all cards in the row? Check all four sides. Every card in the same row must have identical internal padding.
+- Is the internal spacing (gap between label, value, trend) consistent across all cards?
+
+**Metric card sizing reasoning:**
+- The metric value font size should be proportional to card importance and card size. In a standard 4-card row inside a 1280px container, values are typically Display xs (24px) to Display sm (30px). Don't use Display 2xl (72px) for card metrics — that's for hero numbers.
+- Labels above or below the value should be 2-3 steps smaller in the type scale. If the value is 30px, the label should be 14px or 12px.
+
+---
+
+## Step 5: Evaluate Chart and Visualization Layout
+
+**Chart sizing reasoning:**
+- The primary chart should be the largest visualization on the page. It should span at least 50% of the content width, often 66-100%.
+- Secondary charts can sit side-by-side in rows of 2 or 3. They should all be the same height within a row.
+- Chart height should create a readable aspect ratio. Too short and trends are flattened. Too tall and the chart dominates unnecessarily. Standard ratios: 16:9 for primary charts, 4:3 or 1:1 for small secondary charts.
+
+**Chart container reasoning:**
+- Every chart should sit inside a card/panel frame with consistent padding matching other cards on the page.
+- Chart cards should have: card title (text) → optional subtitle/description → chart area → optional legend below.
+- The chart title should use the same font size as other card titles on the page. If metric card titles are 14px, chart card titles should be 14px.
+
+**Chart grid reasoning:**
+- When multiple charts sit in a row, ask: are they meant to be compared? If yes, they MUST be the same height so the y-axes are visually comparable.
+- Charts in a row should have equal widths unless one chart intentionally needs more space (e.g., a wide timeline vs. a narrow pie chart). Even then, use a deliberate ratio like 2:1, not arbitrary widths.
+
+---
+
+## Step 6: Evaluate Data Table Layout
+
+**Table position reasoning:**
+- Tables almost always go at the bottom of a dashboard. They're the detail layer — users drill into them after scanning metrics and charts.
+- If a table is the PRIMARY content (e.g., a list view or admin panel), it can be the main content area, with filters/metrics above it.
+
+**Table structure reasoning:**
+- The table should span the full content width. No narrow tables floating in a wide container.
+- Column widths should be proportional to content. Name columns wider, number columns narrower, status columns fixed.
+- Table header row height, cell row height, and cell padding must be consistent. Every row must be the same height.
+- If the table has pagination, the pagination bar sits at the bottom of the table card with consistent padding.
+
+---
+
+## Step 7: Check Spacing Consistency Across the Whole Page
+
+This is where most dashboards fail. They get individual components right but use inconsistent spacing between them.
+
+**Horizontal spacing reasoning:**
+- What is the gap between cards in a metric row? That gap should be the same as the gap between charts in a chart row, and the same as the gap between table and sidebar content.
+- Think of it as: ONE horizontal gap value for the whole page. All horizontal gaps between sibling content blocks use the same spacing token.
+
+**Vertical spacing reasoning:**
+- What is the gap between the page header and the metric row? Between the metric row and the chart row? Between the chart row and the table?
+- These should be ONE consistent vertical section gap. Not 24px here and 32px there and 40px somewhere else.
+- Within a section (e.g., inside the chart row), the vertical gap between elements can be smaller than the section gap, but it must be consistent across similar contexts.
+
+**Padding reasoning:**
+- The main content area's padding (the space between content and the edges/sidebar) should be consistent on all sides.
+- Card internal padding should be identical across all cards on the page — metric cards, chart cards, table cards. ONE padding value.
+- If the content area has 32px padding and cards have 24px internal padding, that's fine — but every card must use 24px and every content area must use 32px. No mixing.
+
+Ask yourself: If I drew a grid overlay on this dashboard, would the edges of cards, charts, and sections snap to consistent gridlines? If they don't, the spacing is inconsistent.
+
+---
+
+## Step 8: Evaluate the Sidebar and Navigation Shell
+
+**Sidebar reasoning:**
+- The sidebar should have a fixed width. Common widths: 240px, 256px, 280px. Not arbitrary like 267px or 313px.
+- Sidebar width should come from the width token scale if available.
+- The sidebar's internal structure: logo/brand area (top) → primary navigation → secondary navigation → user/settings (bottom). Vertical auto-layout with space-between or explicit gaps.
+- Nav items should have consistent height, consistent internal padding, and consistent gap between them.
+- The active/selected nav item should be the same size as inactive items — don't make it larger or add padding that shifts layout.
+
+**Topbar reasoning:**
+- Topbar height should be fixed and come from a standard value. Common: 56px, 64px, 72px.
+- Topbar contents should be horizontally distributed: left group (logo, nav) → center group (search, optional) → right group (actions, user avatar).
+- Use a horizontal auto-layout with space-between for the topbar's main groups.
+
+---
+
+## Step 9: Evaluate Responsive Behavior Intent
+
+Even if you're working on a single breakpoint, reason about whether the structure COULD adapt:
+
+- Are sidebar + content area using auto-layout so the content area fills remaining space?
+- Are card grids using fill-based sizing so adding or removing a card doesn't break the row?
+- Are chart heights fixed (they should be) while widths are flexible (they should be)?
+- Is the page header's content wrapping-friendly, or would a narrower screen cause overlap?
+
+If you're designing for a single fixed size, the structure should still use auto-layout and fill sizing — manual positioning makes future adaptation impossible.
+
+---
+
+## Step 10: Final Consistency Audit Reasoning
+
+Before declaring a dashboard done, walk through this mental checklist:
+
+1. **Scan from top to bottom.** Does importance decrease as you go down? KPIs → Charts → Tables. If a table is above the charts, ask why.
+
+2. **Scan each horizontal row.** Are all items in the row the same height? The same width (or a deliberate ratio)? Do they have the same internal padding? The same internal spacing? The same title font size? The same value font size?
+
+3. **Compare across rows.** Does every horizontal gap use the same value? Does every vertical section gap use the same value? Does every card use the same padding?
+
+4. **Check heading sizes.** The page title should be the largest. Section/card titles should all be the same size. Metric labels should all be the same size. There should be no more than 4-5 distinct font sizes on the entire dashboard.
+
+5. **Check alignment.** Do the left edges of content blocks align vertically? Does the metric row's left edge align with the chart row's left edge and the table's left edge? Misalignment between sections is the most visible layout error.
+
+6. **Check density.** Is there breathing room, or is everything crammed? Dashboard padding should feel generous — cramped dashboards cause cognitive overload. If in doubt, increase spacing one step up the scale.
+
+7. **Check empty states.** If a metric card had no data, would the card still hold its shape? If a chart had no data, would the chart area still show correctly? Empty states should preserve layout structure.
+
+---
+
+## Anti-Patterns to Flag Immediately
+
+- **Metric cards with wildly different internal layouts** — one card has the label on top, another has it on the bottom, a third has it on the side. Pick one layout and use it everywhere.
+- **Charts at different heights in the same row** — this makes visual comparison impossible and looks broken.
+- **Table that's narrower than the charts above it** — content areas should align. If charts span full width, the table should too.
+- **Sidebar nav items with inconsistent padding** — especially when hover/active states cause layout shifts.
+- **Mixed use of fixed and fill sizing in the same row** — either all children fill equally, or all have explicit fixed widths with a clear ratio.
+- **Page header that's as tall as the metric row** — the header should be compact. It's context, not content. If the header takes up 30%+ of the viewport, it's too tall.
+- **More than one primary chart** — if two charts are the same large size, neither is primary. Pick one and make it larger, or make both secondary.
+- **Orphaned elements** — a lone button, text node, or icon floating outside any container frame. Everything should be inside an auto-layout parent.
+- **Deep nesting without purpose** — frame inside frame inside frame with each adding nothing but a layer. Flatten unnecessary wrappers.

@@ -1,0 +1,2044 @@
+{
+  "schemaVersion": 1,
+  "kind": "ClientArtifactManifestV1",
+  "emissionPlanFingerprint": "sha256:89a9a3bd7bd80899cba3bd7a49092dea8ce09e1931b2ef6116af852334466074",
+  "files": [
+    {
+      "path": ".env.example",
+      "sha256": "sha256:76813b20a866ffaca60f42cbae4fda958bedc679e8fd17912e0e6af59014f832",
+      "bytes": 83,
+      "kind": "generated"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "sha256:fe75b21fe827bc9c7aaf55269524352f55c87773f2e0b6ad17fd9c8f5a459271",
+      "bytes": 35,
+      "kind": "generated"
+    },
+    {
+      "path": ".uui/build-plan.json",
+      "sha256": "sha256:aec120484d73738880e6ffee87504ea5c9d55f705c0179e5183c5c14ad9f71b3",
+      "bytes": 24089,
+      "kind": "generated"
+    },
+    {
+      "path": ".uui/canonical-prompts/create-creatively.txt",
+      "sha256": "sha256:340e5cc5153e9887f06c00a6ea68f39915d81c66c91d955984a00eca85b0f14e",
+      "bytes": 9777,
+      "kind": "copy"
+    },
+    {
+      "path": ".uui/canonical-prompts/enforce-dashboard-layout.txt",
+      "sha256": "sha256:5638d2420a6c59e520260a200b3a1b5896d7228f4cb7b7da2ae09e60bef67823",
+      "bytes": 14285,
+      "kind": "copy"
+    },
+    {
+      "path": ".uui/canonical-prompts/enforce-layout-structure.txt",
+      "sha256": "sha256:0071b2b2a1e7e89cbbc273069ddb63dc2de8045cdc69f33962cbb3457b52ff85",
+      "bytes": 15046,
+      "kind": "copy"
+    },
+    {
+      "path": ".uui/canonical-prompts/use-visual-assets.txt",
+      "sha256": "sha256:ab49d1bc58718d9f48c8fac7121d352a06df7d719108b97a8aa4e2113fcdb487",
+      "bytes": 17799,
+      "kind": "copy"
+    },
+    {
+      "path": ".uui/canonical-prompts/visual-universal.txt",
+      "sha256": "sha256:42559260d672d639257ab857ca6b86bafd636d1451929fb62b09b83160376dc9",
+      "bytes": 17954,
+      "kind": "copy"
+    },
+    {
+      "path": ".uui/factory-mode.json",
+      "sha256": "sha256:c1a2677a7152127664326e14b04e2623959b9b5bbf4e80ba4fe93ed2d626e65b",
+      "bytes": 467,
+      "kind": "generated"
+    },
+    {
+      "path": ".uui/gauntlet-receipt.json",
+      "sha256": "sha256:742e60578135ace5af518c8fc91fa94711d24b9bbd70bdb2e624b20e38a92348",
+      "bytes": 267,
+      "kind": "generated"
+    },
+    {
+      "path": ".uui/prompt-receipt.json",
+      "sha256": "sha256:f35d803d1fb6c5b6235da990d458ab054b467a03addc04ccb9fd11dec2ac02f9",
+      "bytes": 1690,
+      "kind": "generated"
+    },
+    {
+      "path": ".uui/WEB-BUILD-GAUNTLET.md",
+      "sha256": "sha256:4c8f972cf98f3771d3d139dc6cee93d8d4753d233624b99a038ebdacfa94cea9",
+      "bytes": 7228,
+      "kind": "copy"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "sha256:aa5f97becca9558653ff6b097ec976919107927a6678c4462a71a3583f12939b",
+      "bytes": 5667,
+      "kind": "generated"
+    },
+    {
+      "path": "api/storefront.ts",
+      "sha256": "sha256:3a2eae8ca27255b47f615e05fbf22a3cba157fd067490d931544617259b05301",
+      "bytes": 73,
+      "kind": "generated"
+    },
+    {
+      "path": "astro.config.mjs",
+      "sha256": "sha256:11e905c7fae9fc1f47aff24869a61e952d50cf217f90b43da03fda23934419bf",
+      "bytes": 287,
+      "kind": "generated"
+    },
+    {
+      "path": "package.json",
+      "sha256": "sha256:5ed911afff4b62c7058d69634b2aee6ba03173badea6c0ba8250259177b0bfde",
+      "bytes": 1606,
+      "kind": "generated"
+    },
+    {
+      "path": "public/favicon.svg",
+      "sha256": "sha256:6e8aa5af5400515930003448af0a51d77ce4e9bd1edb7a16f61ea16a384bc30d",
+      "bytes": 434,
+      "kind": "copy"
+    },
+    {
+      "path": "public/img/placeholders/interior/interior-2.jpg",
+      "sha256": "sha256:41b2419b4672ed84457f5390d302caffab63b4ad1bea4e8ba55fca1dbfc2d5e8",
+      "bytes": 126879,
+      "kind": "copy"
+    },
+    {
+      "path": "public/img/placeholders/interior/interior-4.jpg",
+      "sha256": "sha256:208426ad852fbee49da8182f8eea17171dd24a5cc482992fa55077bbdd9e1338",
+      "bytes": 101694,
+      "kind": "copy"
+    },
+    {
+      "path": "public/img/placeholders/portrait/portrait-1.jpg",
+      "sha256": "sha256:eadd8708a70fa4f36e0ae4e139a8bc5e7b3627764afe0fa3907bf931b848e9c5",
+      "bytes": 70908,
+      "kind": "copy"
+    },
+    {
+      "path": "public/img/placeholders/product/product-1.jpg",
+      "sha256": "sha256:9cfa3ec253f2f3ff4d5840ba917639b79f95bc3d181c362b13e81ff3dd217816",
+      "bytes": 32054,
+      "kind": "copy"
+    },
+    {
+      "path": "public/img/uui/application/listing-01.webp",
+      "sha256": "sha256:758b7d676c24e5b43d054d1afa45d10b0775418ec8104c9b88fbee8a37ad9191",
+      "bytes": 109310,
+      "kind": "copy"
+    },
+    {
+      "path": "public/img/uui/application/listing-02.webp",
+      "sha256": "sha256:4b444f85b3f8bc9c3259a3a83c750b87e8579065fd11194034fe8ca3c76011f9",
+      "bytes": 65038,
+      "kind": "copy"
+    },
+    {
+      "path": "public/img/uui/application/listing-03.webp",
+      "sha256": "sha256:4a7a57079ac48ea143dec58c6683588372916edcdd888658ad2c6949aa53925e",
+      "bytes": 134344,
+      "kind": "copy"
+    },
+    {
+      "path": "public/img/uui/application/listing-04.webp",
+      "sha256": "sha256:b6ace2f7427e3be6848f824f857748a059ecfefcbcb30a5e64a9ef1e1944406c",
+      "bytes": 82126,
+      "kind": "copy"
+    },
+    {
+      "path": "README.md",
+      "sha256": "sha256:7e6f689cb81f9f190665178456612c74df4ca61becd010989b4e676810e4ad1d",
+      "bytes": 951,
+      "kind": "generated"
+    },
+    {
+      "path": "scripts/client-quality.mjs",
+      "sha256": "sha256:cc5c8a7fda26d0985dd8ac6bc30fd84b89242004269c30c8ff79ff60b070ab61",
+      "bytes": 8606,
+      "kind": "generated"
+    },
+    {
+      "path": "scripts/headless-browser-guard.mjs",
+      "sha256": "sha256:bc91a94cc562d1af309a724909cf5ec86e84597eb0091b8d462db9367daa638a",
+      "bytes": 4468,
+      "kind": "generated"
+    },
+    {
+      "path": "scripts/run-headless-chrome.mjs",
+      "sha256": "sha256:97e25327a6300f2ed012dfe0ab29a0dd84d2219ce02f95d4af3df886a4b3f61f",
+      "bytes": 4141,
+      "kind": "generated"
+    },
+    {
+      "path": "scripts/web-build-qa.mjs",
+      "sha256": "sha256:d964e4b83ed94bb79cbf9442a4407469b79fbc8ff31ac1ee86f93fe859511aa1",
+      "bytes": 17975,
+      "kind": "generated"
+    },
+    {
+      "path": "src/components/application/empty-state/empty-state.tsx",
+      "sha256": "sha256:501b97de99cde1e76d83eda4184560ec27f0a32c421a7c13c70dcb486fa08f78",
+      "bytes": 14299,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/application/slideout-menus/slideout-menu.tsx",
+      "sha256": "sha256:190e22011f764341efc7d35eb9601d62f25db622deea4a9316b613f8df07d9d4",
+      "bytes": 37189,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/avatar/avatar.tsx",
+      "sha256": "sha256:49bcc021bf717ab395a6caec94bd19cb82eb25d3e13afafa74aa937582e0ba28",
+      "bytes": 5154,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/avatar/base-components/avatar-add-button.tsx",
+      "sha256": "sha256:4676000225227c5e9f6a0e953c03c015a5c10ea0de282024ddaabb3c8600032d",
+      "bytes": 1381,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/avatar/base-components/avatar-company-icon.tsx",
+      "sha256": "sha256:52223fe32cd9f6b1f08702eb052af37a875f380c3f2626ccc8c2e6da0329bb09",
+      "bytes": 599,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/avatar/base-components/avatar-count.tsx",
+      "sha256": "sha256:ac7958c908a28fe7c4e090d54af4dcfb5cceb1faf3c2bac94ea0cb8a08bc088d",
+      "bytes": 477,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/avatar/base-components/avatar-online-indicator.tsx",
+      "sha256": "sha256:40dd93e07eb5d2875298586f027bad205b78aabb3be6a296ef036437595b0226",
+      "bytes": 1979,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/avatar/base-components/index.tsx",
+      "sha256": "sha256:d630103c098195bb12b76683ddce85402dcc394feef45d2427e478209d2c2bd5",
+      "bytes": 152,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/avatar/base-components/verified-tick.tsx",
+      "sha256": "sha256:9cf7b0cd9970923bd6eb9d0a1c82eab1ddcdda007a6e94e48b047f7ef85b2473",
+      "bytes": 3060,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/badges/badge-types.ts",
+      "sha256": "sha256:086f2d74cddd0decb0fa78b80609ff17968df7a9c09661d813243ead847d1501",
+      "bytes": 3482,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/badges/badges.tsx",
+      "sha256": "sha256:459fb248220521d4573238d666f3f1fee4e6c850e126a16ecf0ec2c3cab6cd8d",
+      "bytes": 15140,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/buttons/button.tsx",
+      "sha256": "sha256:5f0fdf87c83ec7c9f5d38bd94808a16fed4e8121de0526d18762e669d1e09240",
+      "bytes": 11852,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/buttons/close-button.tsx",
+      "sha256": "sha256:fb11a8d1a35f77aaf5ce4946c5ba3a38db93d67fc7e0b19eb98acaa7f7d67c61",
+      "bytes": 1628,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/checkbox/checkbox.tsx",
+      "sha256": "sha256:4266edfa3562c505e869ba55c81a64e7bdd86962835aa0ea9c460fd7ffc89bd1",
+      "bytes": 4534,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/input/hint-text.tsx",
+      "sha256": "sha256:521941d440c71a807fc81ee50ee6262ea414ab5fc4a39f5ce5ea5ff16f3b3037",
+      "bytes": 1074,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/input/input.tsx",
+      "sha256": "sha256:7312d55d6dbf70cb1dafcff3b18866d324edd5dbeb3b86a719fe1c8d911f507a",
+      "bytes": 11401,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/input/label.tsx",
+      "sha256": "sha256:b9918369ff3e7a8de73d66a3a6bc3724c0d42a3d7604cc059415d5ef9eed250a",
+      "bytes": 2465,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/radio-buttons/radio-buttons.tsx",
+      "sha256": "sha256:0e4340b18c39d2b6b107b5867907907807dc3e220a76ad00ed652eb37a0d9b7b",
+      "bytes": 8587,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/select/combobox.tsx",
+      "sha256": "sha256:ae8996154967a26c4103ccd964ed00560804a76c7d39bacf5414064c9af3a787",
+      "bytes": 7409,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/select/popover.tsx",
+      "sha256": "sha256:a52e8f8f4537b2d1bca089a8ba726e17e1c4c25ce6e38b86af6855048aacf51f",
+      "bytes": 1577,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/select/select-item.tsx",
+      "sha256": "sha256:93a5e1ac3bc7a9ac4131ab9404d965d7d96e594ef18fbcd7abb0b556a070a2e1",
+      "bytes": 5306,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/select/select-shared.tsx",
+      "sha256": "sha256:abfd514facc4e3e32ff5421a54359bb6bc17f8a580f266799fc1c063c958c9d7",
+      "bytes": 1684,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/select/select.tsx",
+      "sha256": "sha256:a5d308d0147b15442bc74f67c2228b98cdc1296afa419a30edfe5b254e9cbf46",
+      "bytes": 5932,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/base/tooltip/tooltip.tsx",
+      "sha256": "sha256:2739d1d80a1ab771df11c6b26e07c7860262ad00b7bdd61a8d4a638610f47c10",
+      "bytes": 4727,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/dot-icon.tsx",
+      "sha256": "sha256:a908145b197665d9fc0148d93d7a67806a7548bb69e82d7c2b21a80f9568b4f6",
+      "bytes": 610,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/featured-icon/featured-icon.tsx",
+      "sha256": "sha256:2c9e0227bcd87c88cc87c20ba119d701de61f855d0add2bc9360b8ecebebe06d",
+      "bytes": 6421,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/affirm-icon.tsx",
+      "sha256": "sha256:d8e2be03d8ddc80b07031fac9f10744bd6addb8cc8d6c0abc176baa25830d8b7",
+      "bytes": 3211,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/afterpay-icon.tsx",
+      "sha256": "sha256:7db88650d678350a22bc58b62475a7f56c491e9902ed9864cbc2458b8a5754ba",
+      "bytes": 4686,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/alipay-icon.tsx",
+      "sha256": "sha256:13f1227cb5bfa79d5bc6817e98f3788fa27c5f536baab9715d19f6c88045536a",
+      "bytes": 4189,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/amazon-icon.tsx",
+      "sha256": "sha256:4442bbe2782452628fd85cf00d68fc1039576851555aa1dcd016d1d957278afd",
+      "bytes": 7228,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/amex-icon.tsx",
+      "sha256": "sha256:e90ce4931e2f35de62d3dac6f7a888cde758f0fca21d6ed1f433ed50e939cf6e",
+      "bytes": 1459,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/apple-pay-icon.tsx",
+      "sha256": "sha256:f06ad7db329af6c5e545227dc505799adee8a347a4803025cd6999da374f94fb",
+      "bytes": 3221,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/ayden-icon.tsx",
+      "sha256": "sha256:98621a7dfdb2dcd9081699a88ad487f9f95b3798c81c24a3eb7a85fe4f8c472f",
+      "bytes": 1951,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/bancontact-icon.tsx",
+      "sha256": "sha256:f93744ca6963117cb287c2ea13a6db13525aff061a8c30bbc4f5b7fba53f53fc",
+      "bytes": 15727,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/binance-pay-icon.tsx",
+      "sha256": "sha256:297c46c8ba5252a312bb4a65eb85d2739b30dbfb554e05916daa277cfaf11c8a",
+      "bytes": 4744,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/bitcoin-cash-icon.tsx",
+      "sha256": "sha256:9b9392c734ae6afb49222058d58789e01b7cf18428a2dbd142dc4f89a6d620e5",
+      "bytes": 2029,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/bitcoin-icon.tsx",
+      "sha256": "sha256:84e9fb7934b6516ee4d4e37b937a5438c4a3c23ca0336d2ad4e93f44aebb3f92",
+      "bytes": 1987,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/bitpay-icon.tsx",
+      "sha256": "sha256:ac4ca2929b89822227dd4412d0c8104dd1845a57253e311d1e6df19bc7123850",
+      "bytes": 6069,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/braintree-icon.tsx",
+      "sha256": "sha256:a8fd6c5a4e2717f5a399fe7b9bb922356bb9d8a258541bb67c067cc9d0f9ddff",
+      "bytes": 14836,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/cash-app-pay-icon.tsx",
+      "sha256": "sha256:8c566958865f84eab151a496ecb35ed58e1d67bfd21a87231ad2699c80839ddd",
+      "bytes": 2286,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/citadele-icon.tsx",
+      "sha256": "sha256:c70478c977b5767d4c7f442c1668b8aee983367403726b335f052db013d13bac",
+      "bytes": 6175,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/coinbase-icon.tsx",
+      "sha256": "sha256:4aeb205ce4ff80c2eaab9b9054fe40c0c7130a324e81af55e8c73edd6ac1dbb6",
+      "bytes": 4384,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/diners-club-icon.tsx",
+      "sha256": "sha256:517649ca2508276b3603ff75a4c59d93e7f88676cad877ab4d172585cdc6b35f",
+      "bytes": 1554,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/discover-icon.tsx",
+      "sha256": "sha256:e951c33575ec44d2d4e377e8d25a808e4955268e424949bdbee62afd55b747b7",
+      "bytes": 3422,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/elo-icon.tsx",
+      "sha256": "sha256:9dbe75033faca9e5316abc9bcf35ecec5fc4471c3f3b4271f9012dc0506884d3",
+      "bytes": 3289,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/etherium-icon.tsx",
+      "sha256": "sha256:502b9066f3fcbfdd9d4e30c84eb366cfa743152ae0db294b90e728fc0bdbcebb",
+      "bytes": 1644,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/forbrugsforeningen-icon.tsx",
+      "sha256": "sha256:fc658623d70d6504eb5d9b786e3a75f7f65fb725f12f34544f3d98ada364688a",
+      "bytes": 2828,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/giropay-icon.tsx",
+      "sha256": "sha256:225daf153e629f0df5663591053b7ed5584b2eda84658d19a8d8d23b87c88b5e",
+      "bytes": 4292,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/google-pay-icon.tsx",
+      "sha256": "sha256:f9c69a11d638b028038e4c8f9bde87c313adcb69709ff1eea6d4678286906a5c",
+      "bytes": 3553,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/ideal-icon.tsx",
+      "sha256": "sha256:0c37ba46c12ab220bdfd11694949b2bc1343bdf5abd2f03c2db323529b482d4a",
+      "bytes": 2239,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/index.tsx",
+      "sha256": "sha256:9dac980d7fd36708786e351868d4693a347e57d8465b2bf27ce9addd999648da",
+      "bytes": 3233,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/interac-icon.tsx",
+      "sha256": "sha256:7f88c2d6066191ffa1ac1343f1da9fc79e7fba784feeed1f6d7853328e9f6782",
+      "bytes": 8622,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/jcb-icon.tsx",
+      "sha256": "sha256:010228f8dd2a2844af65592b0a6e8e1b0ed4d94665dd0aea0cbf08ee18e58942",
+      "bytes": 4398,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/klarna-icon.tsx",
+      "sha256": "sha256:70147d364a5c7025a97b1ef824cf5299a5aaaaefbca3ff4677abd042ae41fb38",
+      "bytes": 2313,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/lightcoin-icon.tsx",
+      "sha256": "sha256:4413eadfe4687c3319624a68e70981b1cdf5135bb690a823a14977e89bd2d2e9",
+      "bytes": 1197,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/maestro-icon.tsx",
+      "sha256": "sha256:c093462b85bc308cfb515e6dbaffa62a1309d5dcc264f6042feaf7e6f94f3b05",
+      "bytes": 1613,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/mastercard-icon.tsx",
+      "sha256": "sha256:ebed7d18a3441d7f0c8f2238ee5a7e2fabbc4ca66782783fa349198000e2cf7e",
+      "bytes": 2076,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/payoneer-icon.tsx",
+      "sha256": "sha256:5f29f13ebb66b662ebcfc433f9211fd376af455d1d9a100354279f5c3d3353c3",
+      "bytes": 8491,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/paypal-icon.tsx",
+      "sha256": "sha256:bfa832f7d12d73c19126c39959b546cc52f0bf8258e600611a05b864eaff13f4",
+      "bytes": 3963,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/paysafe-icon.tsx",
+      "sha256": "sha256:9192eea5bebfb6e197670eb8d843b39699d48309af5e1bcbd08e8e642e111b35",
+      "bytes": 8109,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/qiwi-icon.tsx",
+      "sha256": "sha256:d997d867fab72dc767768f570f652d9f5a3dc058c17d33b2ffdf5c6576e0e999",
+      "bytes": 2264,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/razorpay-icon.tsx",
+      "sha256": "sha256:7e6ac81e5390d388e113f3609e63b4678840eaddd474eed2759ddb8f90c89c04",
+      "bytes": 7333,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/revolut-icon.tsx",
+      "sha256": "sha256:71edceba5735dfb463261ef71a7b8b4b4fb772194167bf8f250be80c0489538b",
+      "bytes": 4764,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/ru-pay-icon.tsx",
+      "sha256": "sha256:a493302745ed28ae748ba179f18fe8619d1d16f1f94d8f46d82a78a35206018b",
+      "bytes": 5400,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/samsung-pay-icon.tsx",
+      "sha256": "sha256:907c3dc8bc0450200be442d6287a3207bc0553745489b877a8b896e9f26fcae1",
+      "bytes": 5567,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/sepa-icon.tsx",
+      "sha256": "sha256:7961ebc488179642359ced843463b83e60d5dede8037be3f6f407df3a40a0cc7",
+      "bytes": 20149,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/shop-pay-icon.tsx",
+      "sha256": "sha256:807ecc67c86ee737585691cb54f4d3a3564468c067083bea5836169acee78438",
+      "bytes": 5769,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/shopee-pay-icon.tsx",
+      "sha256": "sha256:c1b4427b6ab58a1fc2436103be980991524bec09ae7131d2afdf0b443c10af2e",
+      "bytes": 9623,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/skrill-icon.tsx",
+      "sha256": "sha256:b1e9eaf447ed804ba8dc668e056c8460f871069ba2a261f1dc8866d5b20edbe3",
+      "bytes": 2263,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/sofort-icon.tsx",
+      "sha256": "sha256:a27c0f5baa931ad5ba61c1659f2d7b4d2135e8ce3434566e7d7c000cb8a7e579",
+      "bytes": 6193,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/stripe-icon.tsx",
+      "sha256": "sha256:33e7db25a76e1add1e14bdbbfa3e775def61a4e70048dcdd7eb324a1129d0ada",
+      "bytes": 3058,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/union-pay-icon.tsx",
+      "sha256": "sha256:18eb36ca94d3c25adf2e2739b576db77f39c683aa290b35d7bd16197ce13b478",
+      "bytes": 12908,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/upi-icon.tsx",
+      "sha256": "sha256:6d6fcb8dce8ed32bd77261e0020bd6da45c6f91e32dcbb0930eab02da065b888",
+      "bytes": 12468,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/venmo-icon.tsx",
+      "sha256": "sha256:13a8a159c61fb1347397ec423836793b48520f367112fba24b4511b410c89e6c",
+      "bytes": 3415,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/verifone-icon.tsx",
+      "sha256": "sha256:b203247e632a49e0b211ab4b789bb1d2e89802d488e83e7b410ce5b5ad6f1fe0",
+      "bytes": 5056,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/visa-icon.tsx",
+      "sha256": "sha256:5c2e41445004cb3675c422b65af34ee2b1996ca8c5dce958397df8aa0e3ff9c0",
+      "bytes": 2001,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/we-chat-icon.tsx",
+      "sha256": "sha256:e75d8d865c9fb05ee9ade69ece737371865f404b4c6dc15cf00c881d1a45bf3f",
+      "bytes": 1883,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/we-chat-pay-icon.tsx",
+      "sha256": "sha256:5f021a8e16ab9648ff636dbe36d3107e862ee8d23c1d49c48e2618d0ec38b996",
+      "bytes": 10310,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/webmoney-icon.tsx",
+      "sha256": "sha256:b31c1a00108bfa31fe74d7a402603e4d41fb0cb0c5e4ee915a60a34ff1bdd7f7",
+      "bytes": 4737,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/wise-icon.tsx",
+      "sha256": "sha256:c354d2ceb58ba7d54f0f3a34d5b263f169977cb70484377f274fbf68668564ad",
+      "bytes": 2038,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/yandex-icon.tsx",
+      "sha256": "sha256:df51be6d4ce894d3bafdc187a3b4399d1924ec710f92ab7d41e001942afa4c36",
+      "bytes": 2259,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/zelle-icon.tsx",
+      "sha256": "sha256:24651bf26e8aebcfea252162c8c3f1a6600919664eabb148e080bb55882f40ee",
+      "bytes": 5944,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/zip-pay-icon.tsx",
+      "sha256": "sha256:1d82baa052ee2fd16e6fa5e3fa72f79b8b39350c1ec51d777819bea74e88e1f3",
+      "bytes": 2665,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/shared-assets/background-patterns/circle.tsx",
+      "sha256": "sha256:65c64f2d39bfd17fb6af282a876fbe0ca5e8dcb77b3b7523b8f109e568d81b1a",
+      "bytes": 5188,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/shared-assets/background-patterns/grid-check.tsx",
+      "sha256": "sha256:e0767891ccf0e8855f0775945bb04e47cc7b22880f5cb51378f9ec7f71f7dbcc",
+      "bytes": 139009,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/shared-assets/background-patterns/grid.tsx",
+      "sha256": "sha256:ebcced33f367fd399997bfdc5ffea3a4084e126b0dddbc269eb8a5b99b0ca006",
+      "bytes": 13704,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/shared-assets/background-patterns/index.tsx",
+      "sha256": "sha256:4d13fbd538121384e9b732704af6bbf65b6ae890cc28f48b32ba6cf6d0f52552",
+      "bytes": 764,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/shared-assets/background-patterns/square.tsx",
+      "sha256": "sha256:12f46b974f2d6a9cf51faa7498386e289541118a2453661a35794085c523078f",
+      "bytes": 11892,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/shared-assets/illustrations/box.tsx",
+      "sha256": "sha256:c4c725a63d5be631f4c3bf73d1b50595e59d10adfc3dfeb2f7f93e52e5658191",
+      "bytes": 16370,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/shared-assets/illustrations/cloud.tsx",
+      "sha256": "sha256:a9d156a45b684f826df96111f0202292e0317ddbe7a7385c3b59bda30f2b832c",
+      "bytes": 20038,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/shared-assets/illustrations/credit-card.tsx",
+      "sha256": "sha256:e0bfb8f087cbe83ffc245978b27a23eaf22ffbaaec74a2885796324d022e6e3a",
+      "bytes": 19705,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/shared-assets/illustrations/documents.tsx",
+      "sha256": "sha256:dd129375874a245781921c3b48c49820ba1d216af4deca94d42c83b228d1b22b",
+      "bytes": 39234,
+      "kind": "copy"
+    },
+    {
+      "path": "src/components/shared-assets/illustrations/index.tsx",
+      "sha256": "sha256:64a1959a9e0880a5d1bff17535b217174876e244b23292435b311aef345de439",
+      "bytes": 778,
+      "kind": "copy"
+    },
+    {
+      "path": "src/config/client.ts",
+      "sha256": "sha256:7c8d06aa778c81882f216af306b645ba648713964b6013e120a10ce0e85db510",
+      "bytes": 180,
+      "kind": "generated"
+    },
+    {
+      "path": "src/content/content-slots.schema.json",
+      "sha256": "sha256:b9c1692bc470ee9623b24f8f5abf0d02ad583c1ee596136e61abae4ca020b4b9",
+      "bytes": 34,
+      "kind": "generated"
+    },
+    {
+      "path": "src/data/integrations.json",
+      "sha256": "sha256:3297955ba50a8a270649a08315d233379cbbac1ecbf15139aa2564f718b0e2c2",
+      "bytes": 536,
+      "kind": "generated"
+    },
+    {
+      "path": "src/data/legal.json",
+      "sha256": "sha256:cf45f87c991e32f7ba13800b19cd2bee0450b7a29a31e2e97b246242a9265158",
+      "bytes": 41,
+      "kind": "generated"
+    },
+    {
+      "path": "src/data/navigation.json",
+      "sha256": "sha256:e08c18195ad8b66ab0da761e4ab847c6fc1f0ce83c12ebdfac33a6e84cf08542",
+      "bytes": 540,
+      "kind": "generated"
+    },
+    {
+      "path": "src/data/seo.json",
+      "sha256": "sha256:d6dedebf61e5b7e3e98cc2a099f624a0fc05ce11cff817da568f8cae96958f6a",
+      "bytes": 560,
+      "kind": "generated"
+    },
+    {
+      "path": "src/hooks/use-resize-observer.ts",
+      "sha256": "sha256:321c8af4aa1381839b0459425f243151d2c56d2cdaed836cb28c56809f20eb5c",
+      "bytes": 1822,
+      "kind": "copy"
+    },
+    {
+      "path": "src/pages/cart/index.astro",
+      "sha256": "sha256:d06139c56640b711af158e7179f423b738d579eb5be37aa9b6b9bfabf4ce2acf",
+      "bytes": 879,
+      "kind": "generated"
+    },
+    {
+      "path": "src/pages/checkout/index.astro",
+      "sha256": "sha256:041eedc267046518a60b48f551c82150a1a6f2a70615ce1eaa6aeecfa5ad5c2d",
+      "bytes": 889,
+      "kind": "generated"
+    },
+    {
+      "path": "src/pages/orders/[id]/index.astro",
+      "sha256": "sha256:ace0a332695581c4711b75f959b89e86b80bfd90fb87939862b902a8cdec1e95",
+      "bytes": 933,
+      "kind": "generated"
+    },
+    {
+      "path": "src/pages/products/[slug]/index.astro",
+      "sha256": "sha256:dbb85b197fdf3356ee6a2f0b792729938c688908b610add754b350b2dda705ee",
+      "bytes": 1186,
+      "kind": "generated"
+    },
+    {
+      "path": "src/pages/shop/index.astro",
+      "sha256": "sha256:1ad9df8a6f912acc280cc31f0bce642300f08f582662a2a76ddd81115b82510b",
+      "bytes": 865,
+      "kind": "generated"
+    },
+    {
+      "path": "src/styles/global.css",
+      "sha256": "sha256:a92284cda687ba451dda789896847a28a1e3151477b4274ee77836595a3fc843",
+      "bytes": 19331,
+      "kind": "copy"
+    },
+    {
+      "path": "src/styles/theme_child.css",
+      "sha256": "sha256:89caf63556eb84074811d9237461f3f3cd4a9568b175aa41b2fe3d6273ad615b",
+      "bytes": 1223,
+      "kind": "copy"
+    },
+    {
+      "path": "src/styles/theme.css",
+      "sha256": "sha256:11bb249c32ddb0d7d84197ed753ee323879fbb8228f45764a503b20113ec0c6c",
+      "bytes": 2387,
+      "kind": "copy"
+    },
+    {
+      "path": "src/styles/uu/brand-warm.css",
+      "sha256": "sha256:0c5ac35ada19a6c1913e1c9a18dfc967b422c6b998761d5b1432e0c341101507",
+      "bytes": 5265,
+      "kind": "copy"
+    },
+    {
+      "path": "src/styles/uu/layout.css",
+      "sha256": "sha256:9c69da09c528340aee193d641c27c9631df91361d8e62e04c68c208c65b6aada",
+      "bytes": 4297,
+      "kind": "copy"
+    },
+    {
+      "path": "src/styles/uu/theme.css",
+      "sha256": "sha256:f2eb26fb871c01de16383ed152eea368cd849123554b8f0c3f52c52bf9122e9e",
+      "bytes": 44299,
+      "kind": "copy"
+    },
+    {
+      "path": "src/styles/uu/themes.css",
+      "sha256": "sha256:438fbb9b31f483135ddca0674bf2c87bac590f92f1bc66395d33c0c8b8dca355",
+      "bytes": 61044,
+      "kind": "copy"
+    },
+    {
+      "path": "src/utils/cx.ts",
+      "sha256": "sha256:d32cbae0ef101a957c58c0fff7b81738917c9f6b3f150103301e26192af62bcf",
+      "bytes": 756,
+      "kind": "copy"
+    },
+    {
+      "path": "src/utils/is-react-component.ts",
+      "sha256": "sha256:2f24cf5e7c8cc9b8bb16750a59fbe58db32fc11c09d3b4d57288b15b31a98541",
+      "bytes": 1361,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/commerce-shopify/components/SmallShopExperience.tsx",
+      "sha256": "sha256:cfa0ff3b411116fe82128392effd6297510af0be919c81e3145c002375c7faea",
+      "bytes": 75287,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/commerce-shopify/components/SmallShopSection.astro",
+      "sha256": "sha256:67a927ba996216eefe277dddcad49d0472835ae308ab048f32c33e45544a6d52",
+      "bytes": 570,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/commerce-shopify/lib/client.ts",
+      "sha256": "sha256:31f68565f6a0d0d5f00284a9b202072b985066bf36be74ef005163f2d9f00f0f",
+      "bytes": 6475,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/commerce-shopify/lib/contracts.ts",
+      "sha256": "sha256:a316cf481c929ae18a4c7927cf0f50ae0934529fa4dd31fd1dcae32acdd688e9",
+      "bytes": 1643,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/commerce-shopify/lib/mock-data.ts",
+      "sha256": "sha256:b01d35063db930e8311aa263476100b94e4a7c2c4185e40879e831e4f7cc090a",
+      "bytes": 4577,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/commerce-shopify/server/storefront.ts",
+      "sha256": "sha256:7c31694b0081dc2b082c20e5f86bf171ac682e867d9ffe209d295b12006ba50e",
+      "bytes": 6833,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/interaction-recipes/celebrations.css",
+      "sha256": "sha256:b9d0444a1afa7c0d2b2f6c1c372ad9d442bc9495ee1b23e327b39f07747e4791",
+      "bytes": 4483,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/interaction-recipes/index.ts",
+      "sha256": "sha256:633fdc424090d7f1fd61fb6db29c3c6aba1dfa9d4655781e20ad689ab787fc71",
+      "bytes": 1428,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/interaction-recipes/lib/celebrations.ts",
+      "sha256": "sha256:ea32ee353244f131e39651d37b0c69a5a5a95cd210c54c7c54c8508fc776c0cd",
+      "bytes": 7896,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/interaction-recipes/lib/premium.ts",
+      "sha256": "sha256:e3ee5acf27fe88505768138224f47c746afe1f89806a264644600adcbbfd1354",
+      "bytes": 6039,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/interaction-recipes/lib/recipes.ts",
+      "sha256": "sha256:f30324a7739aafa5f3d77e02085bf57d936af3827e11d6516057d4c76c6d0764",
+      "bytes": 19771,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/interaction-recipes/lib/showcase.ts",
+      "sha256": "sha256:5f946e7568b014ff873b204a71d50fdd2c3128af94e4403388370e35d4a6e43c",
+      "bytes": 2876,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/interaction-recipes/lib/storytelling.ts",
+      "sha256": "sha256:6cd5d42e7dbf30b70f25509719dc2b48b61ec134b69b29e3b9a63b5ab0aa1b76",
+      "bytes": 2846,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/interaction-recipes/recipes.css",
+      "sha256": "sha256:d8823b42cf58b972ab82de97699f48bb9dcae32f350d6d6ec191498ee78ce20f",
+      "bytes": 13930,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/layout-system/contract.ts",
+      "sha256": "sha256:ccf5f31398bda5a77a08ffdc31a588b0d2d5600ce3d45625ba72eabe64b9b006",
+      "bytes": 1943,
+      "kind": "copy"
+    },
+    {
+      "path": "toolkit/microinteractions/motion.css",
+      "sha256": "sha256:26c4c8c827d7c737b56078f87fdddafcaf20cf58b397c4f988dd235e6d6cdfaa",
+      "bytes": 50503,
+      "kind": "copy"
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "sha256:1eaea3c379cadd8cf3b6a04fbfd057e132308b5d38c3dc6bfa67d594815d73a0",
+      "bytes": 311,
+      "kind": "generated"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/ArrowRight.d.mts",
+      "sha256": "sha256:7937d7257da7986ede586f4ec2424699262c3ce29a0aa5395484830fd8cd1ee3",
+      "bytes": 191,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/ArrowRight.d.ts",
+      "sha256": "sha256:7937d7257da7986ede586f4ec2424699262c3ce29a0aa5395484830fd8cd1ee3",
+      "bytes": 191,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/ArrowRight.js",
+      "sha256": "sha256:969f6b1648456d627e761205bb369c70494d4603e9965a35fdc153dfbe0c953b",
+      "bytes": 779,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/ArrowRight.mjs",
+      "sha256": "sha256:9d61111db615d4a8615cd65052e7e684cf98a7ad9365a0aa450d76b44ac51517",
+      "bytes": 386,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Bell01.d.mts",
+      "sha256": "sha256:885ab8602065482c41572e6699adc84e9ef817863aa6c1c47402aed69d7c99b2",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Bell01.d.ts",
+      "sha256": "sha256:885ab8602065482c41572e6699adc84e9ef817863aa6c1c47402aed69d7c99b2",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Bell01.js",
+      "sha256": "sha256:9a08f6543c54cee5aeeb8a13d726039a94a28862758c941b5da26581b830eb40",
+      "bytes": 1043,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Bell01.mjs",
+      "sha256": "sha256:54e9c4c87eba013aeffbe550aa5ad91c1b3f30b633f1eb5e59acb7c72498db3a",
+      "bytes": 650,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Calendar.d.mts",
+      "sha256": "sha256:16bafd557ce633c37b331a8953810de48062aa6692e1e3bd8c672d9db2b5c8cc",
+      "bytes": 187,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Calendar.d.ts",
+      "sha256": "sha256:16bafd557ce633c37b331a8953810de48062aa6692e1e3bd8c672d9db2b5c8cc",
+      "bytes": 187,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Calendar.js",
+      "sha256": "sha256:4ae31205054a6a56bf5c646a3f503b324549825a2eda04168fe41fe6bdc7db73",
+      "bytes": 1075,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Calendar.mjs",
+      "sha256": "sha256:79538e5dd3dc0c326caf8e40feb4274144a96d1474433610404d64b906e2b6da",
+      "bytes": 682,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Check.d.mts",
+      "sha256": "sha256:eba2668f2308519fd3e3a7a4678a729e81dce1e09669dabeafe7eeba385b64a0",
+      "bytes": 181,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Check.d.ts",
+      "sha256": "sha256:eba2668f2308519fd3e3a7a4678a729e81dce1e09669dabeafe7eeba385b64a0",
+      "bytes": 181,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Check.js",
+      "sha256": "sha256:db4ebeef1f3ddd3b8390825a9ac8ffff45a427e40277306cee1e5786e2c4bbb6",
+      "bytes": 760,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Check.mjs",
+      "sha256": "sha256:23f640e2d15f495b71347c2e90f76e508293b921591eb32e2a15cf685364a5e4",
+      "bytes": 367,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/CheckCircle.d.mts",
+      "sha256": "sha256:69ee393a671937bed0df5eaee77e42ce41cfac9a536fa0c3e6c9758cd5eb3954",
+      "bytes": 193,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/CheckCircle.d.ts",
+      "sha256": "sha256:69ee393a671937bed0df5eaee77e42ce41cfac9a536fa0c3e6c9758cd5eb3954",
+      "bytes": 193,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/CheckCircle.js",
+      "sha256": "sha256:2df28805351d77ab4fdf22a3678cdd2589ab738d04f5c669ecc5ea00b62d419a",
+      "bytes": 844,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/CheckCircle.mjs",
+      "sha256": "sha256:103d9e977f42dc586212943a76e544d1ebff6e46e911ffbfe7eb669c41653639",
+      "bytes": 451,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Copy01.d.mts",
+      "sha256": "sha256:13d415c92954b175b3d3c0c6c1f7a14ee1222eefbb10098d4ab0fc100744de5c",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Copy01.d.ts",
+      "sha256": "sha256:13d415c92954b175b3d3c0c6c1f7a14ee1222eefbb10098d4ab0fc100744de5c",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Copy01.js",
+      "sha256": "sha256:5d4047cfa4072cf5b68efc5f78f7f6c926548cb8b7c725b5bb4f90bb6008ae20",
+      "bytes": 1267,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Copy01.mjs",
+      "sha256": "sha256:f7c828d54f5f49e9312975b7d5521d005f42bacecf9defbe07f50babc5d56066",
+      "bytes": 874,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/CreditCard01.d.mts",
+      "sha256": "sha256:3dfe151cfd4f230b086e3799dea0195db9b894b77147011b87bac5d48fedcb5e",
+      "bytes": 195,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/CreditCard01.d.ts",
+      "sha256": "sha256:3dfe151cfd4f230b086e3799dea0195db9b894b77147011b87bac5d48fedcb5e",
+      "bytes": 195,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/CreditCard01.js",
+      "sha256": "sha256:6cc3da5fb9172edb0f6bddbc3a93697ec3f945451efc5d38bd48b91906f4a7b6",
+      "bytes": 1060,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/CreditCard01.mjs",
+      "sha256": "sha256:d26e4f86b8f317489ef108b350ebb6028c59c7fd20bec90219b10b707da48d5e",
+      "bytes": 667,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Eye.d.mts",
+      "sha256": "sha256:8712ddc6fdc03a23708e48d5708de535474fe200b0e81a4137a92d768564c259",
+      "bytes": 177,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Eye.d.ts",
+      "sha256": "sha256:8712ddc6fdc03a23708e48d5708de535474fe200b0e81a4137a92d768564c259",
+      "bytes": 177,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Eye.js",
+      "sha256": "sha256:c8579593ddb9c83fb102c8850c22ba6ef799d8bc592a4a2fcd531c647cb4ed23",
+      "bytes": 1181,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Eye.mjs",
+      "sha256": "sha256:7b4482cf727306d1c18b236ff99df50a26d63fd37ef2b8006372f7465860ef42",
+      "bytes": 788,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/EyeOff.d.mts",
+      "sha256": "sha256:ff9d6d77dd74b2df8415cd2149322d4febf16acd83357370131c8a365ef3f988",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/EyeOff.d.ts",
+      "sha256": "sha256:ff9d6d77dd74b2df8415cd2149322d4febf16acd83357370131c8a365ef3f988",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/EyeOff.js",
+      "sha256": "sha256:2f36732f1a7a310195ccdc92ce1044459b382c2be43a9aef6a794de104aa3161",
+      "bytes": 1146,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/EyeOff.mjs",
+      "sha256": "sha256:f7151d0cc7d1368cb17ce1ab808f4e13c3da1d6a3591df0fde0ab15317dff6b4",
+      "bytes": 753,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/File04.d.mts",
+      "sha256": "sha256:990000caf86a5b5b0aef570762c266552b8328ded9615c80a01ec13e69787382",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/File04.d.ts",
+      "sha256": "sha256:990000caf86a5b5b0aef570762c266552b8328ded9615c80a01ec13e69787382",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/File04.js",
+      "sha256": "sha256:4d46268cacd145016b9f530f4f273f3ae23ef4a12bc0fc51da58fc899e9ca898",
+      "bytes": 1221,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/File04.mjs",
+      "sha256": "sha256:62f23abe01c07869183b154fd23f10563220cedf0815e76ac6b4beefb13ee2a1",
+      "bytes": 828,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/FilterLines.d.mts",
+      "sha256": "sha256:31db543441d8a19a822954b39bd6f7bcea18b7bd7bc3088dee5fe98511d940f5",
+      "bytes": 193,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/FilterLines.d.ts",
+      "sha256": "sha256:31db543441d8a19a822954b39bd6f7bcea18b7bd7bc3088dee5fe98511d940f5",
+      "bytes": 193,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/FilterLines.js",
+      "sha256": "sha256:701d50ac20c7577335ca98d4d815086bfbb952ca20c239e36ce73da52293758b",
+      "bytes": 779,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/FilterLines.mjs",
+      "sha256": "sha256:644bf0862bfd9d8cf99819b6c79e72facf85cc4196d550da90744b2a00ae3fb7",
+      "bytes": 386,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/HelpCircle.d.mts",
+      "sha256": "sha256:907402bd98c2c4fddbf7dcd0cc27ff7f92a946dcd0a0972b8d6276d50e52eea8",
+      "bytes": 191,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/HelpCircle.d.ts",
+      "sha256": "sha256:907402bd98c2c4fddbf7dcd0cc27ff7f92a946dcd0a0972b8d6276d50e52eea8",
+      "bytes": 191,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/HelpCircle.js",
+      "sha256": "sha256:07e52268047939a2300368b776c8823d53658431c0e5694577a5a067d87a04f1",
+      "bytes": 873,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/HelpCircle.mjs",
+      "sha256": "sha256:461574f946323c1aa6b9d72e0efeca4e220379228988a994e7596db8f0d465e4",
+      "bytes": 480,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Image01.d.mts",
+      "sha256": "sha256:2e40f4729c08e28c6febe1a4bcb06e10e2eae2101edef6b923391caa427aa73d",
+      "bytes": 185,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Image01.d.ts",
+      "sha256": "sha256:2e40f4729c08e28c6febe1a4bcb06e10e2eae2101edef6b923391caa427aa73d",
+      "bytes": 185,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Image01.js",
+      "sha256": "sha256:d84400fa89058f7eca08c019cce2ef59e20896705b83b9d5add2740cf55c84c6",
+      "bytes": 1277,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Image01.mjs",
+      "sha256": "sha256:c884d1c0ff3493f104a00e85d65af0dc1f1b6f0cf54b1a3003208e2bf127639a",
+      "bytes": 884,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/index.d.mts",
+      "sha256": "sha256:0f51523c1c824f2e009ab4349d8976fc4b441f2e22439b45ea9eb1803091ff5f",
+      "bytes": 1803,
+      "kind": "generated"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/index.d.ts",
+      "sha256": "sha256:6426d54cca290dee1763e6360a7e6c4877b8c4eaa9c4d0a3ec85df4452c7323e",
+      "bytes": 1631,
+      "kind": "generated"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/index.js",
+      "sha256": "sha256:7718a2b110229ae92525e317c3f640d318109fbca5b4e19cb4b6db299ccc42e0",
+      "bytes": 2330,
+      "kind": "generated"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/index.mjs",
+      "sha256": "sha256:0f51523c1c824f2e009ab4349d8976fc4b441f2e22439b45ea9eb1803091ff5f",
+      "bytes": 1803,
+      "kind": "generated"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/InfoCircle.d.mts",
+      "sha256": "sha256:06b0ec3de37175f3f628e620763468ab7279d82f3edd13bc2a94d9a2a5afdd42",
+      "bytes": 191,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/InfoCircle.d.ts",
+      "sha256": "sha256:06b0ec3de37175f3f628e620763468ab7279d82f3edd13bc2a94d9a2a5afdd42",
+      "bytes": 191,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/InfoCircle.js",
+      "sha256": "sha256:13a94dd6f62ca7c6c55838d58f181a4fc5629d2270afa8c5190573e064541191",
+      "bytes": 844,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/InfoCircle.mjs",
+      "sha256": "sha256:1ee06160c4dbe074e8b9b79e07e0919421e06e2687e3a672e63a3e8d589371bf",
+      "bytes": 451,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/LayersTwo01.d.mts",
+      "sha256": "sha256:ba1b7ccfac5f88011669254e881b12a06b0775c92f090332b7b4fd0231121e6f",
+      "bytes": 193,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/LayersTwo01.d.ts",
+      "sha256": "sha256:ba1b7ccfac5f88011669254e881b12a06b0775c92f090332b7b4fd0231121e6f",
+      "bytes": 193,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/LayersTwo01.js",
+      "sha256": "sha256:0b87efcc238434c1a464e61fd120144fa87e9a1779c25e6112483adcde2eaa4d",
+      "bytes": 1053,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/LayersTwo01.mjs",
+      "sha256": "sha256:8e2314f7c3e583d2ec2837193a88e448d650c0ac1d54e9be495ccc313954384d",
+      "bytes": 660,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Link01.d.mts",
+      "sha256": "sha256:da845ae5f2e269de836b0b5108f8eb812e10eaac985ab5cb9c87f7759e0db002",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Link01.d.ts",
+      "sha256": "sha256:da845ae5f2e269de836b0b5108f8eb812e10eaac985ab5cb9c87f7759e0db002",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Link01.js",
+      "sha256": "sha256:c4ce83645dba37b07a175b561de19fc638977bf58adddfa59d6163615535fcf0",
+      "bytes": 878,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Link01.mjs",
+      "sha256": "sha256:4071349aaf743ab0f3e28f4a51d2f75f6d9b0d44b4e5dea666a1871fb3041cbf",
+      "bytes": 485,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Lock01.d.mts",
+      "sha256": "sha256:6c97ecdd1f9001e257f416633f95fb6a2bb9b7a40eb38030437f531aacb8efcc",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Lock01.d.ts",
+      "sha256": "sha256:6c97ecdd1f9001e257f416633f95fb6a2bb9b7a40eb38030437f531aacb8efcc",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Lock01.js",
+      "sha256": "sha256:8dd1c4673157fc0d98221ec8d189e5ae2e20ffac5e3fc916053ca40f0bb897b9",
+      "bytes": 1089,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Lock01.mjs",
+      "sha256": "sha256:1480ba13cfe7ccd59d00ed3c5e65bcbca48215ea9f36aad80925f89c7dd19e0a",
+      "bytes": 696,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Mail01.d.mts",
+      "sha256": "sha256:f17630b832abc9ed83b356a0b0e78c1d06217fa9051a5898cdf16609e15cc9a6",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Mail01.d.ts",
+      "sha256": "sha256:f17630b832abc9ed83b356a0b0e78c1d06217fa9051a5898cdf16609e15cc9a6",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Mail01.js",
+      "sha256": "sha256:fa7cb131f7670aa7fb0cb7d7e5d229c70f0a0b50c8a8698117e0175754d7999e",
+      "bytes": 1142,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Mail01.mjs",
+      "sha256": "sha256:441638a56ee967b5e35595f100cd453ba203cf4be8375edf46f051a674f5b0d3",
+      "bytes": 749,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Menu01.d.mts",
+      "sha256": "sha256:dab01ff7463ea9090df4505687706bc12ac822a44d64535e4ac0a8ce71bf8812",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Menu01.d.ts",
+      "sha256": "sha256:dab01ff7463ea9090df4505687706bc12ac822a44d64535e4ac0a8ce71bf8812",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Menu01.js",
+      "sha256": "sha256:d3cbdeb2bccdf7d6834beebdbccdfb38dc97c977782ec30cbf935cb231d53147",
+      "bytes": 770,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Menu01.mjs",
+      "sha256": "sha256:6cc1ebe69c7df41d902464301c79c09da84ab5bf2ae30fd496e7f7905cfbb442",
+      "bytes": 377,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/MessageChatCircle.d.mts",
+      "sha256": "sha256:6fa962e1a1566364ab8b24ef9164b847e3f5c60cbab51add2b2da730ab0eeb33",
+      "bytes": 205,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/MessageChatCircle.d.ts",
+      "sha256": "sha256:6fa962e1a1566364ab8b24ef9164b847e3f5c60cbab51add2b2da730ab0eeb33",
+      "bytes": 205,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/MessageChatCircle.js",
+      "sha256": "sha256:fab7434cc6c52f393382ad875a20b73d1c846a11aea87af8002e9e4f3ac7c9a6",
+      "bytes": 1455,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/MessageChatCircle.mjs",
+      "sha256": "sha256:54ad9b7d81efdb48052ad5ae7e480853af401bbd764c70f2cc3499bbbd09f868",
+      "bytes": 1062,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Minus.d.mts",
+      "sha256": "sha256:b3497523aa8ce525676e3117287ea7cbb49a8903c00076f80a98b4ca75290365",
+      "bytes": 181,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Minus.d.ts",
+      "sha256": "sha256:b3497523aa8ce525676e3117287ea7cbb49a8903c00076f80a98b4ca75290365",
+      "bytes": 181,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Minus.js",
+      "sha256": "sha256:7e288fc1911110c8654b60010c026b4386f7c8002fa090e9d80678dd00bb2dcb",
+      "bytes": 753,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Minus.mjs",
+      "sha256": "sha256:93a03f6acc82e674104e999d3f4fd473a4b1b1e989b15836aadc61c9e57ce380",
+      "bytes": 360,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Moon01.d.mts",
+      "sha256": "sha256:8bf634e40d10cf486e475be479c3661677d4ab97faf5659fc214c697148c1a53",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Moon01.d.ts",
+      "sha256": "sha256:8bf634e40d10cf486e475be479c3661677d4ab97faf5659fc214c697148c1a53",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Moon01.js",
+      "sha256": "sha256:472832880e4a348f82ccde73f082241d5fc31d8179c6f70e003784bfd09b0ab8",
+      "bytes": 940,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Moon01.mjs",
+      "sha256": "sha256:2e8873d2cf5bfb4840428363c413fdb0e56a76e6672502deef8e533d4ce0a8f8",
+      "bytes": 547,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Paperclip.d.mts",
+      "sha256": "sha256:c53ac527003bb0d00f0b531ae0e89e41fcf741af46dac8c1eac8a02b59ff1d8a",
+      "bytes": 189,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Paperclip.d.ts",
+      "sha256": "sha256:c53ac527003bb0d00f0b531ae0e89e41fcf741af46dac8c1eac8a02b59ff1d8a",
+      "bytes": 189,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Paperclip.js",
+      "sha256": "sha256:0b7bda937db803234f177ac10c276f88c1269011e00b95e306cbfd143db69f95",
+      "bytes": 894,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Paperclip.mjs",
+      "sha256": "sha256:dfb6acd581e641c0412c612ea9ffbc3d68d8f1ffd84680999c5bcc16cd941d8c",
+      "bytes": 501,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Plus.d.mts",
+      "sha256": "sha256:72e106d4a701de7cdcf03bddb141600c085749a66b340782b6c38f748b68bf9e",
+      "bytes": 179,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Plus.d.ts",
+      "sha256": "sha256:72e106d4a701de7cdcf03bddb141600c085749a66b340782b6c38f748b68bf9e",
+      "bytes": 179,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Plus.js",
+      "sha256": "sha256:a4bca92c43e985dedbf500b9ddd8dbd55cae672163f6111061414fede62e0acb",
+      "bytes": 759,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Plus.mjs",
+      "sha256": "sha256:ea578205d57593e779319e089e1f432385340637301a2e8d79c46ce1f2af7815",
+      "bytes": 366,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Receipt.d.mts",
+      "sha256": "sha256:8ebe76f9eb2548b8b88e2ca47a98feb43ccbaf4036d192aea4da1d8548157b01",
+      "bytes": 185,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Receipt.d.ts",
+      "sha256": "sha256:8ebe76f9eb2548b8b88e2ca47a98feb43ccbaf4036d192aea4da1d8548157b01",
+      "bytes": 185,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Receipt.js",
+      "sha256": "sha256:57c772758a3ac385be1eb960ff43a76fef7a726da3f33d008fb8c3da97599591",
+      "bytes": 941,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Receipt.mjs",
+      "sha256": "sha256:8976caab403592e170c04d45b33e0349e803a4fb6456e2f8df2293b06366ee7b",
+      "bytes": 548,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/SearchLg.d.mts",
+      "sha256": "sha256:3c08678eb3d007d83666f7a9370779ee0244df25b16fdde2bd89365e86f5fe93",
+      "bytes": 187,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/SearchLg.d.ts",
+      "sha256": "sha256:3c08678eb3d007d83666f7a9370779ee0244df25b16fdde2bd89365e86f5fe93",
+      "bytes": 187,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/SearchLg.js",
+      "sha256": "sha256:de8cd3a7bc6e66c500262e498549908103bf00b9e77a71a1a55b27bee6778468",
+      "bytes": 810,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/SearchLg.mjs",
+      "sha256": "sha256:2ff2f568f17c8bd56022a01bc31b0b97ca6cc6551fa314550cd1425a01e7a4ea",
+      "bytes": 417,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Send01.d.mts",
+      "sha256": "sha256:f3acfabb46eb3b122d7f3fbfbc066f8c3f152424fd24c424dc175aeba521a649",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Send01.d.ts",
+      "sha256": "sha256:f3acfabb46eb3b122d7f3fbfbc066f8c3f152424fd24c424dc175aeba521a649",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Send01.js",
+      "sha256": "sha256:ea7660cbb656bab424ab6fe6e1010790e2b15333b2566438e1ff492957c27d38",
+      "bytes": 1107,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Send01.mjs",
+      "sha256": "sha256:7349b38e8ef7c19b9cc1827ab105c8709171fd1e3b95515dfd4cd5e4356c0543",
+      "bytes": 714,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Settings01.d.mts",
+      "sha256": "sha256:8766581473a11633f221e90e13e66f98117fdd8b17223e7c970ef30d6f1d4799",
+      "bytes": 191,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Settings01.d.ts",
+      "sha256": "sha256:8766581473a11633f221e90e13e66f98117fdd8b17223e7c970ef30d6f1d4799",
+      "bytes": 191,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Settings01.js",
+      "sha256": "sha256:7ce55a5f8025a3582b974245a23783a9ff70f3fa15627278bf24b36a6bcc7ad0",
+      "bytes": 1742,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Settings01.mjs",
+      "sha256": "sha256:1dd3a92be4d8e2c0816c87e5737258efe56506c9a747c1bc254c92453f872cff",
+      "bytes": 1349,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/ShieldTick.d.mts",
+      "sha256": "sha256:3550abb4545b993c838be2657d5c9fec999be0408a64a5e361520b87c492f4f4",
+      "bytes": 191,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/ShieldTick.d.ts",
+      "sha256": "sha256:3550abb4545b993c838be2657d5c9fec999be0408a64a5e361520b87c492f4f4",
+      "bytes": 191,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/ShieldTick.js",
+      "sha256": "sha256:0dd139df4a7b2915aa77c40f11f414c27daefa795ede8a97801443846c124906",
+      "bytes": 1166,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/ShieldTick.mjs",
+      "sha256": "sha256:0f4fc51db8119cb30ccc74267a9cd35f4810907886fed6ec0f1c69b6b186e13b",
+      "bytes": 773,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/ShoppingBag03.d.mts",
+      "sha256": "sha256:f77185ebafba8e8720386baadb9b318a03873ec648a4d636c481e0d067c58fc7",
+      "bytes": 197,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/ShoppingBag03.d.ts",
+      "sha256": "sha256:f77185ebafba8e8720386baadb9b318a03873ec648a4d636c481e0d067c58fc7",
+      "bytes": 197,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/ShoppingBag03.js",
+      "sha256": "sha256:e38b7e6b5611e1ae2d56c591eb34990f62c100477bbbfe5b4b09e3b9ed2f312b",
+      "bytes": 1131,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/ShoppingBag03.mjs",
+      "sha256": "sha256:be7d66a18793b6f66611ace1dc06554da96d98dac617694b5d76d499486842a7",
+      "bytes": 738,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Sliders01.d.mts",
+      "sha256": "sha256:d946d7a4b952bd09adc77ccd877c9f898fead3302de48140157dec68a22e9907",
+      "bytes": 189,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Sliders01.d.ts",
+      "sha256": "sha256:d946d7a4b952bd09adc77ccd877c9f898fead3302de48140157dec68a22e9907",
+      "bytes": 189,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Sliders01.js",
+      "sha256": "sha256:59b8b775ec27db65dcf93f65b8b01e57b377a7cf174411c47c9ab414bdcf6399",
+      "bytes": 814,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Sliders01.mjs",
+      "sha256": "sha256:5d9d2e0f4c0845189f7cb280f4dcdad163fa5d6155eb6fbfcf6ee0c33feba31d",
+      "bytes": 421,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Star01.d.mts",
+      "sha256": "sha256:22577992decbbe326df54cd9235903ccee15cf088ce2c945a7f0591c0fbfeeab",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Star01.d.ts",
+      "sha256": "sha256:22577992decbbe326df54cd9235903ccee15cf088ce2c945a7f0591c0fbfeeab",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Star01.js",
+      "sha256": "sha256:ffe8a61ba19e940e88f80dee11e9604df591eaf9b3cb97da7f25c6e142a10285",
+      "bytes": 1595,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Star01.mjs",
+      "sha256": "sha256:43e4a6db79ff5a3d75ea5b3861361f547234604c1f4dde3d59de6c11754199db",
+      "bytes": 1202,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Stars02.d.mts",
+      "sha256": "sha256:07435c7e3940bccf1b76f6f4a11e4869c8cca77005eac70a9113a855fea82e6b",
+      "bytes": 185,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Stars02.d.ts",
+      "sha256": "sha256:07435c7e3940bccf1b76f6f4a11e4869c8cca77005eac70a9113a855fea82e6b",
+      "bytes": 185,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Stars02.js",
+      "sha256": "sha256:1a7dddf88e460e78755f29e3c4bde70a6c95bfd40179729960300539e7b8cea6",
+      "bytes": 1177,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Stars02.mjs",
+      "sha256": "sha256:4dee49f7ca14e27da4ca335a3290429d90e1e1b130ce0509ab70b565da0f1ab3",
+      "bytes": 784,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Sun.d.mts",
+      "sha256": "sha256:6e827d9fc4ca86235cf1812fceff5d670284bd20482be15c5314c44f842ba851",
+      "bytes": 177,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Sun.d.ts",
+      "sha256": "sha256:6e827d9fc4ca86235cf1812fceff5d670284bd20482be15c5314c44f842ba851",
+      "bytes": 177,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Sun.js",
+      "sha256": "sha256:2bd80ecba3b333027cf023ff04d5541c0fe7262001e42472f5dff53b2fc21dde",
+      "bytes": 897,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Sun.mjs",
+      "sha256": "sha256:bbe570b0355edc64271ab763b6edbc6cb324cea7c03c7d5befd5ef5b749140b1",
+      "bytes": 504,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Tag01.d.mts",
+      "sha256": "sha256:394364c25c17122e28eb3039fbcff0859bfb34a44eb740963d74ea1f7fab4e9a",
+      "bytes": 181,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Tag01.d.ts",
+      "sha256": "sha256:394364c25c17122e28eb3039fbcff0859bfb34a44eb740963d74ea1f7fab4e9a",
+      "bytes": 181,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Tag01.js",
+      "sha256": "sha256:48eba723a1dcde6ff0d76c543a243fc57c0d7080d4ef27118c8b03db36ffefaa",
+      "bytes": 1228,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Tag01.mjs",
+      "sha256": "sha256:4daa95e5c0075e4b5d222ec7fb56098308c6f2351ecb06653f2988e8f30feaff",
+      "bytes": 835,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Trash01.d.mts",
+      "sha256": "sha256:83db99a3bd5552b048aa4825e996402ff5df56146345fa369ff1050bb7ef67b1",
+      "bytes": 185,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Trash01.d.ts",
+      "sha256": "sha256:83db99a3bd5552b048aa4825e996402ff5df56146345fa369ff1050bb7ef67b1",
+      "bytes": 185,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Trash01.js",
+      "sha256": "sha256:85caaad7cabc5eb3cf89e1db67cde40fc707be3b71eb44a764d730f040b8bad7",
+      "bytes": 1078,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Trash01.mjs",
+      "sha256": "sha256:7422d5906c0336d95a7ff5ff10b26d7ab431b17be44ddb99205e2293ff14f3d0",
+      "bytes": 685,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Truck01.d.mts",
+      "sha256": "sha256:9efe27f338532373311b3780b3e48f7bf08dbf922d26a7aea8e4ed3cf5ea9dbb",
+      "bytes": 185,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Truck01.d.ts",
+      "sha256": "sha256:9efe27f338532373311b3780b3e48f7bf08dbf922d26a7aea8e4ed3cf5ea9dbb",
+      "bytes": 185,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Truck01.js",
+      "sha256": "sha256:e808b9ac73bdd1d8f64a5b36a3d95eb68c18b025f236129dc803f21b3a7ba01b",
+      "bytes": 1231,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Truck01.mjs",
+      "sha256": "sha256:0f64e626cc6116ca1c78fee1d4d2f62cc565a760b4f0e990aeedcd9818d066e9",
+      "bytes": 838,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/UploadCloud02.d.mts",
+      "sha256": "sha256:144f842cff741b99d071d5d865a87a3eb7772a25f9ac41d1aca2d57f914b4b37",
+      "bytes": 197,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/UploadCloud02.d.ts",
+      "sha256": "sha256:144f842cff741b99d071d5d865a87a3eb7772a25f9ac41d1aca2d57f914b4b37",
+      "bytes": 197,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/UploadCloud02.js",
+      "sha256": "sha256:abbe7b28d3916e18f78644103290f4d9b8ea7d2bbb0543551aa32fa72decf441",
+      "bytes": 863,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/UploadCloud02.mjs",
+      "sha256": "sha256:8130594aa2a55a33f7f89f94504070dc94b9ec5c006772ecf89015531455df96",
+      "bytes": 470,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/User01.d.mts",
+      "sha256": "sha256:98b773260f3ddbdfcf35afd7a641c8bb2bd92118c5bfe1d0a8bcdf753f6c4cc3",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/User01.d.ts",
+      "sha256": "sha256:98b773260f3ddbdfcf35afd7a641c8bb2bd92118c5bfe1d0a8bcdf753f6c4cc3",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/User01.js",
+      "sha256": "sha256:d19b5996fc92c5a617906489716ff9ad573d7454d21b1a5566324e7994fca59f",
+      "bytes": 956,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/User01.mjs",
+      "sha256": "sha256:a83b02f4a092453b688d2aa088b4c5fcbe14981275acec2d35577f8a9f04723b",
+      "bytes": 563,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Users01.d.mts",
+      "sha256": "sha256:667efb290190c6c9b3697efe3ab282f085eefa3ad3770c02a2edcd2e2d7eae80",
+      "bytes": 185,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Users01.d.ts",
+      "sha256": "sha256:667efb290190c6c9b3697efe3ab282f085eefa3ad3770c02a2edcd2e2d7eae80",
+      "bytes": 185,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Users01.js",
+      "sha256": "sha256:535df3e0e309978392f8771c344fdcc5eda25d44ececcbe45ef78d414c64bf65",
+      "bytes": 1010,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Users01.mjs",
+      "sha256": "sha256:1f64d68ad92f8a6f71380ba305e3abe9373e1736d961b21dbb50b3723213295b",
+      "bytes": 617,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/X.d.mts",
+      "sha256": "sha256:7e32036b9aea2ee74adbe889f05e1835df71046127d313abc4f87856df72147b",
+      "bytes": 173,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/X.d.ts",
+      "sha256": "sha256:7e32036b9aea2ee74adbe889f05e1835df71046127d313abc4f87856df72147b",
+      "bytes": 173,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/X.js",
+      "sha256": "sha256:cae215bf402fc8b3e56b5d3fbf710a4a9ec2999ca37808cc981367efa58853f2",
+      "bytes": 757,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/X.mjs",
+      "sha256": "sha256:59d9c2744327a38866901bc304692d520c3489282cd36622140a61d4961a0993",
+      "bytes": 364,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/XClose.d.mts",
+      "sha256": "sha256:64507198f49627263196928e8f13368539e3cb731b72e2fbb8a69068c6693005",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/XClose.d.ts",
+      "sha256": "sha256:64507198f49627263196928e8f13368539e3cb731b72e2fbb8a69068c6693005",
+      "bytes": 183,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/XClose.js",
+      "sha256": "sha256:44fbdc06ca5404ca3fadd94822e554da6b5152f25967665c6c739411728460f0",
+      "bytes": 767,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/XClose.mjs",
+      "sha256": "sha256:6a48927be50229f2dc2f0bbb308ca8ebeaca7cebd28af7e663cc949c7a71da47",
+      "bytes": 374,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Zap.d.mts",
+      "sha256": "sha256:8aabc95cda067212fc6817a41ccd8a6b6bcca6e19c7f945e285f80ec998686ec",
+      "bytes": 177,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Zap.d.ts",
+      "sha256": "sha256:8aabc95cda067212fc6817a41ccd8a6b6bcca6e19c7f945e285f80ec998686ec",
+      "bytes": 177,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Zap.js",
+      "sha256": "sha256:56840f74d8becc37d75bd01933e2aaa263168c3b3b4f912ecb2c3be4de516834",
+      "bytes": 939,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/dist/line/Zap.mjs",
+      "sha256": "sha256:4e360dbe36fa2b1c2742b922819d8717639fa6b2c67354d0e9f21ed5c1159695",
+      "bytes": 546,
+      "kind": "copy"
+    },
+    {
+      "path": "vendor/untitledui-pro-icons/package.json",
+      "sha256": "sha256:8757be937fa90c3d0367b13696be08eb26e3c3bae3eb359ecf8ab09449111b98",
+      "bytes": 726,
+      "kind": "generated"
+    }
+  ],
+  "validation": {
+    "gates": [
+      "npm run build",
+      "npm run check",
+      "npm run quality:lint",
+      "npm run quality:e2e"
+    ],
+    "status": "passed"
+  }
+}
