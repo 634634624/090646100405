@@ -7,9 +7,11 @@
 import { useEffect, useMemo, useState } from "react";
 import {
     ArrowRight,
+    Menu01,
     Moon01,
     ShoppingBag03,
     Sun,
+    X,
 } from "@untitledui-pro/icons/line";
 import { Badge } from "@/components/base/badges/badges";
 import { Button as UuiButton } from "@/components/base/buttons/button";
@@ -22,10 +24,20 @@ import {
 export function ApparelStorefront() {
     const [activeCategory, setActiveCategory] = useState<ApparelCategory>("All");
     const [dark, setDark] = useState(false);
+    const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
     useEffect(() => {
         setDark(document.documentElement.classList.contains("dark-mode"));
     }, []);
+
+    useEffect(() => {
+        if (!mobileNavOpen) return;
+        const closeOnEscape = (event: KeyboardEvent) => {
+            if (event.key === "Escape") setMobileNavOpen(false);
+        };
+        window.addEventListener("keydown", closeOnEscape);
+        return () => window.removeEventListener("keydown", closeOnEscape);
+    }, [mobileNavOpen]);
 
     const visibleProducts = useMemo(
         () =>
@@ -79,8 +91,43 @@ export function ApparelStorefront() {
                         >
                             Bag
                         </UuiButton>
+                        <UuiButton
+                            aria-label={mobileNavOpen ? "Close navigation" : "Open navigation"}
+                            aria-expanded={mobileNavOpen}
+                            aria-controls="apparel-mobile-navigation"
+                            color="tertiary"
+                            size="sm"
+                            iconLeading={mobileNavOpen ? X : Menu01}
+                            onPress={() => setMobileNavOpen((open) => !open)}
+                            className="md:hidden"
+                        />
                     </div>
                 </div>
+                {mobileNavOpen && (
+                    <nav
+                        id="apparel-mobile-navigation"
+                        aria-label="Mobile navigation"
+                        className="border-t border-secondary px-4 py-3 md:hidden"
+                    >
+                        <div className="mx-auto flex max-w-7xl flex-col gap-1">
+                            <UuiButton href="/shop/apparel" color="tertiary" size="md" className="justify-start">
+                                Clothing
+                            </UuiButton>
+                            <UuiButton href="/shop" color="tertiary" size="md" className="justify-start">
+                                Living
+                            </UuiButton>
+                            <UuiButton
+                                href="/cart"
+                                color="tertiary"
+                                size="md"
+                                iconLeading={ShoppingBag03}
+                                className="justify-start"
+                            >
+                                Bag
+                            </UuiButton>
+                        </div>
+                    </nav>
+                )}
             </header>
 
             <main>

@@ -142,6 +142,83 @@ async function sourceFingerprint() {
     return `sha256:${hash.digest("hex")}`;
 }
 
+async function exerciseApparelInteractions(page, { route, viewport, baseUrl }) {
+    const failures = [];
+
+    if (route === "/shop/apparel/") {
+        const productHrefs = await page.locator('a[aria-label^="View "]').evaluateAll((anchors) =>
+            anchors.map((anchor) => anchor.getAttribute("href")).filter(Boolean),
+        );
+        if (productHrefs.length !== 6) {
+            failures.push(`expected 6 linked apparel products, found ${productHrefs.length}`);
+        }
+        for (const href of productHrefs) {
+            await page.goto(`${baseUrl}${route}`, { waitUntil: "domcontentloaded" });
+            await page.locator(`a[href="${href}"]`).first().click();
+            await page.waitForURL((url) => url.pathname === href);
+            if (new URL(page.url()).pathname !== href) {
+                failures.push(`product card click did not navigate to ${href}`);
+            }
+        }
+        await page.goto(`${baseUrl}${route}`, { waitUntil: "domcontentloaded" });
+
+        const themeButton = page.getByRole("button", { name: /Use (?:dark|light) theme/ });
+        const startedDark = await page.evaluate(() => document.documentElement.classList.contains("dark-mode"));
+        await themeButton.click();
+        const toggledDark = await page.evaluate(() => document.documentElement.classList.contains("dark-mode"));
+        if (toggledDark === startedDark) failures.push("theme switch did not change rendered theme");
+        await themeButton.click();
+
+        if (viewport.width === 375) {
+            const menuButton = page.getByRole("button", { name: "Open navigation" });
+            await menuButton.click();
+            const mobileNav = page.getByRole("navigation", { name: "Mobile navigation" });
+            if (!await mobileNav.isVisible()) failures.push("mobile menu did not open");
+            if (!await mobileNav.getByRole("link", { name: "Bag" }).isVisible()) {
+                failures.push("mobile menu does not expose bag navigation");
+            }
+            await page.keyboard.press("Tab");
+            const focusInsideMenu = await page.evaluate(() =>
+                document.querySelector('[aria-label="Mobile navigation"]')?.contains(document.activeElement),
+            );
+            if (!focusInsideMenu) failures.push("mobile menu keyboard focus did not reach navigation");
+            await page.keyboard.press("Escape");
+            if (await mobileNav.isVisible()) failures.push("mobile menu did not close on Escape");
+        }
+
+        await page.emulateMedia({ reducedMotion: "reduce" });
+        const reducedMotion = await page.locator('a[aria-label^="View "]').first().evaluate((anchor) => {
+            const style = getComputedStyle(anchor);
+            return {
+                matches: matchMedia("(prefers-reduced-motion: reduce)").matches,
+                transitionProperty: style.transitionProperty,
+            };
+        });
+        if (!reducedMotion.matches || reducedMotion.transitionProperty !== "none") {
+            failures.push(`reduced motion not applied to product cards (${reducedMotion.transitionProperty})`);
+        }
+        await page.emulateMedia({ reducedMotion: "no-preference" });
+    }
+
+    if (/^\/shop\/apparel\/[^/]+\/$/.test(route)) {
+        const sizeButton = page.getByRole("button", { name: "L", exact: true });
+        await sizeButton.click();
+        if (await sizeButton.getAttribute("aria-pressed") !== "true") {
+            failures.push("size selection did not update selected state");
+        }
+        const bagButton = page.getByRole("button", { name: "Add to preview bag" });
+        await bagButton.click();
+        if (!await page.getByRole("button", { name: "Added in size L" }).isVisible()) {
+            failures.push("bag action did not expose selected-size feedback");
+        }
+        if (!await page.getByText(/added for this catalog preview\./).isVisible()) {
+            failures.push("bag action did not expose live confirmation");
+        }
+    }
+
+    return failures;
+}
+
 async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) {
     const failures = [];
     const runtimeErrors = [];
@@ -151,7 +228,10 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
     page.on("pageerror", (error) => runtimeErrors.push(`pageerror: ${error.message}`));
     page.on("requestfailed", (request) => {
         if (request.url().startsWith(baseUrl)) {
-            runtimeErrors.push(`requestfailed: ${request.url()} (${request.failure()?.errorText ?? "unknown"})`);
+            const errorText = request.failure()?.errorText ?? "unknown";
+            if (errorText !== "net::ERR_ABORTED") {
+                runtimeErrors.push(`requestfailed: ${request.url()} (${errorText})`);
+            }
         }
     });
     page.on("response", (response) => {
@@ -315,6 +395,7 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
         );
         if (!focusedVisible) failures.push("keyboard Tab did not reach a visible control");
     }
+    failures.push(...await exerciseApparelInteractions(page, { route, viewport, baseUrl }));
     failures.push(...runtimeErrors);
     await page.evaluate(() => {
         document.documentElement.style.scrollBehavior = "auto";
@@ -325,7 +406,8 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
     const shouldCapture =
         route === [...routePaths][0] ||
         Boolean(documentAudit.heroAudit) ||
-        /(?:cart|checkout)/.test(route);
+        /(?:cart|checkout)/.test(route) ||
+        route === "/shop/apparel/utility-jacket/";
     let screenshot = null;
     if (shouldCapture) {
         screenshot = `${routeSlug(route)}-${viewport.name}-${theme}.png`;

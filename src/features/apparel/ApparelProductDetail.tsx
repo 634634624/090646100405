@@ -3,9 +3,11 @@
 import { useEffect, useState } from "react";
 import {
     CheckCircle,
+    Menu01,
     Moon01,
     ShoppingBag03,
     Sun,
+    X,
 } from "@untitledui-pro/icons/line";
 import { Badge } from "@/components/base/badges/badges";
 import { Button as UuiButton } from "@/components/base/buttons/button";
@@ -17,10 +19,20 @@ export function ApparelProductDetail({ product }: { product: ApparelProduct }) {
     const [dark, setDark] = useState(false);
     const [selectedSize, setSelectedSize] = useState<(typeof sizes)[number]>("M");
     const [added, setAdded] = useState(false);
+    const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
     useEffect(() => {
         setDark(document.documentElement.classList.contains("dark-mode"));
     }, []);
+
+    useEffect(() => {
+        if (!mobileNavOpen) return;
+        const closeOnEscape = (event: KeyboardEvent) => {
+            if (event.key === "Escape") setMobileNavOpen(false);
+        };
+        window.addEventListener("keydown", closeOnEscape);
+        return () => window.removeEventListener("keydown", closeOnEscape);
+    }, [mobileNavOpen]);
 
     const toggleTheme = () => {
         const nextDark = !dark;
@@ -62,8 +74,43 @@ export function ApparelProductDetail({ product }: { product: ApparelProduct }) {
                         >
                             Bag
                         </UuiButton>
+                        <UuiButton
+                            aria-label={mobileNavOpen ? "Close navigation" : "Open navigation"}
+                            aria-expanded={mobileNavOpen}
+                            aria-controls="apparel-product-mobile-navigation"
+                            color="tertiary"
+                            size="sm"
+                            iconLeading={mobileNavOpen ? X : Menu01}
+                            onPress={() => setMobileNavOpen((open) => !open)}
+                            className="md:hidden"
+                        />
                     </div>
                 </div>
+                {mobileNavOpen && (
+                    <nav
+                        id="apparel-product-mobile-navigation"
+                        aria-label="Mobile navigation"
+                        className="border-t border-secondary px-4 py-3 md:hidden"
+                    >
+                        <div className="mx-auto flex max-w-7xl flex-col gap-1">
+                            <UuiButton href="/shop/apparel" color="tertiary" size="md" className="justify-start">
+                                Clothing
+                            </UuiButton>
+                            <UuiButton href="/shop" color="tertiary" size="md" className="justify-start">
+                                Living
+                            </UuiButton>
+                            <UuiButton
+                                href="/cart"
+                                color="tertiary"
+                                size="md"
+                                iconLeading={ShoppingBag03}
+                                className="justify-start"
+                            >
+                                Bag
+                            </UuiButton>
+                        </div>
+                    </nav>
+                )}
             </header>
 
             <main>
@@ -175,4 +222,3 @@ export function ApparelProductDetail({ product }: { product: ApparelProduct }) {
         </div>
     );
 }
-
