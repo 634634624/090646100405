@@ -13,77 +13,14 @@ import {
 } from "@untitledui-pro/icons/line";
 import { Badge } from "@/components/base/badges/badges";
 import { Button as UuiButton } from "@/components/base/buttons/button";
-
-type Category = "All" | "Tops" | "Bottoms" | "Footwear";
-
-interface ApparelProduct {
-    id: string;
-    name: string;
-    category: Exclude<Category, "All">;
-    color: string;
-    price: string;
-    image: string;
-    badge?: string;
-}
-
-const categories: Category[] = ["All", "Tops", "Bottoms", "Footwear"];
-
-const products: ApparelProduct[] = [
-    {
-        id: "heavyweight-tee",
-        name: "Heavyweight tee",
-        category: "Tops",
-        color: "Natural",
-        price: "$48",
-        image: "/img/apparel/tee.jpg",
-        badge: "New",
-    },
-    {
-        id: "work-overshirt",
-        name: "Work overshirt",
-        category: "Tops",
-        color: "Washed charcoal",
-        price: "$118",
-        image: "/img/apparel/overshirt.jpg",
-    },
-    {
-        id: "textured-knit",
-        name: "Textured knit",
-        category: "Tops",
-        color: "Rust",
-        price: "$96",
-        image: "/img/apparel/knit.jpg",
-        badge: "Limited",
-    },
-    {
-        id: "relaxed-trouser",
-        name: "Relaxed trouser",
-        category: "Bottoms",
-        color: "Midnight",
-        price: "$88",
-        image: "/img/apparel/trousers.jpg",
-    },
-    {
-        id: "canvas-low",
-        name: "Canvas low",
-        category: "Footwear",
-        color: "Warm white",
-        price: "$72",
-        image: "/img/apparel/sneakers.jpg",
-    },
-    {
-        id: "utility-jacket",
-        name: "Utility jacket",
-        category: "Tops",
-        color: "Olive",
-        price: "$148",
-        image: "/img/apparel/jacket.jpg",
-        badge: "Bestseller",
-    },
-];
+import {
+    apparelCategories,
+    apparelProducts,
+    type ApparelCategory,
+} from "./catalog";
 
 export function ApparelStorefront() {
-    const [activeCategory, setActiveCategory] = useState<Category>("All");
+    const [activeCategory, setActiveCategory] = useState<ApparelCategory>("All");
     const [dark, setDark] = useState(false);
 
     useEffect(() => {
@@ -93,8 +30,8 @@ export function ApparelStorefront() {
     const visibleProducts = useMemo(
         () =>
             activeCategory === "All"
-                ? products
-                : products.filter((product) => product.category === activeCategory),
+                ? apparelProducts
+                : apparelProducts.filter((product) => product.category === activeCategory),
         [activeCategory],
     );
 
@@ -148,48 +85,76 @@ export function ApparelStorefront() {
 
             <main>
                 <section data-uui-critical-hero className="border-b border-secondary bg-secondary">
-                    <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 px-4 py-10 sm:px-6 md:grid-cols-[minmax(0,0.9fr)_minmax(18rem,1.1fr)] md:py-14 lg:px-8">
-                        <div className="max-w-xl">
+                    <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-10 sm:px-6 md:grid-cols-[minmax(0,0.8fr)_minmax(20rem,1.2fr)] md:py-14 lg:gap-16 lg:px-8">
+                        <div data-uui-hero-actions className="max-w-lg">
                             <Badge color="brand">
-                                New season
+                                Spring / Summer 2026
                             </Badge>
-                            <h1 className="mt-4 text-display-sm font-semibold tracking-tight text-primary md:text-display-md">
-                                Everyday layers, quietly considered.
+                            <h1 className="mt-5 text-display-md font-semibold tracking-tight text-primary md:text-display-lg">
+                                Six staples, built to last.
                             </h1>
-                            <p className="mt-4 max-w-lg text-md text-tertiary md:text-lg">
-                                A compact edit of durable staples in natural textures and easy colors.
+                            <p className="mt-5 max-w-md text-md text-tertiary md:text-lg">
+                                Heavyweight cotton, useful layers, and an easy neutral palette for the everyday rotation.
                             </p>
-                            <div data-uui-hero-actions className="mt-6 flex flex-wrap gap-3">
+                            <div className="mt-6 flex flex-wrap gap-3">
                                 <UuiButton href="#new-arrivals" size="lg" iconTrailing={ArrowRight}>
-                                    Shop new arrivals
+                                    Shop the collection
                                 </UuiButton>
-                                <UuiButton href="#collection" color="secondary" size="lg">
-                                    View collection
+                                <UuiButton href="/shop/apparel/utility-jacket" color="link-gray" size="lg">
+                                    See the utility jacket
                                 </UuiButton>
                             </div>
+                            <dl className="mt-8 grid grid-cols-2 gap-5 border-t border-primary pt-5">
+                                <div>
+                                    <dt className="text-xs font-semibold uppercase tracking-wider text-tertiary">Edit</dt>
+                                    <dd className="mt-1 text-sm font-semibold text-primary">6 considered pieces</dd>
+                                </div>
+                                <div>
+                                    <dt className="text-xs font-semibold uppercase tracking-wider text-tertiary">Returns</dt>
+                                    <dd className="mt-1 text-sm font-semibold text-primary">30 days, no fuss</dd>
+                                </div>
+                            </dl>
                         </div>
 
                         <div
                             data-uui-hero-media
-                            className="grid min-w-0 grid-cols-2 gap-3"
+                            className="relative min-h-[25rem] min-w-0 overflow-hidden rounded-2xl bg-primary sm:min-h-[31rem]"
                             aria-label="Featured apparel"
                         >
-                            <img
-                                src="/img/apparel/tee.jpg"
-                                alt="Natural heavyweight T-shirt"
-                                width="491"
-                                height="493"
-                                loading="eager"
-                                className="aspect-[4/5] w-full rounded-xl object-cover"
-                            />
                             <img
                                 src="/img/apparel/jacket.jpg"
                                 alt="Olive utility jacket"
                                 width="491"
                                 height="493"
                                 loading="eager"
-                                className="aspect-[4/5] w-full rounded-xl object-cover"
+                                className="absolute inset-0 size-full object-cover"
                             />
+                            <a
+                                href="/shop/apparel/heavyweight-tee"
+                                className="absolute top-3 right-3 block w-28 rounded-xl bg-primary p-2 shadow-lg outline-brand transition duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:top-5 sm:right-5 sm:w-40"
+                            >
+                                <img
+                                    src="/img/apparel/tee.jpg"
+                                    alt="Natural heavyweight T-shirt"
+                                    width="491"
+                                    height="493"
+                                    loading="eager"
+                                    className="aspect-square w-full rounded-lg object-cover"
+                                />
+                                <span className="mt-2 block truncate text-xs font-semibold text-primary sm:text-sm">
+                                    Heavyweight tee · $48
+                                </span>
+                            </a>
+                            <a
+                                href="/shop/apparel/utility-jacket"
+                                className="absolute right-3 bottom-3 left-3 flex items-center justify-between gap-4 rounded-xl bg-primary/95 px-4 py-3 shadow-lg outline-brand backdrop-blur-sm focus-visible:outline-2 focus-visible:outline-offset-2 sm:right-auto sm:bottom-5 sm:left-5 sm:min-w-64"
+                            >
+                                <span>
+                                    <span className="block text-xs text-tertiary">Featured layer</span>
+                                    <span className="mt-0.5 block text-sm font-semibold text-primary">Utility jacket · Olive</span>
+                                </span>
+                                <ArrowRight aria-hidden="true" className="size-5 shrink-0 text-brand-secondary" />
+                            </a>
                         </div>
                     </div>
                 </section>
@@ -198,17 +163,17 @@ export function ApparelStorefront() {
                     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
                         <div className="flex flex-col gap-5 border-b border-secondary pb-6 md:flex-row md:items-end md:justify-between">
                             <div>
-                                <p className="text-sm font-semibold text-brand-secondary">Spring / Summer</p>
+                                <p className="text-sm font-semibold text-brand-secondary">Fieldwork Goods / 01</p>
                                 <h2 id="new-arrivals" className="mt-1 text-display-xs font-semibold text-primary md:text-display-sm">
-                                    New arrivals
+                                    The everyday edit
                                 </h2>
                                 <p className="mt-2 text-sm text-tertiary">
-                                    Six versatile pieces. Placeholder catalog for layout review.
+                                    Six versatile pieces in one easy rotation.
                                 </p>
                             </div>
 
                             <div className="flex flex-wrap gap-2" role="group" aria-label="Filter products by category">
-                                {categories.map((category) => {
+                                {apparelCategories.map((category) => {
                                     const selected = activeCategory === category;
                                     return (
                                         <UuiButton
@@ -231,47 +196,53 @@ export function ApparelStorefront() {
                         >
                             {visibleProducts.map((product) => (
                                 <article key={product.id} className="group min-w-0">
-                                    <div className="relative overflow-hidden rounded-xl bg-secondary">
-                                        <img
-                                            src={product.image}
-                                            alt={`${product.name} in ${product.color}`}
-                                            width="491"
-                                            height="493"
-                                            loading="lazy"
-                                            className="aspect-[4/5] w-full object-cover transition duration-200 group-hover:scale-[1.015]"
-                                        />
-                                        {product.badge && (
-                                            <Badge
-                                                color="gray"
-                                                type="modern"
-                                                className="absolute top-2 left-2 sm:top-3 sm:left-3"
-                                            >
-                                                {product.badge}
-                                            </Badge>
-                                        )}
-                                    </div>
+                                    <a
+                                        href={`/shop/apparel/${product.id}`}
+                                        className="block rounded-xl outline-brand transition duration-200 hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                                        aria-label={`View ${product.name} in ${product.color}`}
+                                    >
+                                        <div className="relative overflow-hidden rounded-xl bg-secondary ring-1 ring-secondary transition duration-200 group-hover:shadow-lg group-hover:ring-primary">
+                                            <img
+                                                src={product.image}
+                                                alt={`${product.name} in ${product.color}`}
+                                                width="491"
+                                                height="493"
+                                                loading="lazy"
+                                                className="aspect-[4/5] w-full object-cover transition duration-300 group-hover:scale-[1.025] motion-reduce:transition-none"
+                                            />
+                                            {product.badge && (
+                                                <Badge
+                                                    color="gray"
+                                                    type="modern"
+                                                    className="absolute top-2 left-2 sm:top-3 sm:left-3"
+                                                >
+                                                    {product.badge}
+                                                </Badge>
+                                            )}
+                                        </div>
 
-                                    <div className="mt-3 flex min-w-0 items-start justify-between gap-2">
-                                        <div className="min-w-0">
-                                            <h3 className="truncate text-sm font-semibold text-primary sm:text-md">
-                                                {product.name}
-                                            </h3>
-                                            <p className="mt-0.5 truncate text-xs text-tertiary sm:text-sm">
-                                                {product.color}
+                                        <div className="mt-3 flex min-w-0 items-start justify-between gap-2">
+                                            <div className="min-w-0">
+                                                <h3 className="truncate text-sm font-semibold text-primary transition-colors group-hover:text-brand-secondary sm:text-md">
+                                                    {product.name}
+                                                </h3>
+                                                <p className="mt-0.5 truncate text-xs text-tertiary sm:text-sm">
+                                                    {product.color}
+                                                </p>
+                                            </div>
+                                            <p className="shrink-0 text-sm font-semibold text-primary sm:text-md">
+                                                {product.price}
                                             </p>
                                         </div>
-                                        <p className="shrink-0 text-sm font-semibold text-primary sm:text-md">
-                                            {product.price}
-                                        </p>
-                                    </div>
+                                    </a>
                                 </article>
                             ))}
                         </div>
 
-                        <div className="mt-12 flex justify-center">
-                            <UuiButton href="/shop/apparel#collection" color="secondary" size="lg">
-                                View all clothing
-                            </UuiButton>
+                        <div className="mt-12 flex justify-center border-t border-secondary pt-8">
+                            <p className="text-sm text-tertiary">
+                                Showing {visibleProducts.length} of {apparelProducts.length} pieces
+                            </p>
                         </div>
                     </div>
                 </section>
