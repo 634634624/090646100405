@@ -93,4 +93,3 @@ export const apparelProducts: ApparelProduct[] = [
         badge: "Bestseller",
     },
 ];
-
