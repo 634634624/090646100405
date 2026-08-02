@@ -1,8 +1,0 @@
----
-import StorefrontLayout from "@/layouts/StorefrontLayout.astro";
-import { ProductDetail } from "@/features/storefront/ProductDetail";
-import { storeProducts, type StoreProduct } from "@/features/storefront/catalog";
-export function getStaticPaths() { return storeProducts.map((product) => ({ params: { slug: product.id }, props: { product } })); }
-const { product } = Astro.props as { product: StoreProduct };
----
-<StorefrontLayout title={product.name} description={product.description}><ProductDetail product={product} client:load /></StorefrontLayout>
