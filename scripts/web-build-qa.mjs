@@ -11,6 +11,7 @@ const dist = path.join(root, "dist");
 const artifactRoot = path.join(root, "artifacts", "web-build-qa");
 const viewports = [
     { name: "mobile", width: 375, height: 812 },
+    { name: "compact", width: 560, height: 900 },
     { name: "desktop", width: 1440, height: 900 },
 ];
 const themes = ["light", "dark"];
@@ -188,7 +189,7 @@ async function exerciseStorefrontInteractions(page, { route, viewport, baseUrl }
         if (toggledDark === startedDark) failures.push("theme switch did not change rendered theme");
         await themeButton.click();
 
-        if (viewport.width === 375) {
+        if (viewport.width < 768) {
             const menuButton = page.getByRole("button", { name: "Navigáció megnyitása" });
             await menuButton.click();
             const mobileNav = page.getByRole("navigation", { name: "Mobil navigáció" });
@@ -308,7 +309,7 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
     await page.waitForFunction(() => !document.querySelector("astro-island[ssr]"));
     await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
 
-    const documentAudit = await page.evaluate(async ({ knownRoutes, currentRoute, mobile }) => {
+    const documentAudit = await page.evaluate(async ({ knownRoutes, currentRoute, mobile, touchLayout }) => {
         const visible = (element) => {
             const style = getComputedStyle(element);
             const rect = element.getBoundingClientRect();
@@ -362,6 +363,16 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
         const dialogs = [...document.querySelectorAll('[role="dialog"], dialog[open]')]
             .filter(visible)
             .map((element) => element.getAttribute("aria-label") || element.textContent?.trim().slice(0, 80) || "dialog");
+        const smallTouchTargets = touchLayout
+            ? [...document.querySelectorAll('button, input:not([type="checkbox"]):not([type="radio"]), header a[href], footer a[href], label:has(input[type="checkbox"]), label:has(input[type="radio"])')]
+                .filter(visible)
+                .map((element) => {
+                    const rect = element.getBoundingClientRect();
+                    return { element, width: Math.round(rect.width), height: Math.round(rect.height) };
+                })
+                .filter(({ width, height }) => width < 44 || height < 44)
+                .map(({ element, width, height }) => `${element.getAttribute("aria-label") || element.textContent?.trim().slice(0, 48) || element.tagName} (${width}×${height})`)
+            : [];
         const hero = document.querySelector("[data-uui-critical-hero]");
         let heroAudit = null;
         if (hero) {
@@ -387,6 +398,7 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
             brokenImages,
             deadLinks: [...new Set(deadLinks)],
             dialogs,
+            smallTouchTargets,
             h1Count: document.querySelectorAll("h1").length,
             horizontalOverflow: Math.ceil(document.documentElement.scrollWidth - innerWidth),
             heroAudit,
@@ -400,13 +412,14 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
             route: currentRoute,
             mobile,
         };
-    }, { knownRoutes: [...routePaths], currentRoute: route, mobile: viewport.width === 375 });
+    }, { knownRoutes: [...routePaths], currentRoute: route, mobile: viewport.width === 375, touchLayout: viewport.width < 768 });
 
     if (documentAudit.horizontalOverflow > 1) failures.push(`horizontal overflow ${documentAudit.horizontalOverflow}px`);
     if (documentAudit.h1Count !== 1) failures.push(`expected one H1, found ${documentAudit.h1Count}`);
     if (documentAudit.brokenImages.length) failures.push(`broken images: ${documentAudit.brokenImages.join(", ")}`);
     if (documentAudit.deadLinks.length) failures.push(`dead links: ${documentAudit.deadLinks.join(", ")}`);
     if (documentAudit.dialogs.length) failures.push(`automatic visible dialogs: ${documentAudit.dialogs.join(", ")}`);
+    if (documentAudit.smallTouchTargets.length) failures.push(`touch targets below 44px: ${documentAudit.smallTouchTargets.join(", ")}`);
     if (!documentAudit.metadata.title) failures.push("missing document title");
     if (!documentAudit.metadata.description) failures.push("missing meta description");
     if (
@@ -471,11 +484,12 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
             "/checkout/",
             "/gyik/",
             "/aszf/",
+            "/suti-beallitasok/",
         ].includes(route);
     let screenshot = null;
     if (shouldCapture) {
         screenshot = `${routeSlug(route)}-${viewport.name}-${theme}.png`;
-        const fullPage = route === "/shop/" || route.startsWith("/kategoriak/") || route === "/gyik/" || route === "/aszf/";
+        const fullPage = route === "/shop/" || route.startsWith("/kategoriak/") || route === "/gyik/" || route === "/aszf/" || route === "/suti-beallitasok/";
         await page.screenshot({ path: path.join(artifactRoot, screenshot), fullPage });
     }
     return {

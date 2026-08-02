@@ -82,18 +82,18 @@ export function Storefront({ initialCategory = "Mind" }: { initialCategory?: Sto
         <div className="min-h-screen bg-primary text-primary">
             <header className="border-b border-secondary bg-primary">
                 <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-                    <a href="/" className="shrink-0 text-lg font-semibold tracking-tight text-primary outline-brand focus-visible:outline-2 focus-visible:outline-offset-2">
+                    <a href="/" className="inline-flex min-h-11 shrink-0 items-center text-lg font-semibold tracking-tight text-primary outline-brand focus-visible:outline-2 focus-visible:outline-offset-2">
                         {STOREFRONT.brand.name}
                     </a>
                     <nav aria-label="Elsődleges navigáció" className="hidden items-center gap-6 md:flex">
-                        <a className="text-sm font-semibold text-primary" href="/shop">Termékek</a>
-                        <a className="text-sm font-medium text-tertiary hover:text-primary" href="/kategoriak/muszaki">Műszaki</a>
-                        <a className="text-sm font-medium text-tertiary hover:text-primary" href="/kategoriak/haztartas">Háztartás</a>
-                        <a className="text-sm font-medium text-tertiary hover:text-primary" href="/gyik">Segítség</a>
+                        <a className="inline-flex min-h-11 items-center text-sm font-semibold text-primary" href="/shop">Termékek</a>
+                        <a className="inline-flex min-h-11 items-center text-sm font-medium text-tertiary hover:text-primary" href="/kategoriak/muszaki">Műszaki</a>
+                        <a className="inline-flex min-h-11 items-center text-sm font-medium text-tertiary hover:text-primary" href="/kategoriak/haztartas">Háztartás</a>
+                        <a className="inline-flex min-h-11 items-center text-sm font-medium text-tertiary hover:text-primary" href="/gyik">Segítség</a>
                     </nav>
                     <div className="flex items-center gap-1">
-                        <UuiButton aria-label={dark ? "Világos megjelenés" : "Sötét megjelenés"} color="tertiary" size="sm" iconLeading={dark ? Sun : Moon01} onPress={toggleTheme} />
-                        <UuiButton href="/cart" color="tertiary" size="sm" iconLeading={ShoppingBag03} className="hidden sm:inline-flex">
+                        <UuiButton aria-label={dark ? "Világos megjelenés" : "Sötét megjelenés"} color="tertiary" size="lg" iconLeading={dark ? Sun : Moon01} onPress={toggleTheme} />
+                        <UuiButton href="/cart" color="tertiary" size="lg" iconLeading={ShoppingBag03} className="hidden sm:inline-flex">
                             Kosár ({cartCount})
                         </UuiButton>
                         <UuiButton
@@ -101,7 +101,7 @@ export function Storefront({ initialCategory = "Mind" }: { initialCategory?: Sto
                             aria-expanded={mobileNavOpen}
                             aria-controls="store-mobile-navigation"
                             color="tertiary"
-                            size="sm"
+                            size="lg"
                             iconLeading={mobileNavOpen ? X : Menu01}
                             onPress={() => setMobileNavOpen((open) => !open)}
                             className="md:hidden"
@@ -111,11 +111,11 @@ export function Storefront({ initialCategory = "Mind" }: { initialCategory?: Sto
                 {mobileNavOpen && (
                     <nav id="store-mobile-navigation" aria-label="Mobil navigáció" className="border-t border-secondary px-4 py-3 md:hidden">
                         <div className="mx-auto flex max-w-7xl flex-col gap-1">
-                            <UuiButton href="/shop" color="tertiary" size="md" className="justify-start">Termékek</UuiButton>
-                            <UuiButton href="/kategoriak/muszaki" color="tertiary" size="md" className="justify-start">Műszaki</UuiButton>
-                            <UuiButton href="/kategoriak/haztartas" color="tertiary" size="md" className="justify-start">Háztartás</UuiButton>
-                            <UuiButton href="/gyik" color="tertiary" size="md" className="justify-start">Segítség</UuiButton>
-                            <UuiButton href="/cart" color="tertiary" size="md" iconLeading={ShoppingBag03} className="justify-start">Kosár ({cartCount})</UuiButton>
+                            <UuiButton href="/shop" color="tertiary" size="lg" className="justify-start">Termékek</UuiButton>
+                            <UuiButton href="/kategoriak/muszaki" color="tertiary" size="lg" className="justify-start">Műszaki</UuiButton>
+                            <UuiButton href="/kategoriak/haztartas" color="tertiary" size="lg" className="justify-start">Háztartás</UuiButton>
+                            <UuiButton href="/gyik" color="tertiary" size="lg" className="justify-start">Segítség</UuiButton>
+                            <UuiButton href="/cart" color="tertiary" size="lg" iconLeading={ShoppingBag03} className="justify-start">Kosár ({cartCount})</UuiButton>
                         </div>
                     </nav>
                 )}
@@ -132,9 +132,9 @@ export function Storefront({ initialCategory = "Mind" }: { initialCategory?: Sto
                             <p className="mt-5 max-w-md text-pretty text-md text-tertiary md:text-lg">
                                 Hasznos műszaki és háztartási termékek, világos forintárakkal és egyszerű vásárlással.
                             </p>
-                            <div className="mt-6 flex flex-wrap gap-3">
+                            <div className="mt-6 flex flex-col items-stretch gap-3 min-[480px]:flex-row min-[480px]:items-center">
                                 <UuiButton href="#termekek" size="lg" iconTrailing={ArrowRight}>Termékek megtekintése</UuiButton>
-                                <UuiButton href={`/products/${featuredProduct.id}`} color="link-gray" size="lg">Kiemelt termék</UuiButton>
+                                <UuiButton href={`/products/${featuredProduct.id}`} color="secondary" size="lg" iconTrailing={ArrowRight}>Kiemelt termék</UuiButton>
                             </div>
                             <dl className="mt-8 grid grid-cols-2 gap-5 border-t border-primary pt-5">
                                 <div><dt className="text-xs font-semibold uppercase tracking-wider text-tertiary">Kínálat</dt><dd className="mt-1 text-sm font-semibold text-primary">{visibleProducts.length} induló termék</dd></div>
@@ -161,12 +161,12 @@ export function Storefront({ initialCategory = "Mind" }: { initialCategory?: Sto
                             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                                 <div><p className="text-sm font-semibold text-brand-secondary">{STOREFRONT.brand.name} / 01</p><h2 className="mt-1 text-display-xs font-semibold text-primary md:text-display-sm">Kevesebb keresgélés. Jobb döntés.</h2><p className="mt-2 text-sm text-tertiary">Kereshető, szűrhető induló kínálat.</p></div>
                                 <div className="flex flex-wrap gap-2" role="group" aria-label="Termékek szűrése kategória szerint">
-                                    {storeCategories.map((category) => <UuiButton key={category} size="sm" color={activeCategory === category ? "primary" : "secondary"} aria-pressed={activeCategory === category} onPress={() => setActiveCategory(category)}>{category}</UuiButton>)}
+                                    {storeCategories.map((category) => <UuiButton key={category} size="lg" color={activeCategory === category ? "primary" : "secondary"} aria-pressed={activeCategory === category} onPress={() => setActiveCategory(category)}>{category}</UuiButton>)}
                                 </div>
                             </div>
                             <div className="grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_13rem]">
-                                <UuiInput size="sm" label="Keresés" placeholder="Név, kategória vagy cikkszám" icon={SearchLg} value={query} onChange={updateSearch} />
-                                <UuiSelect size="sm" label="Rendezés" aria-label="Rendezés" items={sortItems} value={sort} onChange={(key) => key && setSort(String(key) as SortId)}>{(item) => <UuiSelect.Item id={item.id}>{item.label}</UuiSelect.Item>}</UuiSelect>
+                                <UuiInput size="lg" label="Keresés" placeholder="Név, kategória vagy cikkszám" icon={SearchLg} value={query} onChange={updateSearch} />
+                                <UuiSelect size="lg" label="Rendezés" aria-label="Rendezés" items={sortItems} value={sort} onChange={(key) => key && setSort(String(key) as SortId)}>{(item) => <UuiSelect.Item id={item.id}>{item.label}</UuiSelect.Item>}</UuiSelect>
                             </div>
                         </div>
 
@@ -188,7 +188,7 @@ export function Storefront({ initialCategory = "Mind" }: { initialCategory?: Sto
                                 ))}
                             </div>
                         ) : (
-                            <div className="py-16 text-center"><h3 className="text-lg font-semibold text-primary">Nincs találat</h3><p className="mt-2 text-sm text-tertiary">Próbálj másik keresést vagy kategóriát.</p><UuiButton className="mt-5" color="secondary" onPress={() => { setQuery(""); setActiveCategory("Mind"); }}>Szűrők törlése</UuiButton></div>
+                            <div className="py-16 text-center"><h3 className="text-lg font-semibold text-primary">Nincs találat</h3><p className="mt-2 text-sm text-tertiary">Próbálj másik keresést vagy kategóriát.</p><UuiButton className="mt-5" color="secondary" size="lg" onPress={() => { setQuery(""); setActiveCategory("Mind"); }}>Szűrők törlése</UuiButton></div>
                         )}
                         <div className="mt-12 flex justify-center border-t border-secondary pt-8"><p className="text-sm text-tertiary">{visibleProducts.length} / {storeProducts.length} termék</p></div>
                     </div>
@@ -196,7 +196,7 @@ export function Storefront({ initialCategory = "Mind" }: { initialCategory?: Sto
 
                 <section className="border-y border-secondary bg-secondary"><div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-8 text-sm sm:grid-cols-3 sm:px-6 lg:px-8"><div><p className="font-semibold text-primary">Világos szállítás</p><p className="mt-1 text-tertiary">A végleges díj rendelés előtt látható.</p></div><div><p className="font-semibold text-primary">Egyszerű segítség</p><p className="mt-1 text-tertiary">Rendelési azonosítóval gyorsabb ügyintézés.</p></div><div><p className="font-semibold text-primary">Biztonságos fizetés</p><p className="mt-1 text-tertiary">Bankkártyaadatot csak jóváhagyott szolgáltató kezelhet.</p></div></div></section>
             </main>
-            <footer className="bg-primary"><div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 text-sm sm:grid-cols-[minmax(0,1fr)_auto] sm:px-6 lg:px-8"><div><p className="font-semibold text-primary">{STOREFRONT.brand.name}</p><p className="mt-1 text-tertiary">Üzemeltető: {STOREFRONT.legal.companyName}</p></div><nav aria-label="Lábléc" className="flex flex-wrap gap-x-5 gap-y-2 text-secondary"><a href="/szallitas">Szállítás</a><a href="/visszakuldes">Visszaküldés</a><a href="/garancia">Garancia</a><a href="/kapcsolat">Kapcsolat</a><a href="/adatvedelem">Adatvédelem</a><a href="/aszf">ÁSZF</a><a href="/suti-beallitasok">Sütik</a></nav></div></footer>
+            <footer className="bg-primary"><div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 text-sm sm:grid-cols-[minmax(0,1fr)_auto] sm:px-6 lg:px-8"><div><p className="font-semibold text-primary">{STOREFRONT.brand.name}</p><p className="mt-1 text-tertiary">Üzemeltető: {STOREFRONT.legal.companyName}</p></div><nav aria-label="Lábléc" className="flex flex-wrap gap-x-5 text-secondary"><a className="inline-flex min-h-11 min-w-11 items-center" href="/szallitas">Szállítás</a><a className="inline-flex min-h-11 min-w-11 items-center" href="/visszakuldes">Visszaküldés</a><a className="inline-flex min-h-11 min-w-11 items-center" href="/garancia">Garancia</a><a className="inline-flex min-h-11 min-w-11 items-center" href="/kapcsolat">Kapcsolat</a><a className="inline-flex min-h-11 min-w-11 items-center" href="/adatvedelem">Adatvédelem</a><a className="inline-flex min-h-11 min-w-11 items-center" href="/aszf">ÁSZF</a><a className="inline-flex min-h-11 min-w-11 items-center" href="/suti-beallitasok">Sütik</a></nav></div></footer>
         </div>
     );
 }

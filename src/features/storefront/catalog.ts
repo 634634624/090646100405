@@ -54,7 +54,7 @@ export const storeProducts: StoreProduct[] = [
             { label: "Elhelyezés", value: "Polc vagy alacsony szekrény" },
             { label: "Készlet", value: "Beszállítói frissítés szerint" },
         ],
-        badge: "Kevés van",
+        badge: "Limitált",
         source: "demo-webshippy",
     },
     {
