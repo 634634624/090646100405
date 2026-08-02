@@ -8,6 +8,7 @@
     "start": "astro dev --host",
     "build": "astro build",
     "check": "astro check",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "quality:lint": "node scripts/client-quality.mjs",
     "browser:stale:check": "node scripts/headless-browser-guard.mjs check",
     "browser:stale:cleanup": "node scripts/headless-browser-guard.mjs cleanup --max-age-seconds 0",
@@ -15,7 +16,7 @@
     "prequality:e2e": "node scripts/headless-browser-guard.mjs cleanup --max-age-seconds 0",
     "quality:e2e": "node scripts/web-build-qa.mjs",
     "postquality:e2e": "node scripts/headless-browser-guard.mjs cleanup --max-age-seconds 0",
-    "quality:closeout": "npm run check && npm run build && npm run quality:lint && npm run quality:e2e"
+    "quality:closeout": "npm run check && npm test && npm run build && npm run quality:lint && npm run quality:e2e"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.0",

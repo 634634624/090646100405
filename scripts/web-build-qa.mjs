@@ -142,15 +142,16 @@ async function sourceFingerprint() {
     return `sha256:${hash.digest("hex")}`;
 }
 
-async function exerciseApparelInteractions(page, { route, viewport, baseUrl }) {
+async function exerciseStorefrontInteractions(page, { route, viewport, baseUrl }) {
     const failures = [];
 
-    if (route === "/shop/apparel/") {
-        const productHrefs = await page.locator('a[aria-label^="View "]').evaluateAll((anchors) =>
+    if (route === "/shop/") {
+        const productLinks = page.locator('a[aria-label$=" megtekintése"]');
+        const productHrefs = await productLinks.evaluateAll((anchors) =>
             anchors.map((anchor) => anchor.getAttribute("href")).filter(Boolean),
         );
         if (productHrefs.length !== 6) {
-            failures.push(`expected 6 linked apparel products, found ${productHrefs.length}`);
+            failures.push(`expected 6 linked products, found ${productHrefs.length}`);
         }
         for (const href of productHrefs) {
             await page.goto(`${baseUrl}${route}`, { waitUntil: "domcontentloaded" });
@@ -162,7 +163,25 @@ async function exerciseApparelInteractions(page, { route, viewport, baseUrl }) {
         }
         await page.goto(`${baseUrl}${route}`, { waitUntil: "domcontentloaded" });
 
-        const themeButton = page.getByRole("button", { name: /Use (?:dark|light) theme/ });
+        const search = page.getByPlaceholder("Név, kategória vagy cikkszám");
+        await search.fill("DEMO-TECH-003");
+        if (await productLinks.count() !== 1) failures.push("search did not narrow the product list to one result");
+        await search.fill("");
+
+        const categoryGroup = page.getByRole("group", { name: "Termékek szűrése kategória szerint" });
+        await categoryGroup.getByRole("button", { name: "Műszaki", exact: true }).click();
+        if (await productLinks.count() !== 3) failures.push("category filter did not show the three technical products");
+        await categoryGroup.getByRole("button", { name: "Mind", exact: true }).click();
+
+        const sortTrigger = page.getByLabel("Rendezés").first();
+        await sortTrigger.click();
+        await page.getByRole("option", { name: "Ár: növekvő" }).click();
+        const firstProduct = await productLinks.first().getAttribute("href");
+        if (firstProduct !== "/products/olvasosarok-fenycsomag") {
+            failures.push(`price sort put ${firstProduct ?? "nothing"} first`);
+        }
+
+        const themeButton = page.getByRole("button", { name: /(?:Sötét|Világos) megjelenés/ });
         const startedDark = await page.evaluate(() => document.documentElement.classList.contains("dark-mode"));
         await themeButton.click();
         const toggledDark = await page.evaluate(() => document.documentElement.classList.contains("dark-mode"));
@@ -170,24 +189,27 @@ async function exerciseApparelInteractions(page, { route, viewport, baseUrl }) {
         await themeButton.click();
 
         if (viewport.width === 375) {
-            const menuButton = page.getByRole("button", { name: "Open navigation" });
+            const menuButton = page.getByRole("button", { name: "Navigáció megnyitása" });
             await menuButton.click();
-            const mobileNav = page.getByRole("navigation", { name: "Mobile navigation" });
+            const mobileNav = page.getByRole("navigation", { name: "Mobil navigáció" });
             if (!await mobileNav.isVisible()) failures.push("mobile menu did not open");
-            if (!await mobileNav.getByRole("link", { name: "Bag" }).isVisible()) {
-                failures.push("mobile menu does not expose bag navigation");
+            if (!await mobileNav.getByRole("link", { name: /Kosár/ }).isVisible()) {
+                failures.push("mobile menu does not expose cart navigation");
             }
             await page.keyboard.press("Tab");
             const focusInsideMenu = await page.evaluate(() =>
-                document.querySelector('[aria-label="Mobile navigation"]')?.contains(document.activeElement),
+                document.querySelector('[aria-label="Mobil navigáció"]')?.contains(document.activeElement),
             );
             if (!focusInsideMenu) failures.push("mobile menu keyboard focus did not reach navigation");
             await page.keyboard.press("Escape");
             if (await mobileNav.isVisible()) failures.push("mobile menu did not close on Escape");
+            await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(resolve)));
+            const focusReturned = await menuButton.evaluate((element) => element === document.activeElement);
+            if (!focusReturned) failures.push("mobile menu did not return focus after Escape");
         }
 
         await page.emulateMedia({ reducedMotion: "reduce" });
-        const reducedMotion = await page.locator('a[aria-label^="View "]').first().evaluate((anchor) => {
+        const reducedMotion = await productLinks.first().evaluate((anchor) => {
             const style = getComputedStyle(anchor);
             return {
                 matches: matchMedia("(prefers-reduced-motion: reduce)").matches,
@@ -200,20 +222,49 @@ async function exerciseApparelInteractions(page, { route, viewport, baseUrl }) {
         await page.emulateMedia({ reducedMotion: "no-preference" });
     }
 
-    if (/^\/shop\/apparel\/[^/]+\/$/.test(route)) {
-        const sizeButton = page.getByRole("button", { name: "L", exact: true });
-        await sizeButton.click();
-        if (await sizeButton.getAttribute("aria-pressed") !== "true") {
-            failures.push("size selection did not update selected state");
+    if (route === "/products/otthoni-zene-csomag/") {
+        const increase = page.getByRole("button", { name: "Mennyiség növelése" });
+        await increase.click();
+        const addButton = page.getByRole("button", { name: "Kosárba teszem" });
+        await addButton.click();
+        if (!await page.getByRole("button", { name: "2 darab a kosárban" }).isVisible()) {
+            failures.push("product add did not expose quantity feedback");
         }
-        const bagButton = page.getByRole("button", { name: "Add to preview bag" });
-        await bagButton.click();
-        if (!await page.getByRole("button", { name: "Added in size L" }).isVisible()) {
-            failures.push("bag action did not expose selected-size feedback");
+        const persisted = await page.evaluate(() => JSON.parse(localStorage.getItem("valogatott-cart-v1") ?? "[]"));
+        if (persisted[0]?.productId !== "otthoni-zene-csomag" || persisted[0]?.quantity !== 2) {
+            failures.push("product add did not persist the expected cart line");
         }
-        if (!await page.getByText(/added for this catalog preview\./).isVisible()) {
-            failures.push("bag action did not expose live confirmation");
-        }
+        await page.evaluate(() => localStorage.removeItem("valogatott-cart-v1"));
+    }
+
+    if (route === "/cart/") {
+        const increase = page.getByRole("button", { name: /Otthoni zene alapcsomag mennyiségének növelése/ });
+        await increase.click();
+        if (!await page.getByText("179 980 Ft", { exact: true }).last().isVisible()) failures.push("cart total did not update after quantity change");
+        await page.getByRole("button", { name: "Otthoni zene alapcsomag eltávolítása" }).click();
+        if (!await page.getByRole("heading", { name: "A kosár üres" }).isVisible()) failures.push("cart removal did not reveal the empty state");
+        await page.evaluate(() => localStorage.setItem("valogatott-cart-v1", JSON.stringify([{ productId: "otthoni-zene-csomag", quantity: 1 }])));
+        await page.reload({ waitUntil: "domcontentloaded" });
+    }
+
+    if (route === "/checkout/") {
+        await page.getByRole("button", { name: "Tovább a biztonságos fizetéshez" }).click();
+        if (!await page.getByRole("alert").isVisible()) failures.push("unconfigured checkout did not fail clearly");
+        const persisted = await page.evaluate(() => JSON.parse(localStorage.getItem("valogatott-cart-v1") ?? "[]"));
+        if (persisted.length !== 1) failures.push("checkout fallback did not preserve the cart");
+    }
+
+    if (route === "/suti-beallitasok/") {
+        await page.getByRole("checkbox", { name: /Elemzési sütik/ }).locator("xpath=ancestor::label").click();
+        await page.getByRole("checkbox", { name: /Hirdetési mérés/ }).locator("xpath=ancestor::label").click();
+        await page.getByRole("button", { name: "Beállítások mentése" }).click();
+        if (!await page.getByRole("status").getByText("A beállításokat elmentettük.").isVisible()) failures.push("consent save did not expose confirmation");
+        const consentAudit = await page.evaluate(() => ({
+            consent: JSON.parse(localStorage.getItem("valogatott-consent-v1") ?? "null"),
+            queuedEvents: Array.isArray(window.dataLayer) ? window.dataLayer.length : 0,
+        }));
+        if (!consentAudit.consent?.analytics || !consentAudit.consent?.marketing) failures.push("consent choices were not persisted");
+        if (consentAudit.queuedEvents !== 0) failures.push("measurement queued data without configured identifiers");
     }
 
     return failures;
@@ -240,15 +291,22 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
         }
     });
 
-    await page.addInitScript((selectedTheme) => {
+    await page.addInitScript(({ selectedTheme, currentRoute }) => {
         window.localStorage.setItem("uui-site-theme", selectedTheme);
-    }, theme);
+        if (currentRoute === "/cart/" || currentRoute === "/checkout/") {
+            window.localStorage.setItem("valogatott-cart-v1", JSON.stringify([{ productId: "otthoni-zene-csomag", quantity: 1 }]));
+        } else {
+            window.localStorage.removeItem("valogatott-cart-v1");
+        }
+    }, { selectedTheme: theme, currentRoute: route });
     const response = await page.goto(`${baseUrl}${route}`, { waitUntil: "domcontentloaded" });
     if (!response || response.status() !== 200) failures.push(`route returned ${response?.status() ?? "no response"}`);
     await page.evaluate(async () => {
         await document.fonts?.ready;
         await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     });
+    await page.waitForFunction(() => !document.querySelector("astro-island[ssr]"));
+    await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
 
     const documentAudit = await page.evaluate(async ({ knownRoutes, currentRoute, mobile }) => {
         const visible = (element) => {
@@ -395,7 +453,7 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
         );
         if (!focusedVisible) failures.push("keyboard Tab did not reach a visible control");
     }
-    failures.push(...await exerciseApparelInteractions(page, { route, viewport, baseUrl }));
+    failures.push(...await exerciseStorefrontInteractions(page, { route, viewport, baseUrl }));
     failures.push(...runtimeErrors);
     await page.evaluate(() => {
         document.documentElement.style.scrollBehavior = "auto";
@@ -404,14 +462,21 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
     await page.waitForFunction(() => window.scrollY === 0);
 
     const shouldCapture =
-        route === [...routePaths][0] ||
-        Boolean(documentAudit.heroAudit) ||
-        /(?:cart|checkout)/.test(route) ||
-        route === "/shop/apparel/utility-jacket/";
+        [
+            "/",
+            "/shop/",
+            "/kategoriak/muszaki/",
+            "/products/otthoni-zene-csomag/",
+            "/cart/",
+            "/checkout/",
+            "/gyik/",
+            "/aszf/",
+        ].includes(route);
     let screenshot = null;
     if (shouldCapture) {
         screenshot = `${routeSlug(route)}-${viewport.name}-${theme}.png`;
-        await page.screenshot({ path: path.join(artifactRoot, screenshot), fullPage: false });
+        const fullPage = route === "/shop/" || route.startsWith("/kategoriak/") || route === "/gyik/" || route === "/aszf/";
+        await page.screenshot({ path: path.join(artifactRoot, screenshot), fullPage });
     }
     return {
         route,
