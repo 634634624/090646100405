@@ -1,0 +1,168 @@
+---
+name: derive-from-system
+description: When creating any new page, component, block, or element that has no existing template, reason from UUI's structural DNA — extract patterns from the nearest existing reference, apply the same compositional logic, and verify it feels native to the system.
+---
+
+# Derive From System
+
+Use this skill when you need to create ANYTHING that doesn't have an existing UUI template, component, or section pattern. This teaches you to think like a designer who has internalized the design system — someone who can create novel elements that feel native because they understand the underlying logic, not because they memorized every component.
+
+---
+
+## The Core Principle
+
+Every design system has DNA — not the tokens themselves, but the RELATIONSHIPS between tokens. UUI's DNA is a set of proportional habits, compositional patterns, and structural decisions that repeat everywhere. Your job is to extract that DNA from what already exists and apply it to what doesn't exist yet.
+
+Never invent from scratch. Always derive from the nearest existing reference.
+
+---
+
+## Step 1: Find the Nearest Relative
+
+Before creating anything new, ask: What existing UUI component or section is MOST SIMILAR to what I need to build?
+
+You're not looking for an exact match. You're looking for structural similarity:
+
+- Need to build a settings panel? → Look at how UUI builds card headers + form layouts + section dividers
+- Need a notification center? → Look at how UUI builds stacked lists + message components + activity feeds
+- Need an onboarding flow? → Look at how UUI builds modals + progress steps + form layouts
+- Need a file browser? → Look at how UUI builds tables + card headers + breadcrumbs + empty states
+- Need a calendar view? → Look at how UUI builds its calendar components + card structure + grid layouts
+- Need a comparison page? → Look at how UUI builds pricing tier cards + tables + feature lists
+- Need a timeline? → Look at how UUI builds activity feeds + progress steps + content sections
+
+Search for the relevant UUI components in the file. Read their layer structure. Study their proportions. These are your blueprints.
+
+If nothing is even close, find TWO references — one that matches the content structure, one that matches the interaction pattern — and hybridize.
+
+---
+
+## Step 2: Extract the Structural DNA
+
+Once you have your reference component(s), don't copy them. STUDY them. Extract these specific patterns:
+
+### Proportional Relationships
+
+Look at the reference and identify:
+- **Padding-to-content ratio**: How much padding does the component use relative to its content size? If a card with 200px of content has 24px padding, that's roughly a 12% padding ratio. Your new element should feel similar.
+- **Heading-to-body size ratio**: What's the step distance in the type scale between the heading and body text? If the reference uses Display xs (24px) heading with Text sm (14px) body, that's a ~1.7x ratio and a skip of several scale steps. Your new element should maintain a similar relationship.
+- **Label-to-value ratio**: In data displays, what's the size relationship between the label and the value it describes? Extract this ratio.
+- **Spacing-to-font-size ratio**: How does the gap between elements relate to the text size? If 14px text has 8px gap below it, that's ~0.57x. If 24px text has 16px gap below it, that's ~0.67x. The system has a habit here — find it.
+
+### Compositional Patterns
+
+Look at how UUI composes elements within containers:
+- **Header → Content → Footer**: Most UUI cards and sections follow this three-part vertical structure. The header has a title + optional description + optional actions. The content is the main payload. The footer has actions or metadata. Identify which parts exist and how they're spaced.
+- **Leading → Content → Trailing**: Most UUI rows follow this horizontal structure. A leading icon or indicator, the main content (text stack), and a trailing action or metadata. Identify the horizontal pattern.
+- **Label → Control → Help text**: Most UUI form patterns follow this vertical structure. Identify this in form-adjacent references.
+
+### Density Habits
+
+- How much whitespace does UUI leave between groups of related elements vs unrelated elements? The ratio between "tight" spacing (within a group) and "loose" spacing (between groups) is the density signature. Usually UUI uses a 1:2 or 1:3 ratio (e.g., 8px within groups, 24px between groups).
+- How many elements does UUI put in a single row before wrapping? This varies by context but there's a pattern — metrics: 3-4, features: 2-3, nav items: 5-7, footer columns: 4-5.
+
+### Container Behavior
+
+- Does the reference use fixed widths or fill-parent? In what context?
+- Does the reference constrain content width inside a wider container?
+- How does the reference handle overflow — truncation, wrapping, scrolling?
+
+---
+
+## Step 3: Build the Skeleton First
+
+Now build your new element, but in strict order:
+
+### 3a. Define the Container
+
+Create the outermost frame:
+- Set auto-layout direction based on your reference's primary flow
+- Set padding by matching the proportional relationship you extracted — read UUI's spacing tokens and pick the one that creates the same ratio
+- Set sizing behavior (fixed, fill, hug) based on where this element will live
+
+### 3b. Define the Zones
+
+Break the interior into zones matching the compositional pattern you extracted:
+- If it's a card-like element: header zone + content zone + footer zone (vertical stack)
+- If it's a row-like element: leading zone + content zone + trailing zone (horizontal stack)
+- If it's a page-like element: navigation zone + content zone (horizontal or vertical depending on nav type)
+
+Each zone is its own auto-layout frame with appropriate spacing.
+
+### 3c. Populate Each Zone
+
+For each zone, ask:
+- What goes here? (content decision)
+- What's the hierarchy within this zone? (type scale decision — read UUI type scale)
+- How are elements spaced within this zone? (spacing decision — read UUI spacing tokens)
+- What components already exist in UUI that I should use here? (search for existing UUI components: buttons, inputs, badges, avatars, icons, etc.)
+
+Use existing UUI components wherever possible. Only create raw frames/text when no component fits.
+
+### 3d. Set the Internal Spacing
+
+Apply spacing tokens that maintain the density ratios you extracted:
+- Tight spacing (within a group): use the same token your reference uses for this
+- Medium spacing (between groups within a zone): one step up
+- Loose spacing (between zones): two steps up
+
+---
+
+## Step 4: Verify Against the System
+
+Now that it's built, verify it belongs:
+
+### The Sibling Test
+
+Place your new element next to the reference you studied. Squint at both. Ask:
+- Do they feel like they belong to the same system?
+- Is the density similar?
+- Is the type scale usage consistent?
+- Is the padding proportionally similar?
+- Do the alignment edges match?
+
+If something feels off, identify WHAT feels off — it's usually spacing or type scale — and adjust to match the reference.
+
+### The Swap Test
+
+Imagine swapping your new element into a page where the reference element already exists. Would it feel jarring? Would a user notice that "this one is different"? If yes, identify what creates the discontinuity and fix it.
+
+### The Scale Test
+
+Imagine 5 instances of your new element in a grid or list. Do they tile cleanly? Is the spacing between them consistent with how UUI spaces similar elements? If something looks off at repetition, the internal proportions are wrong.
+
+### The Hierarchy Test
+
+Cover the text content and look only at size and position. Can you still tell what's a heading, what's a value, what's a label, what's an action? If the hierarchy isn't readable from structure alone, the type scale choices are wrong.
+
+---
+
+## Step 5: Common Traps When Deriving
+
+### The "Looks Clean So It's Done" Trap
+A new element can look visually clean while violating system patterns. Clean ≠ consistent. Always verify against an existing reference, not against your own aesthetic judgment.
+
+### The "Close Enough" Trap
+If UUI uses 24px padding on similar cards and you used 20px because it "felt right" — change it to 24px. The system's opinion overrides your instinct. Close enough isn't the system.
+
+### The "Inventing New Patterns" Trap
+If you find yourself creating a novel compositional pattern (e.g., a circular layout, a diagonal arrangement, a non-standard card shape), stop. UUI doesn't do this. Find the conventional UUI pattern that solves the same problem.
+
+### The "Token Shopping" Trap
+Don't browse the spacing/type scale looking for what "feels right." Instead, look at what the reference ACTUALLY uses, and use the same tokens. Derivation is from reference, not from the token list.
+
+### The "Over-Engineering" Trap
+If the nearest UUI reference is simple, your new element should be simple. Don't add zones, subdivisions, or structural complexity that doesn't exist in similar UUI elements. Match the complexity level of the reference.
+
+---
+
+## Quick Decision Framework
+
+When stuck on any specific decision, follow this chain:
+
+1. **Does UUI have this exact thing?** → Use it directly.
+2. **Does UUI have something structurally similar?** → Extract its DNA and apply it.
+3. **Can I compose this from existing UUI components?** → Assemble from parts (button + input + card header, etc.).
+4. **Do I need to build from raw primitives?** → Study the nearest 2-3 references, extract proportional relationships, build skeleton first, then populate.
+
+Never reach step 4 without genuinely confirming steps 1-3 don't apply. The best derivation is the one that uses the most existing UUI pieces.

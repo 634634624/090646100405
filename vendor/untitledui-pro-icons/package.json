@@ -1,0 +1,32 @@
+{
+  "name": "@untitledui-pro/icons",
+  "version": "0.0.3",
+  "description": "Official React library for Untitled UI PRO Icons",
+  "license": "MIT",
+  "sideEffects": false,
+  "peerDependencies": {
+    "react": ">= 16"
+  },
+  "exports": {
+    "./line": {
+      "import": {
+        "types": "./dist/line/index.d.mts",
+        "default": "./dist/line/index.mjs"
+      },
+      "require": {
+        "types": "./dist/line/index.d.ts",
+        "default": "./dist/line/index.js"
+      }
+    },
+    "./line/*": {
+      "import": {
+        "types": "./dist/line/*.d.mts",
+        "default": "./dist/line/*.mjs"
+      },
+      "require": {
+        "types": "./dist/line/*.d.ts",
+        "default": "./dist/line/*.js"
+      }
+    }
+  }
+}

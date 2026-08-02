@@ -1,0 +1,588 @@
+/* ============================================================
+ * themes.css — per-template palettes (data-theme scoped) + dark variants.
+ * GENERATED. Light = [data-theme=x]; dark = .dark-mode[data-theme=x] (0,2,0 > UU 0,1,0).
+ * Import AFTER brand-warm.css. HAND-MAINTAINED (no spec/regenerate script exists —
+ * FRICTION-LOG F3). New VERTICAL: do NOT add a data-theme key here; recolor via
+ * applyBrand/brandCss at :root[data-brand="client"] (toolkit/scaffold/lib/apply-brand.ts,
+ * DEBUG-LOG G1/H5). data-theme keys are reserved for the shipped template palettes.
+ * ============================================================ */
+[data-theme="kit"] {
+  --color-brand-500: #6366f1; --color-brand-600: #4f46e5; --color-brand-700: #4338ca;
+  --color-bg-primary: #ffffff; --color-bg-secondary: #f6f7f9; --color-text-primary: #0f172a;
+  --color-accent: #f43f5e; --color-accent-dark: #e11d48; --color-accent-soft: #ffe4e6; --color-accent-amber-soft: #fef3c7;
+  --background-color-primary: #ffffff; --background-color-primary_hover: #f8fafc; --background-color-primary_alt: #ffffff;
+  --background-color-secondary: #f6f7f9; --background-color-secondary_hover: #eceef2; --background-color-secondary_alt: #f6f7f9;
+  --background-color-tertiary: #eceef2; --background-color-quaternary: #eceef2;
+  --background-color-brand-primary: #eef2ff; --background-color-brand-primary_alt: #eef2ff; --background-color-brand-secondary: #e0e7ff;
+  --background-color-brand-solid: #4f46e5; --background-color-brand-solid_hover: #4338ca;
+  --background-color-brand-section: #1e1b4b; --background-color-brand-section_subtle: #4338ca;
+  --text-color-primary: #0f172a; --text-color-secondary: #334155; --text-color-secondary_hover: #0f172a;
+  --text-color-tertiary: #475569; --text-color-tertiary_hover: #334155; --text-color-quaternary: #64748b; --text-color-placeholder: #64748b;
+  --text-color-brand-primary: #4338ca; --text-color-brand-secondary: #4338ca; --text-color-brand-secondary_hover: #4338ca; --text-color-brand-tertiary: #4f46e5; --color-text-primary_on-brand: #ffffff; --text-color-primary_on-brand: #ffffff; --color-featured-icon-light-fg-brand: #4338ca;
+  --fg-color-brand-primary: #4f46e5;
+  --border-color-primary: #e2e8f0; --border-color-secondary: #eceef2; --border-color-secondary_alt: #e2e8f0; --border-color-tertiary: #f1f5f9; --border-color-brand: #6366f1; --border-color-brand_alt: #4f46e5;
+  --ring-color-brand: #6366f1; --outline-color-brand: #6366f1; --color-focus-ring: #6366f1;
+}
+.dark-mode[data-theme="kit"] {
+  --color-brand-500: #818cf8; --color-brand-600: #6366f1; --color-brand-700: #a5b4fc;
+  --color-bg-primary: #0b1020; --color-bg-secondary: #121a2e; --color-text-primary: #f8fafc;
+  --color-accent: #fb7185; --color-accent-dark: #f43f5e; --color-accent-soft: #3f1d28; --color-accent-amber-soft: #2a2410;
+  --background-color-primary: #0b1020; --background-color-primary_hover: #121a2e; --background-color-primary_alt: #0b1020;
+  --background-color-secondary: #121a2e; --background-color-secondary_hover: #1c2740; --background-color-secondary_alt: #121a2e;
+  --background-color-tertiary: #1c2740; --background-color-quaternary: #1c2740;
+  --background-color-brand-primary: #1e1b4b; --background-color-brand-primary_alt: #1e1b4b; --background-color-brand-secondary: #312e81;
+  --background-color-brand-solid: #4f46e5; --background-color-brand-solid_hover: #4338ca;
+  --background-color-brand-section: #020617; --background-color-brand-section_subtle: #a5b4fc;
+  --text-color-primary: #f8fafc; --text-color-secondary: #cbd5e1; --text-color-secondary_hover: #f8fafc;
+  --text-color-tertiary: #94a3b8; --text-color-tertiary_hover: #cbd5e1; --text-color-quaternary: #64748b; --text-color-placeholder: #64748b;
+  --text-color-brand-primary: #a5b4fc; --text-color-brand-secondary: #a5b4fc; --text-color-brand-secondary_hover: #a5b4fc; --text-color-brand-tertiary: #818cf8; --color-text-primary_on-brand: #ffffff; --text-color-primary_on-brand: #ffffff; --color-featured-icon-light-fg-brand: #c7d2fe;
+  --fg-color-brand-primary: #6366f1;
+  --border-color-primary: #334155; --border-color-secondary: #1c2740; --border-color-secondary_alt: #334155; --border-color-tertiary: #1c2740; --border-color-brand: #818cf8; --border-color-brand_alt: #6366f1;
+  --ring-color-brand: #818cf8; --outline-color-brand: #818cf8; --color-focus-ring: #818cf8;
+}
+[data-theme="fodrasz"] {
+  --color-brand-500: #a86b7d; --color-brand-600: #8c4f63; --color-brand-700: #6f3c4e;
+  --color-bg-primary: #fffdfb; --color-bg-secondary: #faf3ee; --color-text-primary: #2a1f24;
+  --color-accent: #c79a6b; --color-accent-dark: #a67c4e; --color-accent-soft: #f6ead8; --color-accent-amber-soft: #f6ead8;
+  --background-color-primary: #fffdfb; --background-color-primary_hover: #faf3ee; --background-color-primary_alt: #fffdfb;
+  --background-color-secondary: #faf3ee; --background-color-secondary_hover: #f1e6dd; --background-color-secondary_alt: #faf3ee;
+  --background-color-tertiary: #f1e6dd; --background-color-quaternary: #f1e6dd;
+  --background-color-brand-primary: #f7eaf0; --background-color-brand-primary_alt: #f7eaf0; --background-color-brand-secondary: #f0d9e3;
+  --background-color-brand-solid: #8c4f63; --background-color-brand-solid_hover: #6f3c4e;
+  --background-color-brand-section: #2a1f24; --background-color-brand-section_subtle: #6f3c4e;
+  --text-color-primary: #2a1f24; --text-color-secondary: #4a3b41; --text-color-secondary_hover: #2a1f24;
+  --text-color-tertiary: #6e5c63; --text-color-tertiary_hover: #4a3b41; --text-color-quaternary: #a08f95; --text-color-placeholder: #a08f95;
+  --text-color-brand-primary: #6f3c4e; --text-color-brand-secondary: #6f3c4e; --text-color-brand-secondary_hover: #6f3c4e; --text-color-brand-tertiary: #8c4f63;
+  --fg-color-brand-primary: #8c4f63;
+  --border-color-primary: #ecddd3; --border-color-secondary: #f1e6dd; --border-color-secondary_alt: #ecddd3; --border-color-tertiary: #f7efe9; --border-color-brand: #a86b7d; --border-color-brand_alt: #8c4f63;
+  --ring-color-brand: #a86b7d; --outline-color-brand: #a86b7d; --color-focus-ring: #a86b7d;
+}
+.dark-mode[data-theme="fodrasz"] {
+  --color-brand-500: #c98ca0; --color-brand-600: #b87489; --color-brand-700: #e0b3c1;
+  --color-bg-primary: #1a1114; --color-bg-secondary: #221619; --color-text-primary: #f7eef1;
+  --color-accent: #d9b48a; --color-accent-dark: #c79a6b; --color-accent-soft: #2e2113; --color-accent-amber-soft: #2e2113;
+  --background-color-primary: #1a1114; --background-color-primary_hover: #221619; --background-color-primary_alt: #1a1114;
+  --background-color-secondary: #221619; --background-color-secondary_hover: #2c1d22; --background-color-secondary_alt: #221619;
+  --background-color-tertiary: #2c1d22; --background-color-quaternary: #2c1d22;
+  --background-color-brand-primary: #2c1d22; --background-color-brand-primary_alt: #2c1d22; --background-color-brand-secondary: #3d2730;
+  --background-color-brand-solid: #c98ca0; --background-color-brand-solid_hover: #d9a3b4;
+  --background-color-brand-section: #0f0a0c; --background-color-brand-section_subtle: #e0b3c1;
+  --text-color-primary: #f7eef1; --text-color-secondary: #d8c4cc; --text-color-secondary_hover: #f7eef1;
+  --text-color-tertiary: #ad9aa1; --text-color-tertiary_hover: #d8c4cc; --text-color-quaternary: #7d6a71; --text-color-placeholder: #7d6a71;
+  --text-color-brand-primary: #e0b3c1; --text-color-brand-secondary: #e0b3c1; --text-color-brand-secondary_hover: #e0b3c1; --text-color-brand-tertiary: #c98ca0; --text-color-primary_on-brand: #0b0e0d; --color-text-primary_on-brand: #0b0e0d;
+  --fg-color-brand-primary: #c98ca0;
+  --border-color-primary: #3a262d; --border-color-secondary: #2c1d22; --border-color-secondary_alt: #3a262d; --border-color-tertiary: #3d2730; --border-color-brand: #c98ca0; --border-color-brand_alt: #c98ca0;
+  --ring-color-brand: #c98ca0; --outline-color-brand: #c98ca0; --color-focus-ring: #c98ca0;
+}
+[data-theme="gambling"] {
+  --color-brand-500: #059669; --color-brand-600: #047857; --color-brand-700: #065f46;
+  --color-bg-primary: #ffffff; --color-bg-secondary: #f1f7f3; --color-text-primary: #0a1f17;
+  --color-accent: #d4af37; --color-accent-dark: #b8941f; --color-accent-soft: #fbf2d4; --color-accent-amber-soft: #fbf2d4;
+  --background-color-primary: #ffffff; --background-color-primary_hover: #f4f7f5; --background-color-primary_alt: #ffffff;
+  --background-color-secondary: #f1f7f3; --background-color-secondary_hover: #e3efe8; --background-color-secondary_alt: #f1f7f3;
+  --background-color-tertiary: #e3efe8; --background-color-quaternary: #e3efe8;
+  --background-color-brand-primary: #e7f6ee; --background-color-brand-primary_alt: #e7f6ee; --background-color-brand-secondary: #c8ead9;
+  --background-color-brand-solid: #047857; --background-color-brand-solid_hover: #065f46;
+  --background-color-brand-section: #062a1e; --background-color-brand-section_subtle: #065f46;
+  --text-color-primary: #0a1f17; --text-color-secondary: #2f4339; --text-color-secondary_hover: #0a1f17;
+  --text-color-tertiary: #5b6f64; --text-color-tertiary_hover: #2f4339; --text-color-quaternary: #90a399; --text-color-placeholder: #90a399;
+  --text-color-brand-primary: #065f46; --text-color-brand-secondary: #065f46; --text-color-brand-secondary_hover: #065f46; --text-color-brand-tertiary: #047857; --color-text-primary_on-brand: #ffffff; --text-color-primary_on-brand: #ffffff;
+  --fg-color-brand-primary: #047857;
+  --border-color-primary: #d6e8de; --border-color-secondary: #e3efe8; --border-color-secondary_alt: #d6e8de; --border-color-tertiary: #eef6f1; --border-color-brand: #059669; --border-color-brand_alt: #047857;
+  --ring-color-brand: #059669; --outline-color-brand: #059669; --color-focus-ring: #059669;
+}
+.dark-mode[data-theme="gambling"] {
+  --color-brand-500: #10b981; --color-brand-600: #059669; --color-brand-700: #6ee7b7;
+  --color-bg-primary: #0a0f0d; --color-bg-secondary: #111815; --color-text-primary: #ecfdf5;
+  --color-accent: #f5c542; --color-accent-dark: #d4af37; --color-accent-soft: #2a2410; --color-accent-amber-soft: #2a2410;
+  --background-color-primary: #0a0f0d; --background-color-primary_hover: #111815; --background-color-primary_alt: #0a0f0d;
+  --background-color-secondary: #111815; --background-color-secondary_hover: #1a2420; --background-color-secondary_alt: #111815;
+  --background-color-tertiary: #1a2420; --background-color-quaternary: #1a2420;
+  --background-color-brand-primary: #0d2a1f; --background-color-brand-primary_alt: #0d2a1f; --background-color-brand-secondary: #064e3b;
+  --background-color-brand-solid: #10b981; --background-color-brand-solid_hover: #34d399;
+  --background-color-brand-section: #050a08; --background-color-brand-section_subtle: #6ee7b7;
+  --text-color-primary: #ecfdf5; --text-color-secondary: #a7c4b5; --text-color-secondary_hover: #ecfdf5;
+  --text-color-tertiary: #6e8a7c; --text-color-tertiary_hover: #a7c4b5; --text-color-quaternary: #4b5e54; --text-color-placeholder: #4b5e54;
+  --text-color-brand-primary: #6ee7b7; --text-color-brand-secondary: #6ee7b7; --text-color-brand-secondary_hover: #6ee7b7; --text-color-brand-tertiary: #10b981; --color-text-primary_on-brand: #0a1f17; --text-color-primary_on-brand: #0a1f17;
+  --fg-color-brand-primary: #10b981;
+  --border-color-primary: #1f2d27; --border-color-secondary: #1a2420; --border-color-secondary_alt: #1f2d27; --border-color-tertiary: #243029; --border-color-brand: #10b981; --border-color-brand_alt: #10b981;
+  --ring-color-brand: #10b981; --outline-color-brand: #10b981; --color-focus-ring: #10b981;
+}
+[data-theme="poker"] {
+  --color-brand-500: #e11d48; --color-brand-600: #be123c; --color-brand-700: #9f1239;
+  --color-bg-primary: #ffffff; --color-bg-secondary: #f8f4f2; --color-text-primary: #1f0a10;
+  --color-accent: #d4af37; --color-accent-dark: #b8941f; --color-accent-soft: #fbf2d4; --color-accent-amber-soft: #fbf2d4;
+  --background-color-primary: #ffffff; --background-color-primary_hover: #faf6f3; --background-color-primary_alt: #ffffff;
+  --background-color-secondary: #f8f4f2; --background-color-secondary_hover: #f0e6e2; --background-color-secondary_alt: #f8f4f2;
+  --background-color-tertiary: #f0e6e2; --background-color-quaternary: #f0e6e2;
+  --background-color-brand-primary: #fdeef0; --background-color-brand-primary_alt: #fdeef0; --background-color-brand-secondary: #fbd5dc;
+  --background-color-brand-solid: #be123c; --background-color-brand-solid_hover: #9f1239;
+  --background-color-brand-section: #3b0a16; --background-color-brand-section_subtle: #9f1239;
+  --text-color-primary: #1f0a10; --text-color-secondary: #43242b; --text-color-secondary_hover: #1f0a10;
+  --text-color-tertiary: #76555c; --text-color-tertiary_hover: #43242b; --text-color-quaternary: #a98c92; --text-color-placeholder: #a98c92;
+  --text-color-brand-primary: #9f1239; --text-color-brand-secondary: #9f1239; --text-color-brand-secondary_hover: #9f1239; --text-color-brand-tertiary: #be123c;
+  --fg-color-brand-primary: #be123c;
+  --border-color-primary: #ecd9dd; --border-color-secondary: #f0e6e2; --border-color-secondary_alt: #ecd9dd; --border-color-tertiary: #f7efec; --border-color-brand: #e11d48; --border-color-brand_alt: #be123c;
+  --ring-color-brand: #e11d48; --outline-color-brand: #e11d48; --color-focus-ring: #e11d48;
+}
+.dark-mode[data-theme="poker"] {
+  --color-brand-500: #fb7185; --color-brand-600: #f43f5e; --color-brand-700: #fda4af;
+  --color-bg-primary: #0c0a0b; --color-bg-secondary: #161113; --color-text-primary: #fff1f2;
+  --color-accent: #f5c542; --color-accent-dark: #d4af37; --color-accent-soft: #2a2410; --color-accent-amber-soft: #2a2410;
+  --background-color-primary: #0c0a0b; --background-color-primary_hover: #161113; --background-color-primary_alt: #0c0a0b;
+  --background-color-secondary: #161113; --background-color-secondary_hover: #211619; --background-color-secondary_alt: #161113;
+  --background-color-tertiary: #211619; --background-color-quaternary: #211619;
+  --background-color-brand-primary: #2a0d14; --background-color-brand-primary_alt: #2a0d14; --background-color-brand-secondary: #4c0519;
+  --background-color-brand-solid: #e11d48; --background-color-brand-solid_hover: #f43f5e;
+  --background-color-brand-section: #050304; --background-color-brand-section_subtle: #fda4af;
+  --text-color-primary: #fff1f2; --text-color-secondary: #d6b3b8; --text-color-secondary_hover: #fff1f2;
+  --text-color-tertiary: #9a767c; --text-color-tertiary_hover: #d6b3b8; --text-color-quaternary: #6b4f54; --text-color-placeholder: #6b4f54;
+  --text-color-brand-primary: #fda4af; --text-color-brand-secondary: #fda4af; --text-color-brand-secondary_hover: #fda4af; --text-color-brand-tertiary: #e11d48;
+  --fg-color-brand-primary: #e11d48;
+  --border-color-primary: #2a1c20; --border-color-secondary: #211619; --border-color-secondary_alt: #2a1c20; --border-color-tertiary: #2e2024; --border-color-brand: #fb7185; --border-color-brand_alt: #e11d48;
+  --ring-color-brand: #fb7185; --outline-color-brand: #fb7185; --color-focus-ring: #fb7185;
+}
+[data-theme="menhely"] {
+  --color-brand-500: #0ea5e9; --color-brand-600: #0284c7; --color-brand-700: #0369a1;
+  --color-bg-primary: #ffffff; --color-bg-secondary: #eef6fb; --color-text-primary: #0f2230;
+  --color-accent: #f59e0b; --color-accent-dark: #d97706; --color-accent-soft: #fef3c7; --color-accent-amber-soft: #fef3c7;
+  --background-color-primary: #ffffff; --background-color-primary_hover: #f3fafe; --background-color-primary_alt: #ffffff;
+  --background-color-secondary: #eef6fb; --background-color-secondary_hover: #ddeef7; --background-color-secondary_alt: #eef6fb;
+  --background-color-tertiary: #ddeef7; --background-color-quaternary: #ddeef7;
+  --background-color-brand-primary: #e0f2fe; --background-color-brand-primary_alt: #e0f2fe; --background-color-brand-secondary: #bae6fd;
+  --background-color-brand-solid: #0369a1; --background-color-brand-solid_hover: #075985;
+  --background-color-brand-section: #0c2435; --background-color-brand-section_subtle: #0369a1;
+  --text-color-primary: #0f2230; --text-color-secondary: #2d4250; --text-color-secondary_hover: #0f2230;
+  --text-color-tertiary: #5a6f7c; --text-color-tertiary_hover: #2d4250; --text-color-quaternary: #93a4ae; --text-color-placeholder: #93a4ae;
+  --text-color-brand-primary: #0369a1; --text-color-brand-secondary: #0369a1; --text-color-brand-secondary_hover: #0369a1; --text-color-brand-tertiary: #0284c7;
+  --fg-color-brand-primary: #0284c7;
+  --border-color-primary: #d4e8f2; --border-color-secondary: #ddeef7; --border-color-secondary_alt: #d4e8f2; --border-color-tertiary: #eef6fb; --border-color-brand: #0ea5e9; --border-color-brand_alt: #0284c7;
+  --ring-color-brand: #0ea5e9; --outline-color-brand: #0ea5e9; --color-focus-ring: #0ea5e9;
+}
+.dark-mode[data-theme="menhely"] {
+  --color-brand-500: #38bdf8; --color-brand-600: #0ea5e9; --color-brand-700: #7dd3fc;
+  --color-bg-primary: #0a1620; --color-bg-secondary: #0f2030; --color-text-primary: #f0f9ff;
+  --color-accent: #fbbf24; --color-accent-dark: #f59e0b; --color-accent-soft: #2a2410; --color-accent-amber-soft: #2a2410;
+  --background-color-primary: #0a1620; --background-color-primary_hover: #0f2030; --background-color-primary_alt: #0a1620;
+  --background-color-secondary: #0f2030; --background-color-secondary_hover: #162c3f; --background-color-secondary_alt: #0f2030;
+  --background-color-tertiary: #162c3f; --background-color-quaternary: #162c3f;
+  --background-color-brand-primary: #0c2435; --background-color-brand-primary_alt: #0c2435; --background-color-brand-secondary: #075985;
+  --background-color-brand-solid: #0ea5e9; --background-color-brand-solid_hover: #38bdf8;
+  --background-color-brand-section: #05101a; --background-color-brand-section_subtle: #7dd3fc;
+  --text-color-primary: #f0f9ff; --text-color-secondary: #c2dcea; --text-color-secondary_hover: #f0f9ff;
+  --text-color-tertiary: #8fb0c2; --text-color-tertiary_hover: #c2dcea; --text-color-quaternary: #5f7c8c; --text-color-placeholder: #5f7c8c;
+  --text-color-brand-primary: #7dd3fc; --text-color-brand-secondary: #7dd3fc; --text-color-brand-secondary_hover: #7dd3fc; --text-color-brand-tertiary: #0ea5e9; --text-color-primary_on-brand: #0b0e0d; --color-text-primary_on-brand: #0b0e0d;
+  --fg-color-brand-primary: #0ea5e9;
+  --border-color-primary: #1d3346; --border-color-secondary: #162c3f; --border-color-secondary_alt: #1d3346; --border-color-tertiary: #1d3346; --border-color-brand: #38bdf8; --border-color-brand_alt: #0ea5e9;
+  --ring-color-brand: #38bdf8; --outline-color-brand: #38bdf8; --color-focus-ring: #38bdf8;
+}
+
+/* ===== batch templates (generated) ===== */
+[data-theme="etterem"] {
+  --color-brand-500: #c26047; --color-brand-600: #994733; --color-brand-700: #7c3827;
+  --color-bg-primary: #fdfcfc; --color-bg-secondary: #f9f5f4; --color-text-primary: #241714;
+  --color-accent: #d3a445; --color-accent-dark: #b58930; --color-accent-soft: #f9efdc; --color-accent-amber-soft: #f9efdc;
+  --background-color-primary: #fdfcfc; --background-color-primary_hover: #f9f5f4; --background-color-primary_alt: #fdfcfc;
+  --background-color-secondary: #f9f5f4; --background-color-secondary_hover: #f1ebe9; --background-color-secondary_alt: #f9f5f4;
+  --background-color-tertiary: #f1ebe9; --background-color-quaternary: #e9dfdd;
+  --background-color-brand-primary: #f9eeeb; --background-color-brand-primary_alt: #f9eeeb; --background-color-brand-secondary: #f1dbd5;
+  --background-color-brand-solid: #994733; --background-color-brand-solid_hover: #7c3827;
+  --background-color-brand-section: #2e1d19; --background-color-brand-section_subtle: #7c3827;
+  --text-color-primary: #241714; --text-color-secondary: #503e3a; --text-color-secondary_hover: #322320;
+  --text-color-tertiary: #78635e; --text-color-tertiary_hover: #594540; --text-color-quaternary: #a3938f; --text-color-placeholder: #a3938f;
+  --text-color-brand-primary: #7c3827; --text-color-brand-secondary: #7c3827; --text-color-brand-secondary_hover: #7c3827; --text-color-brand-tertiary: #994733;
+  --fg-color-brand-primary: #994733;
+  --border-color-primary: #e7ddda; --border-color-secondary: #f0ebea; --border-color-secondary_alt: #e7ddda; --border-color-tertiary: #f6f4f3; --border-color-brand: #c26047; --border-color-brand_alt: #994733;
+  --ring-color-brand: #c26047; --outline-color-brand: #c26047; --color-focus-ring: #c26047;
+}
+.dark-mode[data-theme="etterem"] {
+  --color-brand-500: #d99c8c; --color-brand-600: #d37e69; --color-brand-700: #e8bbb0;
+  --color-bg-primary: #170f0c; --color-bg-secondary: #231815; --color-text-primary: #f8f7f7;
+  --color-accent: #ddb86e; --color-accent-dark: #d1a347; --color-accent-soft: #392e18; --color-accent-amber-soft: #392e18;
+  --background-color-primary: #170f0c; --background-color-primary_hover: #231815; --background-color-primary_alt: #170f0c;
+  --background-color-secondary: #231815; --background-color-secondary_hover: #322320; --background-color-secondary_alt: #231815;
+  --background-color-tertiary: #322320; --background-color-quaternary: #372825;
+  --background-color-brand-primary: #391f18; --background-color-brand-primary_alt: #391f18; --background-color-brand-secondary: #562f25;
+  --background-color-brand-solid: #d37e69; --background-color-brand-solid_hover: #d99c8c;
+  --background-color-brand-section: #0e0806; --background-color-brand-section_subtle: #e8bbb0;
+  --text-color-primary: #f8f7f7; --text-color-secondary: #d7cecc; --text-color-secondary_hover: #f4f1f1;
+  --text-color-tertiary: #b1a3a0; --text-color-tertiary_hover: #d2c8c6; --text-color-quaternary: #8a7975; --text-color-placeholder: #8a7975;
+  --text-color-brand-primary: #e8bbb0; --text-color-brand-secondary: #e8bbb0; --text-color-brand-secondary_hover: #e8bbb0; --text-color-brand-tertiary: #d37e69; --text-color-primary_on-brand: #0b0e0d; --color-text-primary_on-brand: #0b0e0d;
+  --fg-color-brand-primary: #d37e69;
+  --border-color-primary: #54403b; --border-color-secondary: #2f2522; --border-color-secondary_alt: #54403b; --border-color-tertiary: #2f2523; --border-color-brand: #d99c8c; --border-color-brand_alt: #d37e69;
+  --ring-color-brand: #d99c8c; --outline-color-brand: #d99c8c; --color-focus-ring: #d99c8c;
+}
+[data-theme="kavezo"] {
+  --color-brand-500: #c28147; --color-brand-600: #996333; --color-brand-700: #7c4f27;
+  --color-bg-primary: #fdfcfc; --color-bg-secondary: #f9f6f4; --color-text-primary: #241c14;
+  --color-accent: #45d38c; --color-accent-dark: #30b573; --color-accent-soft: #dcf9eb; --color-accent-amber-soft: #dcf9eb;
+  --background-color-primary: #fdfcfc; --background-color-primary_hover: #f9f6f4; --background-color-primary_alt: #fdfcfc;
+  --background-color-secondary: #f9f6f4; --background-color-secondary_hover: #f1ede9; --background-color-secondary_alt: #f9f6f4;
+  --background-color-tertiary: #f1ede9; --background-color-quaternary: #e9e3dd;
+  --background-color-brand-primary: #f9f2eb; --background-color-brand-primary_alt: #f9f2eb; --background-color-brand-secondary: #f1e2d5;
+  --background-color-brand-solid: #996333; --background-color-brand-solid_hover: #7c4f27;
+  --background-color-brand-section: #2e2319; --background-color-brand-section_subtle: #7c4f27;
+  --text-color-primary: #241c14; --text-color-secondary: #50443a; --text-color-secondary_hover: #322820;
+  --text-color-tertiary: #786a5e; --text-color-tertiary_hover: #594c40; --text-color-quaternary: #a3988f; --text-color-placeholder: #a3988f;
+  --text-color-brand-primary: #7c4f27; --text-color-brand-secondary: #7c4f27; --text-color-brand-secondary_hover: #7c4f27; --text-color-brand-tertiary: #996333;
+  --fg-color-brand-primary: #996333;
+  --border-color-primary: #e7e0da; --border-color-secondary: #f0edea; --border-color-secondary_alt: #e7e0da; --border-color-tertiary: #f6f5f3; --border-color-brand: #c28147; --border-color-brand_alt: #996333;
+  --ring-color-brand: #c28147; --outline-color-brand: #c28147; --color-focus-ring: #c28147;
+}
+.dark-mode[data-theme="kavezo"] {
+  --color-brand-500: #d9b08c; --color-brand-600: #d39b69; --color-brand-700: #e8cab0;
+  --color-bg-primary: #17110c; --color-bg-secondary: #231c15; --color-text-primary: #f8f7f7;
+  --color-accent: #6edda6; --color-accent-dark: #47d18c; --color-accent-soft: #183929; --color-accent-amber-soft: #183929;
+  --background-color-primary: #17110c; --background-color-primary_hover: #231c15; --background-color-primary_alt: #17110c;
+  --background-color-secondary: #231c15; --background-color-secondary_hover: #322820; --background-color-secondary_alt: #231c15;
+  --background-color-tertiary: #322820; --background-color-quaternary: #372d25;
+  --background-color-brand-primary: #392818; --background-color-brand-primary_alt: #392818; --background-color-brand-secondary: #563c25;
+  --background-color-brand-solid: #d39b69; --background-color-brand-solid_hover: #d9b08c;
+  --background-color-brand-section: #0e0a06; --background-color-brand-section_subtle: #e8cab0;
+  --text-color-primary: #f8f7f7; --text-color-secondary: #d7d1cc; --text-color-secondary_hover: #f4f2f1;
+  --text-color-tertiary: #b1a8a0; --text-color-tertiary_hover: #d2ccc6; --text-color-quaternary: #8a7f75; --text-color-placeholder: #8a7f75;
+  --text-color-brand-primary: #e8cab0; --text-color-brand-secondary: #e8cab0; --text-color-brand-secondary_hover: #e8cab0; --text-color-brand-tertiary: #d39b69; --text-color-primary_on-brand: #0b0e0d; --color-text-primary_on-brand: #0b0e0d;
+  --fg-color-brand-primary: #d39b69;
+  --border-color-primary: #54473b; --border-color-secondary: #2f2822; --border-color-secondary_alt: #54473b; --border-color-tertiary: #2f2823; --border-color-brand: #d9b08c; --border-color-brand_alt: #d39b69;
+  --ring-color-brand: #d9b08c; --outline-color-brand: #d9b08c; --color-focus-ring: #d9b08c;
+}
+[data-theme="ugyved"] {
+  --color-brand-500: #476cc2; --color-brand-600: #335299; --color-brand-700: #27417c;
+  --color-bg-primary: #fcfcfd; --color-bg-secondary: #f4f5f9; --color-text-primary: #141924;
+  --color-accent: #d3a945; --color-accent-dark: #b58d30; --color-accent-soft: #f9f0dc; --color-accent-amber-soft: #f9f0dc;
+  --background-color-primary: #fcfcfd; --background-color-primary_hover: #f4f5f9; --background-color-primary_alt: #fcfcfd;
+  --background-color-secondary: #f4f5f9; --background-color-secondary_hover: #e9ebf1; --background-color-secondary_alt: #f4f5f9;
+  --background-color-tertiary: #e9ebf1; --background-color-quaternary: #dde0e9;
+  --background-color-brand-primary: #ebeff9; --background-color-brand-primary_alt: #ebeff9; --background-color-brand-secondary: #d5ddf1;
+  --background-color-brand-solid: #335299; --background-color-brand-solid_hover: #27417c;
+  --background-color-brand-section: #191f2e; --background-color-brand-section_subtle: #27417c;
+  --text-color-primary: #141924; --text-color-secondary: #3a4050; --text-color-secondary_hover: #202532;
+  --text-color-tertiary: #5e6678; --text-color-tertiary_hover: #404859; --text-color-quaternary: #8f95a3; --text-color-placeholder: #8f95a3;
+  --text-color-brand-primary: #27417c; --text-color-brand-secondary: #27417c; --text-color-brand-secondary_hover: #27417c; --text-color-brand-tertiary: #335299;
+  --fg-color-brand-primary: #335299;
+  --border-color-primary: #dadee7; --border-color-secondary: #eaecf0; --border-color-secondary_alt: #dadee7; --border-color-tertiary: #f3f4f6; --border-color-brand: #476cc2; --border-color-brand_alt: #335299;
+  --ring-color-brand: #476cc2; --outline-color-brand: #476cc2; --color-focus-ring: #476cc2;
+}
+.dark-mode[data-theme="ugyved"] {
+  --color-brand-500: #8ca3d9; --color-brand-600: #6989d3; --color-brand-700: #b0c1e8;
+  --color-bg-primary: #0c1017; --color-bg-secondary: #151923; --color-text-primary: #f7f7f8;
+  --color-accent: #ddbc6e; --color-accent-dark: #d1a847; --color-accent-soft: #392f18; --color-accent-amber-soft: #392f18;
+  --background-color-primary: #0c1017; --background-color-primary_hover: #151923; --background-color-primary_alt: #0c1017;
+  --background-color-secondary: #151923; --background-color-secondary_hover: #202532; --background-color-secondary_alt: #151923;
+  --background-color-tertiary: #202532; --background-color-quaternary: #252a37;
+  --background-color-brand-primary: #182239; --background-color-brand-primary_alt: #182239; --background-color-brand-secondary: #253356;
+  --background-color-brand-solid: #6989d3; --background-color-brand-solid_hover: #8ca3d9;
+  --background-color-brand-section: #06090e; --background-color-brand-section_subtle: #b0c1e8;
+  --text-color-primary: #f7f7f8; --text-color-secondary: #cccfd7; --text-color-secondary_hover: #f1f2f4;
+  --text-color-tertiary: #a0a5b1; --text-color-tertiary_hover: #c6cad2; --text-color-quaternary: #757b8a; --text-color-placeholder: #757b8a;
+  --text-color-brand-primary: #b0c1e8; --text-color-brand-secondary: #b0c1e8; --text-color-brand-secondary_hover: #b0c1e8; --text-color-brand-tertiary: #6989d3; --text-color-primary_on-brand: #0b0e0d; --color-text-primary_on-brand: #0b0e0d;
+  --fg-color-brand-primary: #6989d3;
+  --border-color-primary: #3b4254; --border-color-secondary: #22262f; --border-color-secondary_alt: #3b4254; --border-color-tertiary: #23272f; --border-color-brand: #8ca3d9; --border-color-brand_alt: #6989d3;
+  --ring-color-brand: #8ca3d9; --outline-color-brand: #8ca3d9; --color-focus-ring: #8ca3d9;
+}
+[data-theme="fogaszat"] {
+  --color-brand-500: #47a9c2; --color-brand-600: #338599; --color-brand-700: #276b7c;
+  --color-bg-primary: #fcfdfd; --color-bg-secondary: #f4f8f9; --color-text-primary: #142124;
+  --color-accent: #45d38c; --color-accent-dark: #30b573; --color-accent-soft: #dcf9eb; --color-accent-amber-soft: #dcf9eb;
+  --background-color-primary: #fcfdfd; --background-color-primary_hover: #f4f8f9; --background-color-primary_alt: #fcfdfd;
+  --background-color-secondary: #f4f8f9; --background-color-secondary_hover: #e9f0f1; --background-color-secondary_alt: #f4f8f9;
+  --background-color-tertiary: #e9f0f1; --background-color-quaternary: #dde7e9;
+  --background-color-brand-primary: #ebf6f9; --background-color-brand-primary_alt: #ebf6f9; --background-color-brand-secondary: #d5ebf1;
+  --background-color-brand-solid: #276b7c; --background-color-brand-solid_hover: #1f5663;
+  --background-color-brand-section: #192a2e; --background-color-brand-section_subtle: #276b7c;
+  --text-color-primary: #142124; --text-color-secondary: #3a4b50; --text-color-secondary_hover: #202e32;
+  --text-color-tertiary: #5e7378; --text-color-tertiary_hover: #405459; --text-color-quaternary: #8f9fa3; --text-color-placeholder: #8f9fa3;
+  --text-color-brand-primary: #276b7c; --text-color-brand-secondary: #276b7c; --text-color-brand-secondary_hover: #276b7c; --text-color-brand-tertiary: #338599;
+  --fg-color-brand-primary: #338599;
+  --border-color-primary: #dae4e7; --border-color-secondary: #eaeff0; --border-color-secondary_alt: #dae4e7; --border-color-tertiary: #f3f6f6; --border-color-brand: #47a9c2; --border-color-brand_alt: #338599;
+  --ring-color-brand: #47a9c2; --outline-color-brand: #47a9c2; --color-focus-ring: #47a9c2;
+}
+.dark-mode[data-theme="fogaszat"] {
+  --color-brand-500: #8cc9d9; --color-brand-600: #69bed3; --color-brand-700: #b0dde8;
+  --color-bg-primary: #0c1517; --color-bg-secondary: #152023; --color-text-primary: #f7f8f8;
+  --color-accent: #6edda6; --color-accent-dark: #47d18c; --color-accent-soft: #183929; --color-accent-amber-soft: #183929;
+  --background-color-primary: #0c1517; --background-color-primary_hover: #152023; --background-color-primary_alt: #0c1517;
+  --background-color-secondary: #152023; --background-color-secondary_hover: #202e32; --background-color-secondary_alt: #152023;
+  --background-color-tertiary: #202e32; --background-color-quaternary: #253337;
+  --background-color-brand-primary: #183339; --background-color-brand-primary_alt: #183339; --background-color-brand-secondary: #254c56;
+  --background-color-brand-solid: #69bed3; --background-color-brand-solid_hover: #8cc9d9;
+  --background-color-brand-section: #060d0e; --background-color-brand-section_subtle: #b0dde8;
+  --text-color-primary: #f7f8f8; --text-color-secondary: #ccd4d7; --text-color-secondary_hover: #f1f3f4;
+  --text-color-tertiary: #a0aeb1; --text-color-tertiary_hover: #c6d0d2; --text-color-quaternary: #75868a; --text-color-placeholder: #75868a;
+  --text-color-brand-primary: #b0dde8; --text-color-brand-secondary: #b0dde8; --text-color-brand-secondary_hover: #b0dde8; --text-color-brand-tertiary: #69bed3; --text-color-primary_on-brand: #0b0e0d; --color-text-primary_on-brand: #0b0e0d;
+  --fg-color-brand-primary: #69bed3;
+  --border-color-primary: #3b4f54; --border-color-secondary: #222d2f; --border-color-secondary_alt: #3b4f54; --border-color-tertiary: #232c2f; --border-color-brand: #8cc9d9; --border-color-brand_alt: #69bed3;
+  --ring-color-brand: #8cc9d9; --outline-color-brand: #8cc9d9; --color-focus-ring: #8cc9d9;
+}
+[data-theme="fitness"] {
+  --color-brand-500: #c25847; --color-brand-600: #994133; --color-brand-700: #7c3227;
+  --color-bg-primary: #fdfcfc; --color-bg-secondary: #f9f4f4; --color-text-primary: #241614;
+  --color-accent: #98d345; --color-accent-dark: #7eb530; --color-accent-soft: #edf9dc; --color-accent-amber-soft: #edf9dc;
+  --background-color-primary: #fdfcfc; --background-color-primary_hover: #f9f4f4; --background-color-primary_alt: #fdfcfc;
+  --background-color-secondary: #f9f4f4; --background-color-secondary_hover: #f1eae9; --background-color-secondary_alt: #f9f4f4;
+  --background-color-tertiary: #f1eae9; --background-color-quaternary: #e9dedd;
+  --background-color-brand-primary: #f9edeb; --background-color-brand-primary_alt: #f9edeb; --background-color-brand-secondary: #f1d9d5;
+  --background-color-brand-solid: #994133; --background-color-brand-solid_hover: #7c3227;
+  --background-color-brand-section: #2e1c19; --background-color-brand-section_subtle: #7c3227;
+  --text-color-primary: #241614; --text-color-secondary: #503d3a; --text-color-secondary_hover: #322220;
+  --text-color-tertiary: #78625e; --text-color-tertiary_hover: #594440; --text-color-quaternary: #a3928f; --text-color-placeholder: #a3928f;
+  --text-color-brand-primary: #7c3227; --text-color-brand-secondary: #7c3227; --text-color-brand-secondary_hover: #7c3227; --text-color-brand-tertiary: #994133;
+  --fg-color-brand-primary: #994133;
+  --border-color-primary: #e7dcda; --border-color-secondary: #f0ebea; --border-color-secondary_alt: #e7dcda; --border-color-tertiary: #f6f4f3; --border-color-brand: #c25847; --border-color-brand_alt: #994133;
+  --ring-color-brand: #c25847; --outline-color-brand: #c25847; --color-focus-ring: #c25847;
+}
+.dark-mode[data-theme="fitness"] {
+  --color-brand-500: #d9968c; --color-brand-600: #d37769; --color-brand-700: #e8b7b0;
+  --color-bg-primary: #170e0c; --color-bg-secondary: #231715; --color-text-primary: #f8f7f7;
+  --color-accent: #afdd6e; --color-accent-dark: #98d147; --color-accent-soft: #2c3918; --color-accent-amber-soft: #2c3918;
+  --background-color-primary: #170e0c; --background-color-primary_hover: #231715; --background-color-primary_alt: #170e0c;
+  --background-color-secondary: #231715; --background-color-secondary_hover: #322220; --background-color-secondary_alt: #231715;
+  --background-color-tertiary: #322220; --background-color-quaternary: #372725;
+  --background-color-brand-primary: #391d18; --background-color-brand-primary_alt: #391d18; --background-color-brand-secondary: #562b25;
+  --background-color-brand-solid: #d37769; --background-color-brand-solid_hover: #d9968c;
+  --background-color-brand-section: #0e0706; --background-color-brand-section_subtle: #e8b7b0;
+  --text-color-primary: #f8f7f7; --text-color-secondary: #d7cdcc; --text-color-secondary_hover: #f4f1f1;
+  --text-color-tertiary: #b1a2a0; --text-color-tertiary_hover: #d2c8c6; --text-color-quaternary: #8a7875; --text-color-placeholder: #8a7875;
+  --text-color-brand-primary: #e8b7b0; --text-color-brand-secondary: #e8b7b0; --text-color-brand-secondary_hover: #e8b7b0; --text-color-brand-tertiary: #d37769; --text-color-primary_on-brand: #0b0e0d; --color-text-primary_on-brand: #0b0e0d;
+  --fg-color-brand-primary: #d37769;
+  --border-color-primary: #543e3b; --border-color-secondary: #2f2422; --border-color-secondary_alt: #543e3b; --border-color-tertiary: #2f2523; --border-color-brand: #d9968c; --border-color-brand_alt: #d37769;
+  --ring-color-brand: #d9968c; --outline-color-brand: #d9968c; --color-focus-ring: #d9968c;
+}
+[data-theme="ingatlan"] {
+  --color-brand-500: #4785c2; --color-brand-600: #336699; --color-brand-700: #27527c;
+  --color-bg-primary: #fcfcfd; --color-bg-secondary: #f4f6f9; --color-text-primary: #141c24;
+  --color-accent: #45d3a4; --color-accent-dark: #30b589; --color-accent-soft: #dcf9ef; --color-accent-amber-soft: #dcf9ef;
+  --background-color-primary: #fcfcfd; --background-color-primary_hover: #f4f6f9; --background-color-primary_alt: #fcfcfd;
+  --background-color-secondary: #f4f6f9; --background-color-secondary_hover: #e9edf1; --background-color-secondary_alt: #f4f6f9;
+  --background-color-tertiary: #e9edf1; --background-color-quaternary: #dde3e9;
+  --background-color-brand-primary: #ebf2f9; --background-color-brand-primary_alt: #ebf2f9; --background-color-brand-secondary: #d5e3f1;
+  --background-color-brand-solid: #336699; --background-color-brand-solid_hover: #27527c;
+  --background-color-brand-section: #19242e; --background-color-brand-section_subtle: #27527c;
+  --text-color-primary: #141c24; --text-color-secondary: #3a4550; --text-color-secondary_hover: #202932;
+  --text-color-tertiary: #5e6b78; --text-color-tertiary_hover: #404c59; --text-color-quaternary: #8f99a3; --text-color-placeholder: #8f99a3;
+  --text-color-brand-primary: #27527c; --text-color-brand-secondary: #27527c; --text-color-brand-secondary_hover: #27527c; --text-color-brand-tertiary: #336699;
+  --fg-color-brand-primary: #336699;
+  --border-color-primary: #dae0e7; --border-color-secondary: #eaedf0; --border-color-secondary_alt: #dae0e7; --border-color-tertiary: #f3f5f6; --border-color-brand: #4785c2; --border-color-brand_alt: #336699;
+  --ring-color-brand: #4785c2; --outline-color-brand: #4785c2; --color-focus-ring: #4785c2;
+}
+.dark-mode[data-theme="ingatlan"] {
+  --color-brand-500: #8cb2d9; --color-brand-600: #699ed3; --color-brand-700: #b0cce8;
+  --color-bg-primary: #0c1217; --color-bg-secondary: #151c23; --color-text-primary: #f7f7f8;
+  --color-accent: #6eddb8; --color-accent-dark: #47d1a3; --color-accent-soft: #18392e; --color-accent-amber-soft: #18392e;
+  --background-color-primary: #0c1217; --background-color-primary_hover: #151c23; --background-color-primary_alt: #0c1217;
+  --background-color-secondary: #151c23; --background-color-secondary_hover: #202932; --background-color-secondary_alt: #151c23;
+  --background-color-tertiary: #202932; --background-color-quaternary: #252e37;
+  --background-color-brand-primary: #182939; --background-color-brand-primary_alt: #182939; --background-color-brand-secondary: #253d56;
+  --background-color-brand-solid: #699ed3; --background-color-brand-solid_hover: #8cb2d9;
+  --background-color-brand-section: #060a0e; --background-color-brand-section_subtle: #b0cce8;
+  --text-color-primary: #f7f7f8; --text-color-secondary: #ccd1d7; --text-color-secondary_hover: #f1f2f4;
+  --text-color-tertiary: #a0a8b1; --text-color-tertiary_hover: #c6ccd2; --text-color-quaternary: #757f8a; --text-color-placeholder: #757f8a;
+  --text-color-brand-primary: #b0cce8; --text-color-brand-secondary: #b0cce8; --text-color-brand-secondary_hover: #b0cce8; --text-color-brand-tertiary: #699ed3; --text-color-primary_on-brand: #0b0e0d; --color-text-primary_on-brand: #0b0e0d;
+  --fg-color-brand-primary: #699ed3;
+  --border-color-primary: #3b4754; --border-color-secondary: #22292f; --border-color-secondary_alt: #3b4754; --border-color-tertiary: #23292f; --border-color-brand: #8cb2d9; --border-color-brand_alt: #699ed3;
+  --ring-color-brand: #8cb2d9; --outline-color-brand: #8cb2d9; --color-focus-ring: #8cb2d9;
+}
+[data-theme="fotos"] {
+  --color-brand-500: #5c47c2; --color-brand-600: #443399; --color-brand-700: #35277c;
+  --color-bg-primary: #fcfcfd; --color-bg-secondary: #f4f4f9; --color-text-primary: #171424;
+  --color-accent: #d39145; --color-accent-dark: #b57730; --color-accent-soft: #f9ecdc; --color-accent-amber-soft: #f9ecdc;
+  --background-color-primary: #fcfcfd; --background-color-primary_hover: #f4f4f9; --background-color-primary_alt: #fcfcfd;
+  --background-color-secondary: #f4f4f9; --background-color-secondary_hover: #eae9f1; --background-color-secondary_alt: #f4f4f9;
+  --background-color-tertiary: #eae9f1; --background-color-quaternary: #dfdde9;
+  --background-color-brand-primary: #eeebf9; --background-color-brand-primary_alt: #eeebf9; --background-color-brand-secondary: #dad5f1;
+  --background-color-brand-solid: #443399; --background-color-brand-solid_hover: #35277c;
+  --background-color-brand-section: #1d192e; --background-color-brand-section_subtle: #35277c;
+  --text-color-primary: #171424; --text-color-secondary: #3e3a50; --text-color-secondary_hover: #232032;
+  --text-color-tertiary: #635e78; --text-color-tertiary_hover: #444059; --text-color-quaternary: #928fa3; --text-color-placeholder: #928fa3;
+  --text-color-brand-primary: #35277c; --text-color-brand-secondary: #35277c; --text-color-brand-secondary_hover: #35277c; --text-color-brand-tertiary: #443399;
+  --fg-color-brand-primary: #443399;
+  --border-color-primary: #dcdae7; --border-color-secondary: #ebeaf0; --border-color-secondary_alt: #dcdae7; --border-color-tertiary: #f4f3f6; --border-color-brand: #5c47c2; --border-color-brand_alt: #443399;
+  --ring-color-brand: #5c47c2; --outline-color-brand: #5c47c2; --color-focus-ring: #5c47c2;
+}
+.dark-mode[data-theme="fotos"] {
+  --color-brand-500: #998cd9; --color-brand-600: #7b69d3; --color-brand-700: #b9b0e8;
+  --color-bg-primary: #0e0c17; --color-bg-secondary: #171523; --color-text-primary: #f7f7f8;
+  --color-accent: #dda96e; --color-accent-dark: #d19147; --color-accent-soft: #392a18; --color-accent-amber-soft: #392a18;
+  --background-color-primary: #0e0c17; --background-color-primary_hover: #171523; --background-color-primary_alt: #0e0c17;
+  --background-color-secondary: #171523; --background-color-secondary_hover: #232032; --background-color-secondary_alt: #171523;
+  --background-color-tertiary: #232032; --background-color-quaternary: #282537;
+  --background-color-brand-primary: #1e1839; --background-color-brand-primary_alt: #1e1839; --background-color-brand-secondary: #2d2556;
+  --background-color-brand-solid: #5c47c2; --background-color-brand-solid_hover: #443399;
+  --background-color-brand-section: #07060e; --background-color-brand-section_subtle: #b9b0e8;
+  --text-color-primary: #f7f7f8; --text-color-secondary: #cdccd7; --text-color-secondary_hover: #f1f1f4;
+  --text-color-tertiary: #a3a0b1; --text-color-tertiary_hover: #c8c6d2; --text-color-quaternary: #79758a; --text-color-placeholder: #79758a;
+  --text-color-brand-primary: #b9b0e8; --text-color-brand-secondary: #b9b0e8; --text-color-brand-secondary_hover: #b9b0e8; --text-color-brand-tertiary: #7b69d3;
+  --fg-color-brand-primary: #7b69d3;
+  --border-color-primary: #3f3b54; --border-color-secondary: #24222f; --border-color-secondary_alt: #3f3b54; --border-color-tertiary: #25232f; --border-color-brand: #998cd9; --border-color-brand_alt: #7b69d3;
+  --ring-color-brand: #998cd9; --outline-color-brand: #998cd9; --color-focus-ring: #998cd9;
+}
+[data-theme="eskuvo"] {
+  --color-brand-500: #c24766; --color-brand-600: #99334c; --color-brand-700: #7c273c;
+  --color-bg-primary: #fdfcfc; --color-bg-secondary: #f9f4f5; --color-text-primary: #241418;
+  --color-accent: #d3a945; --color-accent-dark: #b58d30; --color-accent-soft: #f9f0dc; --color-accent-amber-soft: #f9f0dc;
+  --background-color-primary: #fdfcfc; --background-color-primary_hover: #f9f4f5; --background-color-primary_alt: #fdfcfc;
+  --background-color-secondary: #f9f4f5; --background-color-secondary_hover: #f1e9eb; --background-color-secondary_alt: #f9f4f5;
+  --background-color-tertiary: #f1e9eb; --background-color-quaternary: #e9dde0;
+  --background-color-brand-primary: #f9ebef; --background-color-brand-primary_alt: #f9ebef; --background-color-brand-secondary: #f1d5dc;
+  --background-color-brand-solid: #99334c; --background-color-brand-solid_hover: #7c273c;
+  --background-color-brand-section: #2e191e; --background-color-brand-section_subtle: #7c273c;
+  --text-color-primary: #241418; --text-color-secondary: #503a3f; --text-color-secondary_hover: #322024;
+  --text-color-tertiary: #785e65; --text-color-tertiary_hover: #594046; --text-color-quaternary: #a38f94; --text-color-placeholder: #a38f94;
+  --text-color-brand-primary: #7c273c; --text-color-brand-secondary: #7c273c; --text-color-brand-secondary_hover: #7c273c; --text-color-brand-tertiary: #99334c;
+  --fg-color-brand-primary: #99334c;
+  --border-color-primary: #e7dadd; --border-color-secondary: #f0eaec; --border-color-secondary_alt: #e7dadd; --border-color-tertiary: #f6f3f4; --border-color-brand: #c24766; --border-color-brand_alt: #99334c;
+  --ring-color-brand: #c24766; --outline-color-brand: #c24766; --color-focus-ring: #c24766;
+}
+.dark-mode[data-theme="eskuvo"] {
+  --color-brand-500: #d98c9f; --color-brand-600: #d36983; --color-brand-700: #e8b0be;
+  --color-bg-primary: #170c0f; --color-bg-secondary: #231518; --color-text-primary: #f8f7f7;
+  --color-accent: #ddbc6e; --color-accent-dark: #d1a847; --color-accent-soft: #392f18; --color-accent-amber-soft: #392f18;
+  --background-color-primary: #170c0f; --background-color-primary_hover: #231518; --background-color-primary_alt: #170c0f;
+  --background-color-secondary: #231518; --background-color-secondary_hover: #322024; --background-color-secondary_alt: #231518;
+  --background-color-tertiary: #322024; --background-color-quaternary: #372529;
+  --background-color-brand-primary: #391821; --background-color-brand-primary_alt: #391821; --background-color-brand-secondary: #562531;
+  --background-color-brand-solid: #d36983; --background-color-brand-solid_hover: #d98c9f;
+  --background-color-brand-section: #0e0608; --background-color-brand-section_subtle: #e8b0be;
+  --text-color-primary: #f8f7f7; --text-color-secondary: #d7ccce; --text-color-secondary_hover: #f4f1f2;
+  --text-color-tertiary: #b1a0a4; --text-color-tertiary_hover: #d2c6c9; --text-color-quaternary: #8a757a; --text-color-placeholder: #8a757a;
+  --text-color-brand-primary: #e8b0be; --text-color-brand-secondary: #e8b0be; --text-color-brand-secondary_hover: #e8b0be; --text-color-brand-tertiary: #d36983; --text-color-primary_on-brand: #0b0e0d; --color-text-primary_on-brand: #0b0e0d;
+  --fg-color-brand-primary: #d36983;
+  --border-color-primary: #543b41; --border-color-secondary: #2f2226; --border-color-secondary_alt: #543b41; --border-color-tertiary: #2f2326; --border-color-brand: #d98c9f; --border-color-brand_alt: #d36983;
+  --ring-color-brand: #d98c9f; --outline-color-brand: #d98c9f; --color-focus-ring: #d98c9f;
+}
+[data-theme="saas"] {
+  --color-brand-500: #6c47c2; --color-brand-600: #523399; --color-brand-700: #41277c;
+  --color-bg-primary: #fcfcfd; --color-bg-secondary: #f5f4f9; --color-text-primary: #191424;
+  --color-accent: #45d3bc; --color-accent-dark: #30b59f; --color-accent-soft: #dcf9f4; --color-accent-amber-soft: #dcf9f4;
+  --background-color-primary: #fcfcfd; --background-color-primary_hover: #f5f4f9; --background-color-primary_alt: #fcfcfd;
+  --background-color-secondary: #f5f4f9; --background-color-secondary_hover: #ebe9f1; --background-color-secondary_alt: #f5f4f9;
+  --background-color-tertiary: #ebe9f1; --background-color-quaternary: #e0dde9;
+  --background-color-brand-primary: #efebf9; --background-color-brand-primary_alt: #efebf9; --background-color-brand-secondary: #ddd5f1;
+  --background-color-brand-solid: #523399; --background-color-brand-solid_hover: #41277c;
+  --background-color-brand-section: #1f192e; --background-color-brand-section_subtle: #41277c;
+  --text-color-primary: #191424; --text-color-secondary: #403a50; --text-color-secondary_hover: #252032;
+  --text-color-tertiary: #665e78; --text-color-tertiary_hover: #484059; --text-color-quaternary: #958fa3; --text-color-placeholder: #958fa3;
+  --text-color-brand-primary: #41277c; --text-color-brand-secondary: #41277c; --text-color-brand-secondary_hover: #41277c; --text-color-brand-tertiary: #523399;
+  --fg-color-brand-primary: #523399;
+  --border-color-primary: #dedae7; --border-color-secondary: #eceaf0; --border-color-secondary_alt: #dedae7; --border-color-tertiary: #f4f3f6; --border-color-brand: #6c47c2; --border-color-brand_alt: #523399;
+  --ring-color-brand: #6c47c2; --outline-color-brand: #6c47c2; --color-focus-ring: #6c47c2;
+}
+.dark-mode[data-theme="saas"] {
+  --color-brand-500: #a38cd9; --color-brand-600: #8969d3; --color-brand-700: #c1b0e8;
+  --color-bg-primary: #100c17; --color-bg-secondary: #191523; --color-text-primary: #f7f7f8;
+  --color-accent: #6eddcb; --color-accent-dark: #47d1ba; --color-accent-soft: #183934; --color-accent-amber-soft: #183934;
+  --background-color-primary: #100c17; --background-color-primary_hover: #191523; --background-color-primary_alt: #100c17;
+  --background-color-secondary: #191523; --background-color-secondary_hover: #252032; --background-color-secondary_alt: #191523;
+  --background-color-tertiary: #252032; --background-color-quaternary: #2a2537;
+  --background-color-brand-primary: #221839; --background-color-brand-primary_alt: #221839; --background-color-brand-secondary: #332556;
+  --background-color-brand-solid: #8969d3; --background-color-brand-solid_hover: #a38cd9;
+  --background-color-brand-section: #09060e; --background-color-brand-section_subtle: #c1b0e8;
+  --text-color-primary: #f7f7f8; --text-color-secondary: #cfccd7; --text-color-secondary_hover: #f2f1f4;
+  --text-color-tertiary: #a5a0b1; --text-color-tertiary_hover: #cac6d2; --text-color-quaternary: #7b758a; --text-color-placeholder: #7b758a;
+  --text-color-brand-primary: #c1b0e8; --text-color-brand-secondary: #c1b0e8; --text-color-brand-secondary_hover: #c1b0e8; --text-color-brand-tertiary: #8969d3; --text-color-primary_on-brand: #0b0e0d; --color-text-primary_on-brand: #0b0e0d;
+  --fg-color-brand-primary: #8969d3;
+  --border-color-primary: #423b54; --border-color-secondary: #26222f; --border-color-secondary_alt: #423b54; --border-color-tertiary: #27232f; --border-color-brand: #a38cd9; --border-color-brand_alt: #8969d3;
+  --ring-color-brand: #a38cd9; --outline-color-brand: #a38cd9; --color-focus-ring: #a38cd9;
+}
+[data-theme="joga"] {
+  --color-brand-500: #47c27a; --color-brand-600: #33995e; --color-brand-700: #277c4b;
+  --color-bg-primary: #fcfdfc; --color-bg-secondary: #f4f9f6; --color-text-primary: #14241b;
+  --color-accent: #d3a445; --color-accent-dark: #b58930; --color-accent-soft: #f9efdc; --color-accent-amber-soft: #f9efdc;
+  --background-color-primary: #fcfdfc; --background-color-primary_hover: #f4f9f6; --background-color-primary_alt: #fcfdfc;
+  --background-color-secondary: #f4f9f6; --background-color-secondary_hover: #e9f1ec; --background-color-secondary_alt: #f4f9f6;
+  --background-color-tertiary: #e9f1ec; --background-color-quaternary: #dde9e2;
+  --background-color-brand-primary: #ebf9f1; --background-color-brand-primary_alt: #ebf9f1; --background-color-brand-secondary: #d5f1e1;
+  --background-color-brand-solid: #277c4b; --background-color-brand-solid_hover: #1f633c;
+  --background-color-brand-section: #192e22; --background-color-brand-section_subtle: #277c4b;
+  --text-color-primary: #14241b; --text-color-secondary: #3a5043; --text-color-secondary_hover: #203227;
+  --text-color-tertiary: #5e7869; --text-color-tertiary_hover: #40594a; --text-color-quaternary: #8fa397; --text-color-placeholder: #8fa397;
+  --text-color-brand-primary: #277c4b; --text-color-brand-secondary: #277c4b; --text-color-brand-secondary_hover: #277c4b; --text-color-brand-tertiary: #33995e;
+  --fg-color-brand-primary: #33995e;
+  --border-color-primary: #dae7df; --border-color-secondary: #eaf0ed; --border-color-secondary_alt: #dae7df; --border-color-tertiary: #f3f6f5; --border-color-brand: #47c27a; --border-color-brand_alt: #33995e;
+  --ring-color-brand: #47c27a; --outline-color-brand: #47c27a; --color-focus-ring: #47c27a;
+}
+.dark-mode[data-theme="joga"] {
+  --color-brand-500: #8cd9ac; --color-brand-600: #69d395; --color-brand-700: #b0e8c7;
+  --color-bg-primary: #0c1711; --color-bg-secondary: #15231b; --color-text-primary: #f7f8f7;
+  --color-accent: #ddb86e; --color-accent-dark: #d1a347; --color-accent-soft: #392e18; --color-accent-amber-soft: #392e18;
+  --background-color-primary: #0c1711; --background-color-primary_hover: #15231b; --background-color-primary_alt: #0c1711;
+  --background-color-secondary: #15231b; --background-color-secondary_hover: #203227; --background-color-secondary_alt: #15231b;
+  --background-color-tertiary: #203227; --background-color-quaternary: #25372c;
+  --background-color-brand-primary: #183926; --background-color-brand-primary_alt: #183926; --background-color-brand-secondary: #255639;
+  --background-color-brand-solid: #69d395; --background-color-brand-solid_hover: #8cd9ac;
+  --background-color-brand-section: #060e0a; --background-color-brand-section_subtle: #b0e8c7;
+  --text-color-primary: #f7f8f7; --text-color-secondary: #ccd7d0; --text-color-secondary_hover: #f1f4f2;
+  --text-color-tertiary: #a0b1a7; --text-color-tertiary_hover: #c6d2cb; --text-color-quaternary: #758a7e; --text-color-placeholder: #758a7e;
+  --text-color-brand-primary: #b0e8c7; --text-color-brand-secondary: #b0e8c7; --text-color-brand-secondary_hover: #b0e8c7; --text-color-brand-tertiary: #69d395; --text-color-primary_on-brand: #0b0e0d; --color-text-primary_on-brand: #0b0e0d;
+  --fg-color-brand-primary: #69d395;
+  --border-color-primary: #3b5445; --border-color-secondary: #222f28; --border-color-secondary_alt: #3b5445; --border-color-tertiary: #232f28; --border-color-brand: #8cd9ac; --border-color-brand_alt: #69d395;
+  --ring-color-brand: #8cd9ac; --outline-color-brand: #8cd9ac; --color-focus-ring: #8cd9ac;
+}
+[data-theme="autoszerviz"] {
+  --color-brand-500: #c28147; --color-brand-600: #996333; --color-brand-700: #7c4f27;
+  --color-bg-primary: #fdfcfc; --color-bg-secondary: #f9f6f4; --color-text-primary: #241c14;
+  --color-accent: #458cd3; --color-accent-dark: #3073b5; --color-accent-soft: #dcebf9; --color-accent-amber-soft: #dcebf9;
+  --background-color-primary: #fdfcfc; --background-color-primary_hover: #f9f6f4; --background-color-primary_alt: #fdfcfc;
+  --background-color-secondary: #f9f6f4; --background-color-secondary_hover: #f1ede9; --background-color-secondary_alt: #f9f6f4;
+  --background-color-tertiary: #f1ede9; --background-color-quaternary: #e9e3dd;
+  --background-color-brand-primary: #f9f2eb; --background-color-brand-primary_alt: #f9f2eb; --background-color-brand-secondary: #f1e2d5;
+  --background-color-brand-solid: #996333; --background-color-brand-solid_hover: #7c4f27;
+  --background-color-brand-section: #2e2319; --background-color-brand-section_subtle: #7c4f27;
+  --text-color-primary: #241c14; --text-color-secondary: #50443a; --text-color-secondary_hover: #322820;
+  --text-color-tertiary: #786a5e; --text-color-tertiary_hover: #594c40; --text-color-quaternary: #a3988f; --text-color-placeholder: #a3988f;
+  --text-color-brand-primary: #7c4f27; --text-color-brand-secondary: #7c4f27; --text-color-brand-secondary_hover: #7c4f27; --text-color-brand-tertiary: #996333;
+  --fg-color-brand-primary: #996333;
+  --border-color-primary: #e7e0da; --border-color-secondary: #f0edea; --border-color-secondary_alt: #e7e0da; --border-color-tertiary: #f6f5f3; --border-color-brand: #c28147; --border-color-brand_alt: #996333;
+  --ring-color-brand: #c28147; --outline-color-brand: #c28147; --color-focus-ring: #c28147;
+}
+.dark-mode[data-theme="autoszerviz"] {
+  --color-brand-500: #d9b08c; --color-brand-600: #d39b69; --color-brand-700: #e8cab0;
+  --color-bg-primary: #17110c; --color-bg-secondary: #231c15; --color-text-primary: #f8f7f7;
+  --color-accent: #6ea6dd; --color-accent-dark: #478cd1; --color-accent-soft: #182939; --color-accent-amber-soft: #182939;
+  --background-color-primary: #17110c; --background-color-primary_hover: #231c15; --background-color-primary_alt: #17110c;
+  --background-color-secondary: #231c15; --background-color-secondary_hover: #322820; --background-color-secondary_alt: #231c15;
+  --background-color-tertiary: #322820; --background-color-quaternary: #372d25;
+  --background-color-brand-primary: #392818; --background-color-brand-primary_alt: #392818; --background-color-brand-secondary: #563c25;
+  --background-color-brand-solid: #d39b69; --background-color-brand-solid_hover: #d9b08c;
+  --background-color-brand-section: #0e0a06; --background-color-brand-section_subtle: #e8cab0;
+  --text-color-primary: #f8f7f7; --text-color-secondary: #d7d1cc; --text-color-secondary_hover: #f4f2f1;
+  --text-color-tertiary: #b1a8a0; --text-color-tertiary_hover: #d2ccc6; --text-color-quaternary: #8a7f75; --text-color-placeholder: #8a7f75;
+  --text-color-brand-primary: #e8cab0; --text-color-brand-secondary: #e8cab0; --text-color-brand-secondary_hover: #e8cab0; --text-color-brand-tertiary: #d39b69; --text-color-primary_on-brand: #0b0e0d; --color-text-primary_on-brand: #0b0e0d;
+  --fg-color-brand-primary: #d39b69;
+  --border-color-primary: #54473b; --border-color-secondary: #2f2822; --border-color-secondary_alt: #54473b; --border-color-tertiary: #2f2823; --border-color-brand: #d9b08c; --border-color-brand_alt: #d39b69;
+  --ring-color-brand: #d9b08c; --outline-color-brand: #d9b08c; --color-focus-ring: #d9b08c;
+}
+[data-theme="webshop"] {
+  --color-brand-500: #47c270; --color-brand-600: #339955; --color-brand-700: #277c43;
+  --color-bg-primary: #fcfdfc; --color-bg-secondary: #f4f9f5; --color-text-primary: #142419;
+  --color-accent: #d39145; --color-accent-dark: #b57730; --color-accent-soft: #f9ecdc; --color-accent-amber-soft: #f9ecdc;
+  --background-color-primary: #fcfdfc; --background-color-primary_hover: #f4f9f5; --background-color-primary_alt: #fcfdfc;
+  --background-color-secondary: #f4f9f5; --background-color-secondary_hover: #e9f1ec; --background-color-secondary_alt: #f4f9f5;
+  --background-color-tertiary: #e9f1ec; --background-color-quaternary: #dde9e1;
+  --background-color-brand-primary: #ebf9f0; --background-color-brand-primary_alt: #ebf9f0; --background-color-brand-secondary: #d5f1de;
+  --background-color-brand-solid: #277c43; --background-color-brand-solid_hover: #1f6336;
+  --background-color-brand-section: #192e20; --background-color-brand-section_subtle: #277c43;
+  --text-color-primary: #142419; --text-color-secondary: #3a5041; --text-color-secondary_hover: #203226;
+  --text-color-tertiary: #5e7867; --text-color-tertiary_hover: #405948; --text-color-quaternary: #8fa396; --text-color-placeholder: #8fa396;
+  --text-color-brand-primary: #277c43; --text-color-brand-secondary: #277c43; --text-color-brand-secondary_hover: #277c43; --text-color-brand-tertiary: #339955;
+  --fg-color-brand-primary: #339955;
+  --border-color-primary: #dae7de; --border-color-secondary: #eaf0ec; --border-color-secondary_alt: #dae7de; --border-color-tertiary: #f3f6f4; --border-color-brand: #47c270; --border-color-brand_alt: #339955;
+  --ring-color-brand: #47c270; --outline-color-brand: #47c270; --color-focus-ring: #47c270;
+}
+.dark-mode[data-theme="webshop"] {
+  --color-brand-500: #8cd9a6; --color-brand-600: #69d38c; --color-brand-700: #b0e8c3;
+  --color-bg-primary: #0c1710; --color-bg-secondary: #15231a; --color-text-primary: #f7f8f7;
+  --color-accent: #dda96e; --color-accent-dark: #d19147; --color-accent-soft: #392a18; --color-accent-amber-soft: #392a18;
+  --background-color-primary: #0c1710; --background-color-primary_hover: #15231a; --background-color-primary_alt: #0c1710;
+  --background-color-secondary: #15231a; --background-color-secondary_hover: #203226; --background-color-secondary_alt: #15231a;
+  --background-color-tertiary: #203226; --background-color-quaternary: #25372b;
+  --background-color-brand-primary: #183923; --background-color-brand-primary_alt: #183923; --background-color-brand-secondary: #255635;
+  --background-color-brand-solid: #69d38c; --background-color-brand-solid_hover: #8cd9a6;
+  --background-color-brand-section: #060e09; --background-color-brand-section_subtle: #b0e8c3;
+  --text-color-primary: #f7f8f7; --text-color-secondary: #ccd7cf; --text-color-secondary_hover: #f1f4f2;
+  --text-color-tertiary: #a0b1a5; --text-color-tertiary_hover: #c6d2ca; --text-color-quaternary: #758a7c; --text-color-placeholder: #758a7c;
+  --text-color-brand-primary: #b0e8c3; --text-color-brand-secondary: #b0e8c3; --text-color-brand-secondary_hover: #b0e8c3; --text-color-brand-tertiary: #69d38c; --text-color-primary_on-brand: #0b0e0d; --color-text-primary_on-brand: #0b0e0d;
+  --fg-color-brand-primary: #69d38c;
+  --border-color-primary: #3b5443; --border-color-secondary: #222f27; --border-color-secondary_alt: #3b5443; --border-color-tertiary: #232f27; --border-color-brand: #8cd9a6; --border-color-brand_alt: #69d38c;
+  --ring-color-brand: #8cd9a6; --outline-color-brand: #8cd9a6; --color-focus-ring: #8cd9a6;
+}

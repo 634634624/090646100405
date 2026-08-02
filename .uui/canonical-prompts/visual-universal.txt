@@ -1,0 +1,272 @@
+---
+name: use-images-and-visual-assets
+description: Universal reasoning guide for using images, photography, backgrounds, cutouts, masks, patterns, and visual assets in any design — breaks the AI habit of flat boxes-on-boxes layouts by teaching creative, intentional image usage.
+---
+
+# Use Images & Visual Assets
+
+Your default behavior is to produce flat layouts of colored rectangles, icons, and text. Real designs use IMAGES — photography, illustrations, cutouts, masked shapes, textured backgrounds, layered compositions. This skill teaches you to think about images as a core design tool, not an afterthought.
+
+Every time you create a design, ask: "Where is the visual life in this?" If the answer is "icons and colored boxes," you haven't finished designing.
+
+---
+
+## Step 1: Scan for Image Opportunities
+
+Before laying out any design, identify where images belong. This applies universally — marketing sites, dashboards, apps, portfolios, e-commerce, presentations, anything.
+
+### The visual desert test
+Scroll through your design mentally. If a user would see more than 3 consecutive content blocks with zero photographic or illustrative content, you have a visual desert. Something needs an image, a background treatment, or a visual element that isn't a flat rectangle.
+
+### Ask per element
+For every section, card, header, or content block, ask:
+- **Could this show a real thing?** Products, people, places, screenshots, artwork — if the content refers to something visual, SHOW it.
+- **Could this benefit from atmosphere?** Backgrounds, textures, gradients, patterns — even data-heavy sections can feel richer with subtle visual treatment.
+- **Is this just a colored box with text?** If yes, challenge yourself — could it be a photo with text overlay? A cutout image beside the text? A masked shape with an image fill? An illustration?
+
+### Context-specific triggers
+- **People are mentioned** → Show their faces. Testimonials, team, about, profiles, comments — humans connect with humans.
+- **A product exists** → Show it. Screenshots in device mockups, product photos, packaging renders. Never describe a product with only text when you could show it.
+- **A place or environment matters** → Show it. Real estate, travel, restaurants, events — atmosphere IS the content.
+- **The brand has a mood** → Express it visually. A luxury brand's emptiness is different from a startup's emptiness. Photography sets the tone that color alone cannot.
+- **Data or metrics are shown** → The data section itself may not need images, but the section AROUND it does — break up dense information with visual breathing room.
+
+---
+
+## Step 2: Image Treatments Beyond "Image in Rectangle"
+
+This is where most AI-generated designs fail. You put an image in a rectangular frame and call it done. Real designers use dozens of treatments:
+
+### Cutout / Background removal
+Remove the background from a photo so the subject floats freely over the layout. This is one of the most powerful techniques and you UNDERUSE it.
+- **People cutouts**: A person with background removed, placed overlapping a card, breaking out of a section boundary, or floating beside text. Creates energy and dimensionality.
+- **Product cutouts**: A product with background removed, placed at an angle, casting a shadow, overlapping UI elements. Makes products feel tangible.
+- **Object cutouts**: Food, devices, plants, furniture — anything removed from its background and placed compositionally in the layout.
+- **When to use**: Hero sections, feature highlights, pricing sections ("this is what you get"), about pages, any time you want an element to feel like it exists IN the design rather than being trapped in a box.
+
+### Masked / Clipped shapes
+Instead of rectangular frames, clip images into circles, rounded shapes, organic blobs, angled cuts, or custom shapes.
+- **Circle masks**: Classic for avatars but also powerful for decorative image elements — a grid of circular photos creates a completely different feel than rectangles.
+- **Rounded rectangle masks**: Softer than sharp rectangles, matches modern UI radius tokens.
+- **Angled / diagonal clips**: Cut an image at an angle so it creates a dynamic edge against the adjacent content. Common in sports, tech, and high-energy brands.
+- **Organic / blob shapes**: Soft, irregular shapes for creative, playful, or organic brands.
+- **Geometric shapes**: Hexagons, triangles, arches — used in architecture, tech, and structured brands.
+- **When to use**: When you want images to feel integrated into the design language rather than just "placed." The mask shape should echo the brand personality.
+
+### Layered / Overlapping compositions
+Images don't have to sit in neat, separate boxes. Layer them.
+- **Overlapping cards**: One image slightly overlapping another, creating depth. A main hero photo with a smaller detail photo overlapping its corner.
+- **Image + UI overlap**: A product screenshot that overlaps the boundary between two sections. A photo that sits half in a colored section, half in a white section.
+- **Stacked with offset**: Multiple images stacked with slight offset, like a pile of polaroids or a card deck. Creates casual, approachable energy.
+- **Image behind UI elements**: A dashboard card where the background is a subtle, blurred photo rather than a flat color.
+
+### Image as texture / pattern
+Use images not as focal content but as background texture.
+- **Blurred background**: Take a photo, blur it heavily (20-40px), use it as a section background. Creates color and atmosphere without competing with foreground content.
+- **Tiled patterns**: Photographs of textures (marble, wood, fabric, concrete) used as tiled section backgrounds at low opacity.
+- **Gradient map**: An image with a color overlay that tints it entirely to a brand color, used as a subtle background.
+- **Noise/grain overlay**: Adds analog texture to digital flatness.
+
+### Duotone / Color treatments
+Transform photos with color overlays rather than using them at full color.
+- **Duotone**: Map an image to two brand colors. Creates a strong branded feel while keeping the image's content visible.
+- **Monochrome + accent**: Desaturate an image, then let one element pop in brand color (e.g., grayscale city photo with a red umbrella).
+- **High contrast B&W**: Strip all color for dramatic, editorial impact. Especially powerful for portraits and architecture.
+- **Brand color overlay**: Semi-transparent brand color over a photo creates a branded atmosphere while maintaining visual depth.
+
+### Split / Collage compositions
+Don't commit to one large image when a composition tells a better story.
+- **Grid collage**: 3-5 images arranged in an asymmetric grid, different sizes, telling a broader story than one image could.
+- **Split screen**: Half image, half content — the image takes exactly 50% of the width (or height) with content on the other half.
+- **Filmstrip / Horizontal scroll**: A row of images suggesting there's more to see. Good for portfolios, galleries, case studies.
+- **Before/after**: Two images side by side showing transformation. Powerful for product demos, renovations, fitness, design work.
+
+---
+
+## Step 3: Background Treatments That Add Depth
+
+Flat solid-color backgrounds are the hallmark of unfinished design. Layer depth into them:
+
+### Photo backgrounds with overlays
+- Place a full-bleed photo behind a section. Add a semi-transparent color overlay (50-80% opacity depending on how visible you want the photo).
+- The photo provides texture and atmosphere. The overlay provides readability and brand color.
+- Vary the overlay: solid color, gradient (transparent at top to solid at bottom), or radial (transparent at center, solid at edges).
+
+### Gradient backgrounds
+- Simple two-color gradients (subtle, 5-10% color difference) add dimension vs flat color.
+- Radial gradients behind key content areas create a spotlight/focus effect.
+- Mesh gradients (multiple color points) create rich, modern backgrounds.
+- Gradient + noise texture = depth without distraction.
+
+### Pattern backgrounds
+- Geometric patterns (dots, lines, grids) at 3-10% opacity over a section background.
+- These patterns should be SUBTLE — if you notice the pattern before the content, it's too strong.
+- Use design system pattern components when available. Otherwise create simple repeating shapes.
+
+### Blurred image backgrounds
+- Take a vibrant image, apply heavy Gaussian blur, reduce opacity to 30-50%.
+- The result: color and energy from the photo, without any recognizable subject competing with content.
+- Especially effective for app backgrounds, modal backdrops, and glass-effect cards.
+
+### Texture backgrounds
+- Subtle paper, fabric, concrete, or grain textures at very low opacity (2-5%) add a tactile quality.
+- The user may not consciously notice the texture, but they'll feel the difference vs pure flat color.
+
+---
+
+## Step 4: Image + Text Relationships
+
+When images and text coexist, their relationship must be intentional:
+
+### Text OVER images
+Text sits directly on the image. Requires readability treatment:
+- **Scrim/overlay**: Dark gradient or semi-transparent layer between image and text. The most reliable method.
+- **Text shadow**: Subtle shadow behind text letterforms. Works for headlines, not for body text.
+- **Contained text box**: Text inside a solid or frosted-glass container floating over the image. Preserves more of the image.
+- **Choose image carefully**: Select or generate images with natural "quiet zones" — areas of low detail/consistent tone where text sits cleanly.
+- **RULE**: If you can't instantly read every word, the treatment failed. Fix it before moving on.
+
+### Text BESIDE images
+Text and image side by side. The most versatile and reliable layout.
+- Image and text should feel balanced — neither should dominate unless intentional.
+- Vertical alignment matters: center-align text with the image's visual center of gravity, not necessarily its geometric center.
+- In alternating layouts (image-left/text-right, then flipped), keep the rhythm consistent.
+
+### Text WRAPPING images
+Text flows around an irregularly shaped image or cutout. Creates editorial, magazine-like layouts. More complex but editorial, magazine-like layouts. More complex but very effective for long-form content.
+
+### Text AS image
+Text rendered at very large scale becomes a visual/graphic element itself. Display-size typography filling a section serves as both content and visual interest. Pair with subtle background treatment.
+
+---
+
+## Step 5: Aspect Ratios & Consistency
+
+### Within grids — enforce consistency
+When images appear in a repeating structure (card grid, team grid, portfolio grid), ALL images MUST share the same aspect ratio. Mixed ratios in a grid look broken, not creative. Pick one ratio and enforce it.
+
+### Common ratios and their character
+- **16:9** — Cinematic, widescreen. Good for hero banners, video thumbnails, landscape showcases.
+- **3:2** — Classic photography ratio. Balanced, versatile. Good for blog cards, feature images.
+- **4:3** — Slightly taller, traditional. Good for product images, screenshots.
+- **1:1** — Square. Good for avatars, social media, product grids, icon-like image elements.
+- **3:4 / 2:3** — Portrait. Good for people, mobile screenshots, tall cards.
+- **Ultra-wide (21:9+)** — Panoramic. Good for full-bleed section headers, atmospheric strips.
+- **Ultra-tall (1:2+)** — Vertical. Good for mobile-first designs, story-like content, scrolling galleries.
+
+### Breaking ratio rules intentionally
+You CAN mix ratios when it's a deliberate composition choice — a large hero image at 16:9 with small square thumbnails below, or an asymmetric collage. The key is that mixed ratios should look DESIGNED, not accidental.
+
+---
+
+## Step 6: Scale Mode Rules
+
+How an image fills its container matters:
+
+- **FILL** (most common): Image covers the entire frame, cropping edges as needed. Use for backgrounds, card thumbnails, hero images, avatars — any time the frame should be fully covered.
+- **FIT**: Image fits entirely within the frame, may leave empty space. Use for logos, product images where cropping would lose information, icons.
+- **TILE**: Image repeats to fill the frame. Use only for patterns and textures.
+
+**Never stretch**: If an image's natural ratio doesn't match the container, use FILL (which crops) rather than stretching to fit. Distorted images immediately look amateur.
+
+---
+
+## Step 7: Context-Specific Image Thinking
+
+### Marketing / Landing pages
+- Hero: IMAGE IS MANDATORY. Full-bleed photo, product mockup, or illustration.
+- Alternate image-heavy and text-heavy sections for rhythm.
+- Use at least one background-image section to break the monotony of flat colors.
+- People and product images build trust. Abstract art does not.
+
+### Dashboards / App interfaces
+- Images are sparser but still critical: user avatars, product thumbnails, chart/data visualizations, empty state illustrations.
+- Background treatments can be subtle — slight gradients, gentle blur behind side panels, frosted glass on overlays.
+- Don't default to gray boxes for every content placeholder. Even a subtle image or illustration in the sidebar, header, or empty state humanizes the interface.
+
+### E-commerce
+- Product images are THE content. They must be large, clear, and show the product from the best angle.
+- Lifestyle photography (product in use) alongside product shots increases perceived value.
+- Grid images MUST be consistent: same background, same lighting direction, same padding.
+
+### Portfolio / Creative
+- Here images ARE the design. Give them space, let them breathe.
+- Masonry / asymmetric grids showcase creative work better than rigid grids.
+- Full-bleed images with minimal UI create maximum impact.
+
+### Presentations / Slides
+- Every slide should have a visual element — photo, diagram, illustration, or graphic. Text-only slides lose attention.
+- Full-bleed photo backgrounds with text overlay work powerfully in presentations.
+- Use image cutouts for speaker/person slides rather than boxed photos.
+
+### Mobile / App design
+- Screen real estate is limited — images must be impactful at small sizes.
+- Hero images on mobile often work best as background treatments rather than taking up half the screen.
+- Card images need to communicate quickly — tight crops, clear subjects, strong contrast.
+
+---
+
+## Step 8: Image Generation Guidance
+
+When you generate images, prompt quality determines design quality.
+
+### Structure your prompts
+[Subject] + [Action/State] + [Environment] + [Lighting/Mood] + [Composition] + [Style]
+
+### Match the design register
+- **Minimalist**: Clean backgrounds, single subjects, lots of negative space, soft natural light.
+- **Editorial/Luxury**: Rich contrast, dramatic lighting, cinematic composition, shallow depth of field.
+- **Bold/Expressive**: Saturated color, dynamic angles, movement, energy.
+- **Warm/Organic**: Golden hour light, natural materials, earthy tones, imperfect beauty.
+- **Corporate/Professional**: Even lighting, clean environments, balanced composition, neutral palette.
+- **Dark/Moody**: Low-key lighting, deep shadows, selective illumination, atmospheric.
+
+### Consistency across a design
+All generated images in one design should feel like they came from the same photo shoot or illustrator. Match lighting direction, color temperature, level of abstraction, and photographic style across every image in the design.
+
+---
+
+## Step 9: Anti-Patterns
+
+### ❌ Every image trapped in a rectangle
+Use cutouts, masks, overlaps, bleeds. Break the boxes.
+
+### ❌ Placeholder gray boxes left in final designs
+If a component has an image slot, fill it. Gray rectangles scream "unfinished wireframe."
+
+### ❌ Text illegible over images
+If you place text on an image, GUARANTEE readability with overlays, scrims, or text containers.
+
+### ❌ Inconsistent image styles in one design
+Mixing photo styles (warm lifestyle + cold corporate + illustrated) in one page looks like a collage of stock sites, not a designed experience.
+
+### ❌ All images the same size
+Create scale contrast — hero images large, supporting images medium, avatars small. Uniform sizing is monotonous.
+
+### ❌ Images that communicate nothing
+A random abstract gradient behind text isn't an "image." Every image should either show something relevant, set a mood, or provide texture. If it does none of these, remove it.
+
+### ❌ Using only rectangles for image containers
+Circles, rounded shapes, angles, organic masks — the container shape is a design choice.
+
+### ❌ Ignoring dark mode
+Images on white backgrounds look jarring in dark mode. Consider: subtle borders in dark mode, darkened image overlays, or selecting images with darker tonality for dark themes.
+
+### ❌ Flat background on every single section
+At minimum, one section per page should have a non-flat background — photo, gradient, pattern, texture. Pure flat everywhere = digital boredom.
+
+---
+
+## Final Checklist
+
+Before declaring any design complete:
+
+1. **Count the images.** Is there at least one real image per major section? If not, add them.
+2. **Check the treatments.** Are images only in rectangles? Try at least one cutout, mask, or overlap.
+3. **Test readability.** Is ALL text over images clearly readable? Fix any that isn't.
+4. **Grid consistency.** Do all images in grids share the same ratio and style? Standardize them.
+5. **Visual rhythm.** Do heavy (image) and light (text) sections alternate? Reorganize if needed.
+6. **Background variety.** Is every section a flat color? Add at least one textured/gradient/image background.
+7. **People are visible.** Do testimonials, team sections, and profiles have real photos? Add them.
+8. **Products are shown.** If the design is about a product, is the product VISIBLE? Show it.
+9. **The honest test.** Would a non-designer see a finished, polished product — or a wireframe with colors? Be ruthless.

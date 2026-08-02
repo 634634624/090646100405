@@ -1,0 +1,452 @@
+{
+  "schemaVersion": 1,
+  "kind": "FactoryModeReceiptV1",
+  "mode": "ASSEMBLY",
+  "sourcePlanFingerprint": "sha256:2f0b4d2177767ca9ad78236a78cc2ded198e59466844e9db5d97cd859151a89c",
+  "resolvedBuildPlanFingerprint": "sha256:b422016fb3a30574d3f75bf31d610a0494a773b05489f0e39ef8f6125717533c",
+  "gapDecisions": [],
+  "ownedSources": [
+    {
+      "path": "src/components/application/empty-state/empty-state.tsx",
+      "sha256": "sha256:501b97de99cde1e76d83eda4184560ec27f0a32c421a7c13c70dcb486fa08f78"
+    },
+    {
+      "path": "src/components/application/slideout-menus/slideout-menu.tsx",
+      "sha256": "sha256:190e22011f764341efc7d35eb9601d62f25db622deea4a9316b613f8df07d9d4"
+    },
+    {
+      "path": "src/components/base/avatar/avatar.tsx",
+      "sha256": "sha256:49bcc021bf717ab395a6caec94bd19cb82eb25d3e13afafa74aa937582e0ba28"
+    },
+    {
+      "path": "src/components/base/avatar/base-components/avatar-add-button.tsx",
+      "sha256": "sha256:4676000225227c5e9f6a0e953c03c015a5c10ea0de282024ddaabb3c8600032d"
+    },
+    {
+      "path": "src/components/base/avatar/base-components/avatar-company-icon.tsx",
+      "sha256": "sha256:52223fe32cd9f6b1f08702eb052af37a875f380c3f2626ccc8c2e6da0329bb09"
+    },
+    {
+      "path": "src/components/base/avatar/base-components/avatar-count.tsx",
+      "sha256": "sha256:ac7958c908a28fe7c4e090d54af4dcfb5cceb1faf3c2bac94ea0cb8a08bc088d"
+    },
+    {
+      "path": "src/components/base/avatar/base-components/avatar-online-indicator.tsx",
+      "sha256": "sha256:40dd93e07eb5d2875298586f027bad205b78aabb3be6a296ef036437595b0226"
+    },
+    {
+      "path": "src/components/base/avatar/base-components/index.tsx",
+      "sha256": "sha256:d630103c098195bb12b76683ddce85402dcc394feef45d2427e478209d2c2bd5"
+    },
+    {
+      "path": "src/components/base/avatar/base-components/verified-tick.tsx",
+      "sha256": "sha256:9cf7b0cd9970923bd6eb9d0a1c82eab1ddcdda007a6e94e48b047f7ef85b2473"
+    },
+    {
+      "path": "src/components/base/badges/badge-types.ts",
+      "sha256": "sha256:086f2d74cddd0decb0fa78b80609ff17968df7a9c09661d813243ead847d1501"
+    },
+    {
+      "path": "src/components/base/badges/badges.tsx",
+      "sha256": "sha256:459fb248220521d4573238d666f3f1fee4e6c850e126a16ecf0ec2c3cab6cd8d"
+    },
+    {
+      "path": "src/components/base/buttons/button.tsx",
+      "sha256": "sha256:5f0fdf87c83ec7c9f5d38bd94808a16fed4e8121de0526d18762e669d1e09240"
+    },
+    {
+      "path": "src/components/base/buttons/close-button.tsx",
+      "sha256": "sha256:fb11a8d1a35f77aaf5ce4946c5ba3a38db93d67fc7e0b19eb98acaa7f7d67c61"
+    },
+    {
+      "path": "src/components/base/checkbox/checkbox.tsx",
+      "sha256": "sha256:4266edfa3562c505e869ba55c81a64e7bdd86962835aa0ea9c460fd7ffc89bd1"
+    },
+    {
+      "path": "src/components/base/input/hint-text.tsx",
+      "sha256": "sha256:521941d440c71a807fc81ee50ee6262ea414ab5fc4a39f5ce5ea5ff16f3b3037"
+    },
+    {
+      "path": "src/components/base/input/input.tsx",
+      "sha256": "sha256:7312d55d6dbf70cb1dafcff3b18866d324edd5dbeb3b86a719fe1c8d911f507a"
+    },
+    {
+      "path": "src/components/base/input/label.tsx",
+      "sha256": "sha256:b9918369ff3e7a8de73d66a3a6bc3724c0d42a3d7604cc059415d5ef9eed250a"
+    },
+    {
+      "path": "src/components/base/radio-buttons/radio-buttons.tsx",
+      "sha256": "sha256:0e4340b18c39d2b6b107b5867907907807dc3e220a76ad00ed652eb37a0d9b7b"
+    },
+    {
+      "path": "src/components/base/select/combobox.tsx",
+      "sha256": "sha256:ae8996154967a26c4103ccd964ed00560804a76c7d39bacf5414064c9af3a787"
+    },
+    {
+      "path": "src/components/base/select/popover.tsx",
+      "sha256": "sha256:a52e8f8f4537b2d1bca089a8ba726e17e1c4c25ce6e38b86af6855048aacf51f"
+    },
+    {
+      "path": "src/components/base/select/select-item.tsx",
+      "sha256": "sha256:93a5e1ac3bc7a9ac4131ab9404d965d7d96e594ef18fbcd7abb0b556a070a2e1"
+    },
+    {
+      "path": "src/components/base/select/select-shared.tsx",
+      "sha256": "sha256:abfd514facc4e3e32ff5421a54359bb6bc17f8a580f266799fc1c063c958c9d7"
+    },
+    {
+      "path": "src/components/base/select/select.tsx",
+      "sha256": "sha256:a5d308d0147b15442bc74f67c2228b98cdc1296afa419a30edfe5b254e9cbf46"
+    },
+    {
+      "path": "src/components/base/tooltip/tooltip.tsx",
+      "sha256": "sha256:2739d1d80a1ab771df11c6b26e07c7860262ad00b7bdd61a8d4a638610f47c10"
+    },
+    {
+      "path": "src/components/foundations/dot-icon.tsx",
+      "sha256": "sha256:a908145b197665d9fc0148d93d7a67806a7548bb69e82d7c2b21a80f9568b4f6"
+    },
+    {
+      "path": "src/components/foundations/featured-icon/featured-icon.tsx",
+      "sha256": "sha256:2c9e0227bcd87c88cc87c20ba119d701de61f855d0add2bc9360b8ecebebe06d"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/affirm-icon.tsx",
+      "sha256": "sha256:d8e2be03d8ddc80b07031fac9f10744bd6addb8cc8d6c0abc176baa25830d8b7"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/afterpay-icon.tsx",
+      "sha256": "sha256:7db88650d678350a22bc58b62475a7f56c491e9902ed9864cbc2458b8a5754ba"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/alipay-icon.tsx",
+      "sha256": "sha256:13f1227cb5bfa79d5bc6817e98f3788fa27c5f536baab9715d19f6c88045536a"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/amazon-icon.tsx",
+      "sha256": "sha256:4442bbe2782452628fd85cf00d68fc1039576851555aa1dcd016d1d957278afd"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/amex-icon.tsx",
+      "sha256": "sha256:e90ce4931e2f35de62d3dac6f7a888cde758f0fca21d6ed1f433ed50e939cf6e"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/apple-pay-icon.tsx",
+      "sha256": "sha256:f06ad7db329af6c5e545227dc505799adee8a347a4803025cd6999da374f94fb"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/ayden-icon.tsx",
+      "sha256": "sha256:98621a7dfdb2dcd9081699a88ad487f9f95b3798c81c24a3eb7a85fe4f8c472f"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/bancontact-icon.tsx",
+      "sha256": "sha256:f93744ca6963117cb287c2ea13a6db13525aff061a8c30bbc4f5b7fba53f53fc"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/binance-pay-icon.tsx",
+      "sha256": "sha256:297c46c8ba5252a312bb4a65eb85d2739b30dbfb554e05916daa277cfaf11c8a"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/bitcoin-cash-icon.tsx",
+      "sha256": "sha256:9b9392c734ae6afb49222058d58789e01b7cf18428a2dbd142dc4f89a6d620e5"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/bitcoin-icon.tsx",
+      "sha256": "sha256:84e9fb7934b6516ee4d4e37b937a5438c4a3c23ca0336d2ad4e93f44aebb3f92"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/bitpay-icon.tsx",
+      "sha256": "sha256:ac4ca2929b89822227dd4412d0c8104dd1845a57253e311d1e6df19bc7123850"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/braintree-icon.tsx",
+      "sha256": "sha256:a8fd6c5a4e2717f5a399fe7b9bb922356bb9d8a258541bb67c067cc9d0f9ddff"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/cash-app-pay-icon.tsx",
+      "sha256": "sha256:8c566958865f84eab151a496ecb35ed58e1d67bfd21a87231ad2699c80839ddd"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/citadele-icon.tsx",
+      "sha256": "sha256:c70478c977b5767d4c7f442c1668b8aee983367403726b335f052db013d13bac"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/coinbase-icon.tsx",
+      "sha256": "sha256:4aeb205ce4ff80c2eaab9b9054fe40c0c7130a324e81af55e8c73edd6ac1dbb6"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/diners-club-icon.tsx",
+      "sha256": "sha256:517649ca2508276b3603ff75a4c59d93e7f88676cad877ab4d172585cdc6b35f"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/discover-icon.tsx",
+      "sha256": "sha256:e951c33575ec44d2d4e377e8d25a808e4955268e424949bdbee62afd55b747b7"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/elo-icon.tsx",
+      "sha256": "sha256:9dbe75033faca9e5316abc9bcf35ecec5fc4471c3f3b4271f9012dc0506884d3"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/etherium-icon.tsx",
+      "sha256": "sha256:502b9066f3fcbfdd9d4e30c84eb366cfa743152ae0db294b90e728fc0bdbcebb"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/forbrugsforeningen-icon.tsx",
+      "sha256": "sha256:fc658623d70d6504eb5d9b786e3a75f7f65fb725f12f34544f3d98ada364688a"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/giropay-icon.tsx",
+      "sha256": "sha256:225daf153e629f0df5663591053b7ed5584b2eda84658d19a8d8d23b87c88b5e"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/google-pay-icon.tsx",
+      "sha256": "sha256:f9c69a11d638b028038e4c8f9bde87c313adcb69709ff1eea6d4678286906a5c"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/ideal-icon.tsx",
+      "sha256": "sha256:0c37ba46c12ab220bdfd11694949b2bc1343bdf5abd2f03c2db323529b482d4a"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/index.tsx",
+      "sha256": "sha256:9dac980d7fd36708786e351868d4693a347e57d8465b2bf27ce9addd999648da"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/interac-icon.tsx",
+      "sha256": "sha256:7f88c2d6066191ffa1ac1343f1da9fc79e7fba784feeed1f6d7853328e9f6782"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/jcb-icon.tsx",
+      "sha256": "sha256:010228f8dd2a2844af65592b0a6e8e1b0ed4d94665dd0aea0cbf08ee18e58942"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/klarna-icon.tsx",
+      "sha256": "sha256:70147d364a5c7025a97b1ef824cf5299a5aaaaefbca3ff4677abd042ae41fb38"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/lightcoin-icon.tsx",
+      "sha256": "sha256:4413eadfe4687c3319624a68e70981b1cdf5135bb690a823a14977e89bd2d2e9"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/maestro-icon.tsx",
+      "sha256": "sha256:c093462b85bc308cfb515e6dbaffa62a1309d5dcc264f6042feaf7e6f94f3b05"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/mastercard-icon.tsx",
+      "sha256": "sha256:ebed7d18a3441d7f0c8f2238ee5a7e2fabbc4ca66782783fa349198000e2cf7e"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/payoneer-icon.tsx",
+      "sha256": "sha256:5f29f13ebb66b662ebcfc433f9211fd376af455d1d9a100354279f5c3d3353c3"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/paypal-icon.tsx",
+      "sha256": "sha256:bfa832f7d12d73c19126c39959b546cc52f0bf8258e600611a05b864eaff13f4"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/paysafe-icon.tsx",
+      "sha256": "sha256:9192eea5bebfb6e197670eb8d843b39699d48309af5e1bcbd08e8e642e111b35"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/qiwi-icon.tsx",
+      "sha256": "sha256:d997d867fab72dc767768f570f652d9f5a3dc058c17d33b2ffdf5c6576e0e999"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/razorpay-icon.tsx",
+      "sha256": "sha256:7e6ac81e5390d388e113f3609e63b4678840eaddd474eed2759ddb8f90c89c04"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/revolut-icon.tsx",
+      "sha256": "sha256:71edceba5735dfb463261ef71a7b8b4b4fb772194167bf8f250be80c0489538b"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/ru-pay-icon.tsx",
+      "sha256": "sha256:a493302745ed28ae748ba179f18fe8619d1d16f1f94d8f46d82a78a35206018b"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/samsung-pay-icon.tsx",
+      "sha256": "sha256:907c3dc8bc0450200be442d6287a3207bc0553745489b877a8b896e9f26fcae1"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/sepa-icon.tsx",
+      "sha256": "sha256:7961ebc488179642359ced843463b83e60d5dede8037be3f6f407df3a40a0cc7"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/shop-pay-icon.tsx",
+      "sha256": "sha256:807ecc67c86ee737585691cb54f4d3a3564468c067083bea5836169acee78438"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/shopee-pay-icon.tsx",
+      "sha256": "sha256:c1b4427b6ab58a1fc2436103be980991524bec09ae7131d2afdf0b443c10af2e"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/skrill-icon.tsx",
+      "sha256": "sha256:b1e9eaf447ed804ba8dc668e056c8460f871069ba2a261f1dc8866d5b20edbe3"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/sofort-icon.tsx",
+      "sha256": "sha256:a27c0f5baa931ad5ba61c1659f2d7b4d2135e8ce3434566e7d7c000cb8a7e579"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/stripe-icon.tsx",
+      "sha256": "sha256:33e7db25a76e1add1e14bdbbfa3e775def61a4e70048dcdd7eb324a1129d0ada"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/union-pay-icon.tsx",
+      "sha256": "sha256:18eb36ca94d3c25adf2e2739b576db77f39c683aa290b35d7bd16197ce13b478"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/upi-icon.tsx",
+      "sha256": "sha256:6d6fcb8dce8ed32bd77261e0020bd6da45c6f91e32dcbb0930eab02da065b888"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/venmo-icon.tsx",
+      "sha256": "sha256:13a8a159c61fb1347397ec423836793b48520f367112fba24b4511b410c89e6c"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/verifone-icon.tsx",
+      "sha256": "sha256:b203247e632a49e0b211ab4b789bb1d2e89802d488e83e7b410ce5b5ad6f1fe0"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/visa-icon.tsx",
+      "sha256": "sha256:5c2e41445004cb3675c422b65af34ee2b1996ca8c5dce958397df8aa0e3ff9c0"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/we-chat-icon.tsx",
+      "sha256": "sha256:e75d8d865c9fb05ee9ade69ece737371865f404b4c6dc15cf00c881d1a45bf3f"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/we-chat-pay-icon.tsx",
+      "sha256": "sha256:5f021a8e16ab9648ff636dbe36d3107e862ee8d23c1d49c48e2618d0ec38b996"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/webmoney-icon.tsx",
+      "sha256": "sha256:b31c1a00108bfa31fe74d7a402603e4d41fb0cb0c5e4ee915a60a34ff1bdd7f7"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/wise-icon.tsx",
+      "sha256": "sha256:c354d2ceb58ba7d54f0f3a34d5b263f169977cb70484377f274fbf68668564ad"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/yandex-icon.tsx",
+      "sha256": "sha256:df51be6d4ce894d3bafdc187a3b4399d1924ec710f92ab7d41e001942afa4c36"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/zelle-icon.tsx",
+      "sha256": "sha256:24651bf26e8aebcfea252162c8c3f1a6600919664eabb148e080bb55882f40ee"
+    },
+    {
+      "path": "src/components/foundations/payment-icons/zip-pay-icon.tsx",
+      "sha256": "sha256:1d82baa052ee2fd16e6fa5e3fa72f79b8b39350c1ec51d777819bea74e88e1f3"
+    },
+    {
+      "path": "src/components/shared-assets/background-patterns/circle.tsx",
+      "sha256": "sha256:65c64f2d39bfd17fb6af282a876fbe0ca5e8dcb77b3b7523b8f109e568d81b1a"
+    },
+    {
+      "path": "src/components/shared-assets/background-patterns/grid-check.tsx",
+      "sha256": "sha256:e0767891ccf0e8855f0775945bb04e47cc7b22880f5cb51378f9ec7f71f7dbcc"
+    },
+    {
+      "path": "src/components/shared-assets/background-patterns/grid.tsx",
+      "sha256": "sha256:ebcced33f367fd399997bfdc5ffea3a4084e126b0dddbc269eb8a5b99b0ca006"
+    },
+    {
+      "path": "src/components/shared-assets/background-patterns/index.tsx",
+      "sha256": "sha256:4d13fbd538121384e9b732704af6bbf65b6ae890cc28f48b32ba6cf6d0f52552"
+    },
+    {
+      "path": "src/components/shared-assets/background-patterns/square.tsx",
+      "sha256": "sha256:12f46b974f2d6a9cf51faa7498386e289541118a2453661a35794085c523078f"
+    },
+    {
+      "path": "src/components/shared-assets/illustrations/box.tsx",
+      "sha256": "sha256:c4c725a63d5be631f4c3bf73d1b50595e59d10adfc3dfeb2f7f93e52e5658191"
+    },
+    {
+      "path": "src/components/shared-assets/illustrations/cloud.tsx",
+      "sha256": "sha256:a9d156a45b684f826df96111f0202292e0317ddbe7a7385c3b59bda30f2b832c"
+    },
+    {
+      "path": "src/components/shared-assets/illustrations/credit-card.tsx",
+      "sha256": "sha256:e0bfb8f087cbe83ffc245978b27a23eaf22ffbaaec74a2885796324d022e6e3a"
+    },
+    {
+      "path": "src/components/shared-assets/illustrations/documents.tsx",
+      "sha256": "sha256:dd129375874a245781921c3b48c49820ba1d216af4deca94d42c83b228d1b22b"
+    },
+    {
+      "path": "src/components/shared-assets/illustrations/index.tsx",
+      "sha256": "sha256:64a1959a9e0880a5d1bff17535b217174876e244b23292435b311aef345de439"
+    },
+    {
+      "path": "toolkit/commerce-shopify/components/SmallShopExperience.tsx",
+      "sha256": "sha256:cfa0ff3b411116fe82128392effd6297510af0be919c81e3145c002375c7faea"
+    },
+    {
+      "path": "toolkit/commerce-shopify/components/SmallShopSection.astro",
+      "sha256": "sha256:67a927ba996216eefe277dddcad49d0472835ae308ab048f32c33e45544a6d52"
+    },
+    {
+      "path": "toolkit/commerce-shopify/lib/client.ts",
+      "sha256": "sha256:31f68565f6a0d0d5f00284a9b202072b985066bf36be74ef005163f2d9f00f0f"
+    },
+    {
+      "path": "toolkit/commerce-shopify/lib/contracts.ts",
+      "sha256": "sha256:a316cf481c929ae18a4c7927cf0f50ae0934529fa4dd31fd1dcae32acdd688e9"
+    },
+    {
+      "path": "toolkit/commerce-shopify/lib/mock-data.ts",
+      "sha256": "sha256:b01d35063db930e8311aa263476100b94e4a7c2c4185e40879e831e4f7cc090a"
+    },
+    {
+      "path": "toolkit/commerce-shopify/server/storefront.ts",
+      "sha256": "sha256:7c31694b0081dc2b082c20e5f86bf171ac682e867d9ffe209d295b12006ba50e"
+    },
+    {
+      "path": "toolkit/interaction-recipes/celebrations.css",
+      "sha256": "sha256:b9d0444a1afa7c0d2b2f6c1c372ad9d442bc9495ee1b23e327b39f07747e4791"
+    },
+    {
+      "path": "toolkit/interaction-recipes/index.ts",
+      "sha256": "sha256:633fdc424090d7f1fd61fb6db29c3c6aba1dfa9d4655781e20ad689ab787fc71"
+    },
+    {
+      "path": "toolkit/interaction-recipes/lib/celebrations.ts",
+      "sha256": "sha256:ea32ee353244f131e39651d37b0c69a5a5a95cd210c54c7c54c8508fc776c0cd"
+    },
+    {
+      "path": "toolkit/interaction-recipes/lib/premium.ts",
+      "sha256": "sha256:e3ee5acf27fe88505768138224f47c746afe1f89806a264644600adcbbfd1354"
+    },
+    {
+      "path": "toolkit/interaction-recipes/lib/recipes.ts",
+      "sha256": "sha256:f30324a7739aafa5f3d77e02085bf57d936af3827e11d6516057d4c76c6d0764"
+    },
+    {
+      "path": "toolkit/interaction-recipes/lib/showcase.ts",
+      "sha256": "sha256:5f946e7568b014ff873b204a71d50fdd2c3128af94e4403388370e35d4a6e43c"
+    },
+    {
+      "path": "toolkit/interaction-recipes/lib/storytelling.ts",
+      "sha256": "sha256:6cd5d42e7dbf30b70f25509719dc2b48b61ec134b69b29e3b9a63b5ab0aa1b76"
+    },
+    {
+      "path": "toolkit/interaction-recipes/recipes.css",
+      "sha256": "sha256:d8823b42cf58b972ab82de97699f48bb9dcae32f350d6d6ec191498ee78ce20f"
+    },
+    {
+      "path": "toolkit/layout-system/contract.ts",
+      "sha256": "sha256:ccf5f31398bda5a77a08ffdc31a588b0d2d5600ce3d45625ba72eabe64b9b006"
+    },
+    {
+      "path": "toolkit/microinteractions/motion.css",
+      "sha256": "sha256:26c4c8c827d7c737b56078f87fdddafcaf20cf58b397c4f988dd235e6d6cdfaa"
+    }
+  ],
+  "rules": {
+    "ownedSourcesImmutable": true,
+    "newClientComponentsAllowed": false,
+    "componentCreationGate": "return-to-canonical-factory"
+  },
+  "receiptFingerprint": "sha256:9da7b0665f4dbae63df0f743205391957e96633d59671fdd51b5261be8995cd2"
+}

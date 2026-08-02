@@ -1,0 +1,1 @@
+import*as e from"react";const i=({size:r=24,color:t="currentColor",...o})=>e.createElement("svg",{viewBox:"0 0 24 24",fill:"none",width:r,height:r,color:t,"aria-hidden":"true",...o},e.createElement("path",{d:"M5 12h14",stroke:"currentColor",strokeWidth:o.strokeWidth||2,strokeLinecap:"round",strokeLinejoin:"round"}));i.displayName="Minus";export{i as Minus};

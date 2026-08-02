@@ -1,0 +1,23 @@
+---
+import { SmallShopExperience, type SmallShopView } from "./SmallShopExperience";
+import "@/toolkit/interaction-recipes/celebrations.css";
+
+interface Props {
+    view?: SmallShopView;
+    brand?: string;
+}
+
+const { view = "shop", brand = "Fieldwork Living" } = Astro.props;
+const configured = Boolean(
+    import.meta.env.SHOPIFY_STORE_DOMAIN &&
+    import.meta.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN &&
+    import.meta.env.SHOPIFY_API_VERSION,
+);
+---
+
+<SmallShopExperience
+    client:load
+    view={view}
+    brand={brand}
+    mode={configured ? "shopify" : "mock"}
+/>

@@ -1,0 +1,273 @@
+/**
+ * toolkit/interaction-recipes/recipes.css — COMPOSED interaction patterns.
+ *
+ * This is the RECIPE layer that sits ABOVE the primitives:
+ *   - toolkit/microinteractions/motion.css  → tokens + single-element feedback (press, ripple, tick, like, symbol…)
+ *   - toolkit/motion (P53)                   → scroll reveal / stagger / parallax / View-Transition page nav
+ *   - toolkit/interaction-recipes (HERE)     → real page-moments built by SEQUENCING those primitives:
+ *       submit-button state machine · sliding tab indicator · toast stack · hero choreography · floating field label.
+ *
+ * Every recipe obeys toolkit/microinteractions/RULES.md (transform/opacity only, no
+ * layout animation, no polarity cross-fade, SSR-safe, reduced-motion-safe, every
+ * :hover pairs a :focus-visible). Bind timing to the shared motion tokens (one knob);
+ * literals here are ONLY var() fallbacks so the file renders even if motion.css
+ * hasn't loaded on a page. Import motion.css first for the real tokens.
+ *
+ * Pairs with lib/recipes.ts for the JS controllers; see README.md + the live
+ * showcase at src/pages/demos/interaction-recipes.
+ */
+
+/* ════════════════════════════════════════════════════════════════════════════
+   1 · SUBMIT BUTTON STATE MACHINE  —  idle → loading → success | error
+   The single most-requested button interaction. The label + spinner + check are
+   STACKED in one grid cell so the button width never changes between states
+   (RULES §6/§8 — no layout animation, reserve the space). Only opacity/transform
+   cross-fades between faces; the disabled + aria-busy truth is set by the JS.
+   ════════════════════════════════════════════════════════════════════════════ */
+.ir-submit {
+  position: relative;
+  isolation: isolate;
+  transition: transform var(--motion-duration-fast, 100ms) var(--motion-ease-out, ease-out);
+}
+.ir-submit:active:not([data-ir-state="loading"]):not(:disabled) {
+  transform: scale(0.97); /* press — transform only, colour stays instant (§1) */
+}
+/* Faces stack in one cell → constant width/height. */
+.ir-submit__faces {
+  display: inline-grid;
+}
+.ir-submit__faces > * {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition:
+    opacity var(--motion-duration-base, 180ms) var(--motion-ease-out, ease-out),
+    transform var(--motion-duration-slow, 240ms) var(--spring-snappy, cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+/* Non-active faces are hidden + nudged; the active one rests at center. Not a §1
+   polarity cross-fade (same fg/bg) — this is the copy→check swap pattern. */
+.ir-submit__loading,
+.ir-submit__success,
+.ir-submit__error {
+  opacity: 0;
+  transform: scale(0.6);
+  pointer-events: none;
+}
+.ir-submit[data-ir-state="idle"] .ir-submit__idle,
+.ir-submit[data-ir-state="loading"] .ir-submit__loading,
+.ir-submit[data-ir-state="success"] .ir-submit__success,
+.ir-submit[data-ir-state="error"] .ir-submit__error {
+  opacity: 1;
+  transform: none;
+}
+.ir-submit[data-ir-state="loading"] .ir-submit__idle,
+.ir-submit[data-ir-state="success"] .ir-submit__idle,
+.ir-submit[data-ir-state="error"] .ir-submit__idle {
+  opacity: 0;
+  transform: scale(0.6);
+  pointer-events: none;
+}
+/* Error face gives the button one soft shake (movement → off under RM below). */
+.ir-submit[data-ir-state="error"] {
+  animation: ir-shake var(--motion-duration-transition, 320ms) var(--motion-ease-standard, ease);
+}
+@keyframes ir-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  45% { transform: translateX(3px); }
+  70% { transform: translateX(-2px); }
+  88% { transform: translateX(1px); }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   2 · SLIDING TAB / SEGMENTED INDICATOR  —  shared-axis move
+   The active pill/underline is ONE element that TRANSLATES + SCALES to cover the
+   active tab (measured by JS/FLIP), instead of fading a per-tab background. This
+   is the Material "shared axis" move: continuous, points at causality (§9).
+   ════════════════════════════════════════════════════════════════════════════ */
+.ir-tabs {
+  position: relative;
+}
+.ir-tabs__indicator {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-bg-primary, #fff);
+  box-shadow: 0 1px 3px rgb(16 24 40 / 0.1);
+  /* JS sets --ir-x (translate px) + --ir-w (width px); we animate transform only. */
+  width: var(--ir-w, 0);
+  transform: translateX(var(--ir-x, 0));
+  transition: transform var(--motion-duration-base, 180ms) var(--motion-ease-emphasized, ease),
+    width var(--motion-duration-base, 180ms) var(--motion-ease-emphasized, ease);
+}
+.ir-tabs[data-ir-underline] .ir-tabs__indicator {
+  top: auto;
+  bottom: 0;
+  height: 2px;
+  border-radius: 9999px;
+  background: var(--color-bg-brand-solid, #6941c6);
+  box-shadow: none;
+}
+.ir-tabs__tab {
+  position: relative;
+  z-index: 1; /* label above the indicator */
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   3 · TOAST STACK  —  enter (pop) · rest · exit (fade+slide)
+   Region is an aria-live polite log; JS appends/removes nodes. Enter and EXIT are
+   ASYMMETRIC (enter overshoots slightly, exit is a quick clean fade — §ENTER≠EXIT).
+   ════════════════════════════════════════════════════════════════════════════ */
+.ir-toast-region {
+  position: fixed;
+  z-index: 80;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: min(22rem, calc(100vw - 2rem));
+  pointer-events: none;
+}
+.ir-toast {
+  pointer-events: auto;
+  transform-origin: right bottom;
+  animation: ir-toast-in var(--motion-duration-slow, 240ms) var(--spring-snappy, cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+.ir-toast[data-ir-leaving] {
+  animation: ir-toast-out var(--motion-duration-base, 180ms) var(--motion-ease-in, ease-in) forwards;
+}
+@keyframes ir-toast-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes ir-toast-out {
+  to { opacity: 0; transform: translateX(12px) scale(0.98); }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   4 · HERO CHOREOGRAPHY  —  the "alive" entrance (Tier-3, done right)
+   NOT one 3-second tween. MANY short (≈360ms) eased moves, each offset by ~70ms,
+   so several elements are in motion at once and the whole hero settles in ~1s.
+   SSR-safe (§7): the start state only exists under .js-motion; no-JS = final.
+   ════════════════════════════════════════════════════════════════════════════ */
+.js-motion .ir-choreo > * {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.js-motion .ir-choreo[data-ir-play] > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--motion-duration-transition, 320ms) var(--motion-ease-out, ease-out),
+    transform 360ms var(--motion-ease-emphasized, cubic-bezier(0.05, 0.7, 0.1, 1));
+}
+/* Overlapping stagger — the offsets are what make it read as choreography, not a
+   queue. 8 slots covers most heroes; add more inline if needed. */
+.js-motion .ir-choreo[data-ir-play] > *:nth-child(1) { transition-delay: 0ms; }
+.js-motion .ir-choreo[data-ir-play] > *:nth-child(2) { transition-delay: 70ms; }
+.js-motion .ir-choreo[data-ir-play] > *:nth-child(3) { transition-delay: 140ms; }
+.js-motion .ir-choreo[data-ir-play] > *:nth-child(4) { transition-delay: 210ms; }
+.js-motion .ir-choreo[data-ir-play] > *:nth-child(5) { transition-delay: 280ms; }
+.js-motion .ir-choreo[data-ir-play] > *:nth-child(6) { transition-delay: 350ms; }
+.js-motion .ir-choreo[data-ir-play] > *:nth-child(7) { transition-delay: 420ms; }
+.js-motion .ir-choreo[data-ir-play] > *:nth-child(8) { transition-delay: 490ms; }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   5 · FLOATING FIELD LABEL  —  placeholder → floating label
+   The label sits over an empty input and floats up on focus / when filled. Move
+   is transform (translate+scale) — never top/left/font-size (§6, no layout anim).
+   Uses :placeholder-shown + :focus-within, so it works with zero JS.
+   ════════════════════════════════════════════════════════════════════════════ */
+.ir-field {
+  position: relative;
+}
+.ir-field > input,
+.ir-field > textarea {
+  /* room for the resting label; the input's own padding-top holds the floated label */
+  padding-top: 1.25rem;
+  padding-bottom: 0.5rem;
+}
+.ir-field > label {
+  position: absolute;
+  left: 0.875rem;
+  top: 0.9rem;
+  transform-origin: left center;
+  color: var(--color-text-quaternary, #98a2b3);
+  pointer-events: none;
+  transition: transform var(--motion-duration-base, 180ms) var(--motion-ease-emphasized, ease),
+    color var(--motion-duration-fast, 100ms) linear;
+}
+/* Filled OR focused → float up (translateY) + shrink (scale). */
+.ir-field > input:focus + label,
+.ir-field > input:not(:placeholder-shown) + label,
+.ir-field > textarea:focus + label,
+.ir-field > textarea:not(:placeholder-shown) + label {
+  transform: translateY(-0.7rem) scale(0.82);
+  color: var(--color-text-brand-secondary, #6941c6);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   6 · DRAG-TO-REORDER (FLIP)  —  the primitive that implements First-Last-Invert-
+   Play. The grabbed item follows the pointer (translate + a static lift shadow);
+   on drop, every item GLIDES to its new slot via a transform tween — never a
+   layout reflow (§6). attachReorder() in lib/recipes.ts measures First/Last.
+   Keyboard: focus an item, ArrowUp/Down moves it (announced via aria-live).
+   ════════════════════════════════════════════════════════════════════════════ */
+.ir-reorder__item {
+  transition: transform var(--motion-duration-slow, 240ms) var(--motion-ease-emphasized, ease);
+}
+.ir-reorder__item[data-ir-flip] {
+  transition: none; /* the Invert frame is instant; Play (rAF) re-enables the transition */
+}
+.ir-reorder__item[data-ir-dragging] {
+  position: relative;
+  z-index: 2;
+  transition: none; /* follows the pointer 1:1 (§3 — direct manipulation) */
+  box-shadow: 0 8px 24px -6px rgb(16 24 40 / 0.18); /* static lift, not a per-frame tween (§10); no glow */
+}
+.ir-reorder__handle {
+  cursor: grab;
+  touch-action: none; /* pointer drag from the handle never scrolls the list */
+}
+.ir-reorder__item[data-ir-dragging] .ir-reorder__handle {
+  cursor: grabbing;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   REDUCED MOTION  —  kill vestibular MOVEMENT, keep the meaning-carrying fades
+   (RULES §2). Movement lives in `transform`; meaning lives in `opacity`/`color`.
+   Under the toolkit's global RM reset these transitions are already zeroed; here
+   we make the recipes' RM behaviour explicit + truthful (land on final state).
+   ════════════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .ir-submit,
+  .ir-submit__faces > *,
+  .ir-tabs__indicator,
+  .ir-field > label {
+    transition-property: opacity, color; /* drop transform tweens; keep fades */
+  }
+  .ir-submit[data-ir-state="error"],
+  .ir-toast,
+  .ir-toast[data-ir-leaving] {
+    animation: none; /* no shake / no slide — the state truth is set instantly */
+  }
+  .ir-toast[data-ir-leaving] { opacity: 0; }
+  .js-motion .ir-choreo > *,
+  .js-motion .ir-choreo[data-ir-play] > * {
+    transform: none; /* no travel; the opacity fade (below) stays as the RM substitute */
+  }
+  .js-motion .ir-choreo[data-ir-play] > * {
+    transition: opacity var(--motion-duration-base, 180ms) linear;
+  }
+  .ir-reorder__item,
+  .ir-reorder__item[data-ir-dragging] {
+    transition: none; /* FLIP glide + drop settle are instant; the 1:1 drag itself stays (§3) */
+    box-shadow: none;
+  }
+}

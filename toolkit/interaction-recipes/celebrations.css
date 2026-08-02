@@ -1,0 +1,122 @@
+/**
+ * toolkit/interaction-recipes/celebrations.css — the REWARD TIER.
+ *
+ * Playful, celebratory moments for conversion PEAKS — add-to-cart, purchase,
+ * booking, goal reached. Longer + spring-heavy than micro-feedback ON PURPOSE
+ * (Duolingo / Revolut register): a real reward for a real success, never a
+ * decorative loop. Still rule-safe: transform/opacity only (§6/§10), one accent
+ * per moment (§9), and reduced motion keeps the OUTCOME (badge count, success
+ * label) while dropping the movement (§2). Import after motion.css (spinner +
+ * tokens) + recipes.css (the .ir-submit faces these buttons reuse).
+ *
+ * Building blocks (JS in lib/celebrations.ts): confetti burst · fly-to-cart ghost ·
+ * badge bump · success ring. Composed buttons: .ir-cart-btn (add-to-cart) reuse the
+ * .ir-submit faces; buy / book use attachRewardButton on an .ir-submit button.
+ */
+
+/* ── Confetti particle — JS spawns N at an origin; each flies out on its own vector
+      (--ir-tx/--ir-ty/--ir-r set inline) and fades. position:fixed so it can burst
+      out of any overflow:hidden button. Flat festive colours (decorative — not text,
+      so B5 does not apply). ── */
+.ir-confetti {
+  position: fixed;
+  z-index: 90;
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: ir-confetti 900ms cubic-bezier(0.2, 0.6, 0.3, 1) forwards;
+  animation-delay: var(--ir-delay, 0ms);
+}
+@keyframes ir-confetti {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
+  12% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--ir-tx, 0px)), calc(-50% + var(--ir-ty, 0px))) rotate(var(--ir-r, 0deg)) scale(1);
+  }
+}
+
+/* ── Fly-to-cart ghost — a small dot tossed from the button to the cart icon. JS
+      pins it (position:fixed) at the button centre, then sets the target transform
+      inline; this transition carries it there while it shrinks + fades. The toss
+      cubic lifts slightly before dropping in (a hint of an arc). ── */
+.ir-fly {
+  position: fixed;
+  z-index: 90;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--color-bg-brand-solid, #6941c6);
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(1);
+  transition:
+    transform 640ms cubic-bezier(0.5, -0.25, 0.75, 1),
+    opacity 640ms ease-in;
+}
+
+/* ── Cart badge bump — the count springs when an item lands. ── */
+.ir-badge {
+  display: inline-flex;
+  min-width: 1.25rem;
+  justify-content: center;
+  font-variant-numeric: tabular-nums;
+}
+.ir-badge--bump {
+  animation: ir-bump 340ms var(--motion-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+@keyframes ir-bump {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.42); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+/* ── Success ring — a single pulse behind a button on a rewarded success (buy/book).
+      Composited scale+opacity; pre-rendered ring, no per-frame box-shadow (§10). ── */
+.ir-reward {
+  position: relative;
+}
+.ir-reward::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid var(--color-bg-brand-solid, #6941c6);
+  opacity: 0;
+  pointer-events: none;
+}
+.ir-reward[data-ir-state="success"]::after {
+  animation: ir-ring 620ms var(--motion-ease-out, cubic-bezier(0, 0, 0, 1));
+}
+@keyframes ir-ring {
+  0% { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.35); }
+}
+
+/* ── Add-to-cart button reuses .ir-submit faces (idle/loading/success/error).
+      celebrations.ts drives the state + the fly + the bump. A tiny extra: the idle
+      cart icon nudges on success. ── */
+.ir-cart-btn .ir-cart-icon {
+  transition: transform var(--motion-duration-base, 180ms) var(--motion-ease-out, ease-out);
+}
+.ir-cart-btn[data-ir-state="success"] .ir-cart-icon {
+  transform: translateY(-1px) scale(1.08);
+}
+
+/* ── REDUCED MOTION — keep the OUTCOME (badge count, success label, ring truth),
+      drop the vestibular movement. Confetti + fly are movement → suppressed; the
+      state still flips truthfully (JS updates the count/label regardless). ── */
+@media (prefers-reduced-motion: reduce) {
+  .ir-confetti,
+  .ir-fly {
+    display: none !important;
+  }
+  .ir-badge--bump,
+  .ir-reward[data-ir-state="success"]::after,
+  .ir-cart-btn[data-ir-state="success"] .ir-cart-icon {
+    animation: none !important;
+    transform: none !important;
+  }
+}

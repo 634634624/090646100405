@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "kind": "CanonicalPromptReceiptV1",
+  "promptsRoot": "docs/design/uui-canonical-prompts",
+  "combinedFingerprint": "sha256:8d240af55929e4e6d3feb743bb0a9f2adcf6290b802da468d2d465fbcb59da4a",
+  "prompts": [
+    {
+      "name": "create-creatively.txt",
+      "factoryPath": "docs/design/uui-canonical-prompts/create-creatively.txt",
+      "clientPath": ".uui/canonical-prompts/create-creatively.txt",
+      "sha256": "340e5cc5153e9887f06c00a6ea68f39915d81c66c91d955984a00eca85b0f14e"
+    },
+    {
+      "name": "enforce-dashboard-layout.txt",
+      "factoryPath": "docs/design/uui-canonical-prompts/enforce-dashboard-layout.txt",
+      "clientPath": ".uui/canonical-prompts/enforce-dashboard-layout.txt",
+      "sha256": "5638d2420a6c59e520260a200b3a1b5896d7228f4cb7b7da2ae09e60bef67823"
+    },
+    {
+      "name": "enforce-layout-structure.txt",
+      "factoryPath": "docs/design/uui-canonical-prompts/enforce-layout-structure.txt",
+      "clientPath": ".uui/canonical-prompts/enforce-layout-structure.txt",
+      "sha256": "0071b2b2a1e7e89cbbc273069ddb63dc2de8045cdc69f33962cbb3457b52ff85"
+    },
+    {
+      "name": "use-visual-assets.txt",
+      "factoryPath": "docs/design/uui-canonical-prompts/use-visual-assets.txt",
+      "clientPath": ".uui/canonical-prompts/use-visual-assets.txt",
+      "sha256": "ab49d1bc58718d9f48c8fac7121d352a06df7d719108b97a8aa4e2113fcdb487"
+    },
+    {
+      "name": "visual-universal.txt",
+      "factoryPath": "docs/design/uui-canonical-prompts/visual-universal.txt",
+      "clientPath": ".uui/canonical-prompts/visual-universal.txt",
+      "sha256": "42559260d672d639257ab857ca6b86bafd636d1451929fb62b09b83160376dc9"
+    }
+  ]
+}

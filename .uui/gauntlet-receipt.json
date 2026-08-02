@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "kind": "CanonicalWebBuildGauntletReceiptV1",
+  "factoryPath": "apps/site-starter/toolkit/WEB-BUILD-GAUNTLET.md",
+  "clientPath": ".uui/WEB-BUILD-GAUNTLET.md",
+  "sha256": "4c8f972cf98f3771d3d139dc6cee93d8d4753d233624b99a038ebdacfa94cea9"
+}

@@ -1,0 +1,100 @@
+/* ============================================================
+ * layout.css — auto-grid + layout vars (framework-uui)
+ * Használat: <div class="grid gap-6 [grid-template-columns:var(--columns-min-20)]">
+ * vagy a .auto-grid-* utility-kkel lent.
+ * ============================================================ */
+:root {
+  --columns-min-10: repeat(auto-fit, minmax(min(10rem, 100%), 1fr));
+  --columns-min-15: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  --columns-min-20: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+  --columns-min-30: repeat(auto-fit, minmax(min(30rem, 100%), 1fr));
+
+  /* Semantic layout rails. Existing UUI measurements; names now carry intent. */
+  --layout-gutter: 1rem;
+  --width-wide: var(--max-width-container, 80rem);
+  --width-content: 67rem;
+  --width-narrow: 60rem;
+  --width-prose: 65ch;
+
+  /* R1 role spacing. */
+  --section-y-band: 3rem;
+  --section-y-standard: 4rem;
+  --section-y-hero: 5rem;
+
+  /* Semantic elevation: surface and boundary stay paired by utility. */
+  --elevation-raised: var(--shadow-sm);
+  --elevation-overlay: var(--shadow-xl);
+  --elevation-overflow: var(--shadow-md);
+
+  /* Global role registry. 60..99 is reserved for simultaneous modal roots. */
+  --z-base: 0;
+  --z-local: 10;
+  --z-sticky: 30;
+  --z-dropdown: 40;
+  --z-blanket: 50;
+  --z-lifted: 55;
+  --z-popover: 58;
+  --z-modal: 60;
+  --z-toast: 100;
+  --z-tooltip: 110;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --layout-gutter: 2rem;
+    --section-y-band: 4rem;
+    --section-y-standard: 6rem;
+    --section-y-hero: 7rem;
+  }
+}
+
+.dark-mode {
+  --elevation-raised: 0 0 0 1px color-mix(in oklab, white 8%, transparent), var(--shadow-sm);
+  --elevation-overlay: 0 0 0 1px color-mix(in oklab, white 10%, transparent), var(--shadow-xl);
+}
+
+/* Rails own width + inline gutter. `full` deliberately owns neither. */
+@utility rail-full { width: 100%; }
+@utility rail-wide { width: 100%; max-width: var(--width-wide); margin-inline: auto; padding-inline: var(--layout-gutter); }
+@utility rail-content { width: 100%; max-width: var(--width-content); margin-inline: auto; padding-inline: var(--layout-gutter); }
+@utility rail-narrow { width: 100%; max-width: var(--width-narrow); margin-inline: auto; padding-inline: var(--layout-gutter); }
+@utility rail-prose { width: 100%; max-width: calc(var(--width-prose) + 2 * var(--layout-gutter)); margin-inline: auto; padding-inline: var(--layout-gutter); }
+
+/* Escapes only the current rail gutter. Viewport bleed requires full/rail sibling composition. */
+@utility bleed-rail { width: calc(100% + 2 * var(--layout-gutter)); margin-inline: calc(-1 * var(--layout-gutter)); }
+
+@utility section-space-band { padding-block: var(--section-y-band); }
+@utility section-space-standard { padding-block: var(--section-y-standard); }
+@utility section-space-hero { padding-block: var(--section-y-hero); }
+
+/* Surface utilities are atomic contracts: background + boundary/elevation. */
+@utility surface-canvas { background-color: var(--color-bg-secondary); }
+@utility surface-base { background-color: var(--color-bg-primary); }
+@utility surface-sunken { background-color: var(--color-bg-tertiary); box-shadow: inset 0 0 0 1px var(--color-border-secondary); }
+@utility surface-raised { background-color: var(--color-bg-primary); box-shadow: var(--elevation-raised); }
+@utility surface-overlay { background-color: var(--color-bg-primary); box-shadow: var(--elevation-overlay); }
+
+@utility z-base { z-index: var(--z-base); }
+@utility z-local { z-index: var(--z-local); }
+@utility z-sticky { z-index: var(--z-sticky); }
+@utility z-dropdown { z-index: var(--z-dropdown); }
+@utility z-blanket { z-index: var(--z-blanket); }
+@utility z-lifted { z-index: var(--z-lifted); }
+@utility z-popover { z-index: var(--z-popover); }
+@utility z-modal-stack { z-index: calc(var(--z-modal) + var(--uui-overlay-order, 0)); }
+@utility z-toast { z-index: var(--z-toast); }
+@utility z-tooltip { z-index: var(--z-tooltip); }
+
+/* Auto-grid utilities — responsive without breakpoints (auto-fit) */
+@utility auto-grid-sm {
+  display: grid;
+  grid-template-columns: var(--columns-min-15);
+}
+@utility auto-grid {
+  display: grid;
+  grid-template-columns: var(--columns-min-20);
+}
+@utility auto-grid-lg {
+  display: grid;
+  grid-template-columns: var(--columns-min-30);
+}
