@@ -1,37 +1,8 @@
 ---
-import "@/styles/global.css";
-import "@/styles/apparel.css";
-import { ApparelProductDetail } from "@/features/apparel/ApparelProductDetail";
-import { apparelProducts, type ApparelProduct } from "@/features/apparel/catalog";
-
-export function getStaticPaths() {
-    return apparelProducts.map((product) => ({
-        params: { slug: product.id },
-        props: { product },
-    }));
-}
-
-const { product } = Astro.props as { product: ApparelProduct };
+import StorefrontLayout from "@/layouts/StorefrontLayout.astro";
+import { ProductDetail } from "@/features/storefront/ProductDetail";
+import { storeProducts, type StoreProduct } from "@/features/storefront/catalog";
+export function getStaticPaths() { return storeProducts.map((product) => ({ params: { slug: product.id }, props: { product } })); }
+const { product } = Astro.props as { product: StoreProduct };
 ---
-
-<!doctype html>
-<html lang="en" data-theme="kit" data-brand="fieldwork-goods" data-uui-client-state="prelaunch">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content={`${product.name} in ${product.color} from Fieldwork Goods.`} />
-        <meta name="robots" content="noindex,nofollow" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <title>{product.name} — Fieldwork Goods</title>
-        <script is:inline>
-            try {
-                if (localStorage.getItem("uui-site-theme") === "dark") {
-                    document.documentElement.classList.add("dark-mode");
-                }
-            } catch {}
-        </script>
-    </head>
-    <body class="bg-primary text-primary">
-        <ApparelProductDetail product={product} client:load />
-    </body>
-</html>
+<StorefrontLayout title={product.name} description={product.description}><ProductDetail product={product} client:load /></StorefrontLayout>

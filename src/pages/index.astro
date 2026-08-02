@@ -1,31 +1,5 @@
 ---
-import "@/styles/global.css";
-import SmallShopSection from "@/toolkit/commerce-shopify/components/SmallShopSection.astro";
+import StorefrontLayout from "@/layouts/StorefrontLayout.astro";
+import { Storefront } from "@/features/storefront/Storefront";
 ---
-
-<!doctype html>
-<html lang="en" data-theme="kit" data-uui-client-state="prelaunch">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-            name="description"
-            content="Discover Fieldwork Living's small collection of complete room editions."
-        />
-        <meta name="robots" content="noindex,nofollow" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <title>Fieldwork Living — Small room editions</title>
-        <script is:inline>
-            try {
-                if (localStorage.getItem("uui-site-theme") === "dark") {
-                    document.documentElement.classList.add("dark-mode");
-                }
-            } catch {}
-        </script>
-    </head>
-    <body class="bg-primary text-primary">
-        <main>
-            <SmallShopSection brand="Fieldwork Living" view="shop" />
-        </main>
-    </body>
-</html>
+<StorefrontLayout title="Hasznos dolgok. Jó döntésekhez." description="Válogatott műszaki és háztartási termékek magyar vásárlóknak."><Storefront client:load /></StorefrontLayout>

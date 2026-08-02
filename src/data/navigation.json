@@ -1,22 +1,9 @@
 [
-  {
-    "path": "/shop",
-    "purpose": "Discover a small, understandable product range."
-  },
-  {
-    "path": "/products/[slug]",
-    "purpose": "Choose the product configuration with clear trust and delivery information."
-  },
-  {
-    "path": "/cart",
-    "purpose": "Review the order and remove surprises before checkout."
-  },
-  {
-    "path": "/checkout",
-    "purpose": "Collect only purchase-critical delivery and payment data."
-  },
-  {
-    "path": "/orders/[id]",
-    "purpose": "Confirm and communicate fulfillment state."
-  }
+  { "path": "/", "purpose": "A fő értékajánlat és a kiemelt termék." },
+  { "path": "/shop", "purpose": "Kereshető és szűrhető termékkínálat." },
+  { "path": "/kategoriak/muszaki", "purpose": "Műszaki kategória." },
+  { "path": "/kategoriak/haztartas", "purpose": "Háztartási kategória." },
+  { "path": "/products/[slug]", "purpose": "Termékrészletek és kosárba tétel." },
+  { "path": "/cart", "purpose": "Mennyiség, eltávolítás és végösszeg." },
+  { "path": "/checkout", "purpose": "Biztonságos pénztárszolgáltatói átadás." }
 ]

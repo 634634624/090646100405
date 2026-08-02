@@ -1,13 +1,5 @@
 ---
-import "@/styles/global.css";
-import Section1 from "@/toolkit/commerce-shopify/components/SmallShopSection.astro";
+import StorefrontLayout from "@/layouts/StorefrontLayout.astro";
+import { CartPage } from "@/features/storefront/CartPage";
 ---
-<!doctype html>
-<html lang="en" data-theme="kit" data-uui-client-state="prelaunch">
-  <head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="description" content="Review the order and remove surprises before checkout." /><meta name="robots" content="noindex,nofollow" /><link rel="icon" href="/favicon.svg" type="image/svg+xml" /><title>Review the order and remove surprises before checkout.</title><script is:inline>try{if(localStorage.getItem("uui-site-theme")==="dark")document.documentElement.classList.add("dark-mode")}catch{}</script></head>
-  <body class="bg-primary text-primary">
-    <main>
-        <Section1 {...{"brand":"Fieldwork Living","view":"cart"}} />
-    </main>
-  </body>
-</html>
+<StorefrontLayout title="Kosár" description="A kiválasztott termékek és a várható végösszeg."><CartPage client:load /></StorefrontLayout>

@@ -1,30 +1,5 @@
 ---
-import "@/styles/global.css";
-import "@/styles/apparel.css";
-import { ApparelStorefront } from "@/features/apparel/ApparelStorefront";
+import StorefrontLayout from "@/layouts/StorefrontLayout.astro";
+import { Storefront } from "@/features/storefront/Storefront";
 ---
-
-<!doctype html>
-<html lang="en" data-theme="kit" data-brand="fieldwork-goods" data-uui-client-state="prelaunch">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-            name="description"
-            content="Shop Fieldwork Goods apparel essentials in a compact, clothing-first storefront."
-        />
-        <meta name="robots" content="noindex,nofollow" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <title>Fieldwork Goods — Six staples, built to last</title>
-        <script is:inline>
-            try {
-                if (localStorage.getItem("uui-site-theme") === "dark") {
-                    document.documentElement.classList.add("dark-mode");
-                }
-            } catch {}
-        </script>
-    </head>
-    <body class="bg-primary text-primary">
-        <ApparelStorefront client:load />
-    </body>
-</html>
+<StorefrontLayout title="Termékek" description="A korábbi üzletút megőrzött helyi átjárója az új termékkínálathoz."><Storefront client:load /></StorefrontLayout>

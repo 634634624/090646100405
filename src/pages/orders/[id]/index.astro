@@ -1,14 +1,15 @@
 ---
-import "@/styles/global.css";
-import Section1 from "@/toolkit/commerce-shopify/components/SmallShopSection.astro";
-export function getStaticPaths() { return [{"params":{"id":"demo-1001"}}]; }
+import StorefrontLayout from "@/layouts/StorefrontLayout.astro";
+import { Button as UuiButton } from "@/components/base/buttons/button";
+import { ArrowRight, CheckCircle } from "@untitledui-pro/icons/line";
+export function getStaticPaths() { return [{ params: { id: "demo-1001" } }]; }
 ---
-<!doctype html>
-<html lang="en" data-theme="kit" data-uui-client-state="prelaunch">
-  <head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="description" content="Confirm and communicate fulfillment state." /><meta name="robots" content="noindex,nofollow" /><link rel="icon" href="/favicon.svg" type="image/svg+xml" /><title>Confirm and communicate fulfillment state.</title><script is:inline>try{if(localStorage.getItem("uui-site-theme")==="dark")document.documentElement.classList.add("dark-mode")}catch{}</script></head>
-  <body class="bg-primary text-primary">
-    <main>
-        <Section1 {...{"brand":"Fieldwork Living","view":"order"}} />
+<StorefrontLayout title="Rendelési állapot" description="A rendelés feldolgozásának minta állapota.">
+    <main class="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 lg:px-8 lg:py-24">
+        <span class="mx-auto flex size-14 items-center justify-center rounded-full bg-success-secondary text-fg-success-primary"><CheckCircle className="size-7" aria-hidden="true" /></span>
+        <p class="mt-6 text-sm font-semibold text-brand-secondary">Minta rendelési állapot</p>
+        <h1 class="mt-2 text-display-md font-semibold text-primary">A rendelés útja itt követhető.</h1>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-tertiary">Valódi rendelésnél a szolgáltató ellenőrzött azonosítója és a kereskedő értesítői jelennek meg.</p>
+        <UuiButton href="/shop" size="lg" className="mt-10" iconTrailing={ArrowRight}>Vásárlás folytatása</UuiButton>
     </main>
-  </body>
-</html>
+</StorefrontLayout>

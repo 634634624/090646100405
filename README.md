@@ -1,7 +1,6 @@
-# Generated UUI client site
+# BestCarTrade Kft. · Válogatott storefront
 
-Independent Astro client emitted by the canonical UUI Site Factory in
-`634634624/uui-components-browser`.
+The accepted PhantomWP/Astro storefront converted for a Hungarian technical and household launch.
 
 ## Start
 
@@ -24,3 +23,5 @@ assets, and receipts—not the complete Brand Library or Agency OS.
   not replace this repository, its receipts, Agency OS, or the canonical
   Factory.
 - Production deployment is never implicit.
+- Demo catalog data is internal and must be replaced by an approved Webshippy feed before launch.
+- See `docs/INTEGRATION-BOUNDARIES.md` for provider and credential boundaries.

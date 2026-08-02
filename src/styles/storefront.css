@@ -1,9 +1,9 @@
 /*
- * Fieldwork Goods apparel skin.
- * Scoped to this storefront so the existing Fieldwork Living palette stays unchanged.
+ * Válogatott storefront skin.
+ * One central warm light/dark palette; the shopper brand stays independent from the legal company name.
  * Both base and namespaced UUI tokens are set because components consume both layers.
  */
-[data-theme="kit"][data-brand="fieldwork-goods"] {
+[data-theme="kit"][data-brand="valogatott"] {
     --color-brand-25: #fffaf7;
     --color-brand-50: #fdf3ec;
     --color-brand-100: #f9e3d6;
@@ -125,7 +125,7 @@
     --outline-color-brand: #bd5d38;
 }
 
-.dark-mode[data-theme="kit"][data-brand="fieldwork-goods"] {
+.dark-mode[data-theme="kit"][data-brand="valogatott"] {
     --color-brand-25: #2a1711;
     --color-brand-50: #321b14;
     --color-brand-100: #45231a;

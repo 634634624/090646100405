@@ -1,16 +1,6 @@
 [
-  {
-    "capabilityId": "payments-checkout",
-    "mode": "mock",
-    "note": "Deterministic mock mode is build-ready; configure the pinned Shopify provider in Agency delivery before launch.",
-    "providerId": "shopify-storefront",
-    "status": "configured"
-  },
-  {
-    "capabilityId": "transactional-email",
-    "mode": "mock",
-    "note": "Deterministic mock mode is build-ready; configure the pinned Shopify provider in Agency delivery before launch.",
-    "providerId": "shopify-notifications",
-    "status": "configured"
-  }
+  { "capabilityId": "catalog-orders", "mode": "contract-only", "providerId": "webshippy", "status": "blocked-by-credentials-and-contract", "note": "Validated import boundary exists; live requests and order mutation remain disabled." },
+  { "capabilityId": "payments-checkout", "mode": "safe-fallback", "providerId": "unconfigured", "status": "blocked-by-owner-approval", "note": "Local cart works; checkout preserves it and shows a clear recovery message." },
+  { "capabilityId": "measurement", "mode": "consent-safe-disabled", "providerId": "meta-google-tiktok", "status": "ready-for-public-identifiers", "note": "No event is emitted before consent and configuration." },
+  { "capabilityId": "future-suppliers", "mode": "inactive", "providerId": "dressa-dropshippingxl", "status": "deferred", "note": "Adapter boundaries exist without live access." }
 ]

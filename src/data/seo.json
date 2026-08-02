@@ -1,22 +1,7 @@
 [
-  {
-    "path": "/shop",
-    "description": "Discover a small, understandable product range."
-  },
-  {
-    "path": "/products/[slug]",
-    "description": "Choose the product configuration with clear trust and delivery information."
-  },
-  {
-    "path": "/cart",
-    "description": "Review the order and remove surprises before checkout."
-  },
-  {
-    "path": "/checkout",
-    "description": "Collect only purchase-critical delivery and payment data."
-  },
-  {
-    "path": "/orders/[id]",
-    "description": "Confirm and communicate fulfillment state."
-  }
+  { "path": "/", "description": "Válogatott műszaki és háztartási termékek magyar vásárlóknak." },
+  { "path": "/shop", "description": "Kereshető és szűrhető kínálat forintárakkal." },
+  { "path": "/products/[slug]", "description": "Termékrészletek, készlet és kosárba tétel." },
+  { "path": "/cart", "description": "A kiválasztott termékek és a várható végösszeg." },
+  { "path": "/checkout", "description": "Biztonságos átadás a jóváhagyott pénztárszolgáltatóhoz." }
 ]
