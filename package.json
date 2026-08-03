@@ -7,7 +7,8 @@
     "start": "astro dev --host",
     "build": "node scripts/sync-media.mjs && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "astro": "^6.0.0",
@@ -33,5 +34,8 @@
   },
   "overrides": {
     "vite": "^7"
+  },
+  "devDependencies": {
+    "wrangler": "^4.68.0"
   }
 }
