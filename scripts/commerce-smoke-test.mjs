@@ -37,8 +37,7 @@ if (config.webshippy) {
     if (writeProducts) {
         if (!config.liveWriteEnabled) throw new Error("Set COMMERCE_LIVE_WRITE_ENABLED=true before --write-products.");
         for (const product of testProducts) {
-            const barcode = config.webshippy.barcodeBySku[product.sku];
-            if (!barcode) throw new Error(`Missing barcode for ${product.sku}.`);
+            const barcode = config.webshippy.barcodeBySku[product.sku] || `${product.sku}-BAR`;
             await upsertWebshippyProduct(provider, product, barcode);
             console.log(`Webshippy product upsert OK: ${product.sku}`);
         }

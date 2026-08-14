@@ -13,12 +13,12 @@
 ## Test 1-3 products
 
 1. Copy `.env.example` to the deployment secret store; do not commit values.
-2. Set Shopify domain, Storefront token and `SHOPIFY_VARIANT_MAP_JSON` (SKU -> ProductVariant GID).
-3. Set Webshippy API key and `WEBSHIPPY_TEST_BARCODES_JSON` (SKU -> barcode).
+2. Set the Shopify domain. The Storefront token and `SHOPIFY_VARIANT_MAP_JSON` are optional: tokenless catalog/cart access and automatic SKU lookup are used by default.
+3. Set the Webshippy API key. Demo SKUs and valid test barcodes are generated automatically; `WEBSHIPPY_TEST_BARCODES_JSON` is only an override.
 4. Start with `COMMERCE_MODE=live` and `COMMERCE_LIVE_WRITE_ENABLED=false`.
 5. Run `npm run commerce:smoke` for Shopify shop + Webshippy product/stock reads.
 6. Only after the read test passes, set `COMMERCE_LIVE_WRITE_ENABLED=true` and run `npm run commerce:smoke -- --write-products`. This upserts exactly the three `DEMO-TECH-*` records by SKU.
-7. Put those three Shopify variant GIDs into the map and test `/checkout` with one, two and three cart lines.
+7. Test `/checkout` with one, two and three cart lines. Variant IDs are discovered automatically from the demo SKUs.
 
 ## Duplicate-order guard
 
@@ -35,4 +35,4 @@ Use `WEBSHIPPY_ORDER_OWNER=webshippy-api` only if the native connector is disabl
 
 ## Launch blockers
 
-Test credentials, three real SKUs/barcodes, Shopify variant GIDs, approved product data, shipping rules, legal/company data, Webshippy channel contract, selected order owner, deployment and rollback approval. Production writes and deployment remain separate approvals.
+Account-owned Shopify store domain and Webshippy API key, approved product data, shipping rules, legal/company data, Webshippy channel contract, selected order owner, deployment and rollback approval. Production writes and deployment remain separate approvals.

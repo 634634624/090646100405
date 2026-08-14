@@ -1,4 +1,4 @@
-export interface ShopifyClientConfig { domain: string; token: string; apiVersion: string }
+export interface ShopifyClientConfig { domain: string; token?: string; apiVersion: string }
 export interface ShopifyCartLine { merchandiseId: string; quantity: number }
 export interface ShopifyCheckout { cartId: string; checkoutUrl: string }
 
@@ -13,9 +13,11 @@ export async function shopifyGraphql<T>(config: ShopifyClientConfig, query: stri
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10_000);
     try {
+        const headers: Record<string, string> = { "Content-Type": "application/json" };
+        if (config.token) headers["X-Shopify-Storefront-Access-Token"] = config.token;
         const response = await fetcher(`https://${config.domain}/api/${config.apiVersion}/graphql.json`, {
             method: "POST",
-            headers: { "Content-Type": "application/json", "X-Shopify-Storefront-Access-Token": config.token },
+            headers,
             body: JSON.stringify({ query, variables }),
             signal: controller.signal,
         });
@@ -30,6 +32,20 @@ export async function shopifyGraphql<T>(config: ShopifyClientConfig, query: stri
 }
 
 const CART_CREATE = `mutation CartCreate($input: CartInput!) { cartCreate(input: $input) { cart { id checkoutUrl } userErrors { field message } } }`;
+const VARIANTS_BY_SKU = `query VariantsBySku { products(first: 100) { nodes { variants(first: 100) { nodes { id sku } } } } }`;
+
+export async function resolveShopifyVariantIds(config: ShopifyClientConfig, skus: string[], fetcher: Fetch = fetch): Promise<Record<string, string>> {
+    const wanted = new Set(skus);
+    if (!wanted.size) return {};
+    const data = await shopifyGraphql<{ products: { nodes: { variants: { nodes: { id: string; sku?: string | null }[] } }[] } }>(config, VARIANTS_BY_SKU, {}, fetcher);
+    const result: Record<string, string> = {};
+    for (const product of data.products.nodes) {
+        for (const variant of product.variants.nodes) {
+            if (variant.sku && wanted.has(variant.sku)) result[variant.sku] = variant.id;
+        }
+    }
+    return result;
+}
 
 export async function createShopifyCheckout(config: ShopifyClientConfig, lines: ShopifyCartLine[], fetcher: Fetch = fetch): Promise<ShopifyCheckout> {
     if (!lines.length || lines.some((line) => !line.merchandiseId.startsWith("gid://shopify/ProductVariant/") || !Number.isInteger(line.quantity) || line.quantity < 1 || line.quantity > 99)) {

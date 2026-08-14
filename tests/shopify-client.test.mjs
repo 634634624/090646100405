@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { createShopifyCheckout, ShopifyError } from "../src/integrations/commerce/shopify.ts";
+import { createShopifyCheckout, resolveShopifyVariantIds, ShopifyError } from "../src/integrations/commerce/shopify.ts";
 
 const config = { domain: "demo.myshopify.com", token: "storefront-secret", apiVersion: "2026-07" };
 
@@ -25,4 +25,15 @@ test("rejects invalid cart lines before network", async () => {
 test("rejects provider and unsafe checkout responses", async () => {
     await assert.rejects(createShopifyCheckout(config, [{ merchandiseId: "gid://shopify/ProductVariant/1", quantity: 1 }], async () => new Response(JSON.stringify({ data: { cartCreate: { cart: null, userErrors: [{ message: "sold out" }] } } }), { status: 200 })), /sold out/);
     await assert.rejects(createShopifyCheckout(config, [{ merchandiseId: "gid://shopify/ProductVariant/1", quantity: 1 }], async () => new Response(JSON.stringify({ data: { cartCreate: { cart: { id: "1", checkoutUrl: "http://unsafe.test" }, userErrors: [] } } }), { status: 200 })), /unsafe/);
+});
+
+test("supports tokenless Storefront requests and discovers variant IDs by SKU", async () => {
+    let headers;
+    const tokenless = { domain: "demo.myshopify.com", apiVersion: "2026-07" };
+    const result = await resolveShopifyVariantIds(tokenless, ["DEMO-TECH-001"], async (_url, options) => {
+        headers = options.headers;
+        return new Response(JSON.stringify({ data: { products: { nodes: [{ variants: { nodes: [{ id: "gid://shopify/ProductVariant/7", sku: "DEMO-TECH-001" }] } }] } } }), { status: 200 });
+    });
+    assert.equal(headers["X-Shopify-Storefront-Access-Token"], undefined);
+    assert.deepEqual(result, { "DEMO-TECH-001": "gid://shopify/ProductVariant/7" });
 });

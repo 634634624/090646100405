@@ -14,5 +14,11 @@ test("parses provider settings without exposing secrets", () => {
 });
 
 test("rejects malformed JSON maps", () => {
-    assert.throws(() => commerceConfig({ SHOPIFY_STORE_DOMAIN: "demo.myshopify.com", SHOPIFY_STOREFRONT_ACCESS_TOKEN: "x", SHOPIFY_VARIANT_MAP_JSON: "{" }), /valid JSON/);
+    assert.throws(() => commerceConfig({ SHOPIFY_STORE_DOMAIN: "demo.myshopify.com", SHOPIFY_VARIANT_MAP_JSON: "{" }), /valid JSON/);
+});
+
+test("configures tokenless Shopify from the store domain alone", () => {
+    const config = commerceConfig({ COMMERCE_MODE: "live", SHOPIFY_STORE_DOMAIN: "demo.myshopify.com" });
+    assert.equal(config.shopify?.domain, "demo.myshopify.com");
+    assert.equal(config.shopify?.token, undefined);
 });
