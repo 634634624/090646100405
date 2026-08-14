@@ -9,6 +9,7 @@
     "build": "astro build",
     "check": "astro check",
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "commerce:smoke": "node --experimental-strip-types scripts/commerce-smoke-test.mjs",
     "quality:lint": "node scripts/client-quality.mjs",
     "browser:stale:check": "node scripts/headless-browser-guard.mjs check",
     "browser:stale:cleanup": "node scripts/headless-browser-guard.mjs cleanup --max-age-seconds 0",
@@ -20,6 +21,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.0",
+    "@astrojs/node": "^11.1.2",
     "@astrojs/react": "^5.0.0",
     "@axe-core/playwright": "^4.12.1",
     "@playwright/test": "^1.61.1",
@@ -27,6 +29,7 @@
     "@tailwindcss/vite": "^4.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@untitledui-pro/icons": "file:vendor/untitledui-pro-icons",
     "@untitledui/file-icons": "^0.0.9",
     "@untitledui/icons": "^0.0.22",
     "astro": "^7.1.3",
@@ -38,10 +41,12 @@
     "tailwindcss": "^4.0.0",
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-react-aria-components": "^2.2.0",
-    "typescript": "^5.0.0",
-    "@untitledui-pro/icons": "file:vendor/untitledui-pro-icons"
+    "typescript": "^5.0.0"
   },
   "engines": {
     "node": "22.x"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1"
   }
 }

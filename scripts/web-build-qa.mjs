@@ -7,7 +7,8 @@ import path from "node:path";
 import process from "node:process";
 
 const root = process.cwd();
-const dist = path.join(root, "dist");
+// Node adapter keeps prerendered pages and browser assets under dist/client.
+const dist = path.join(root, "dist", "client");
 const artifactRoot = path.join(root, "artifacts", "web-build-qa");
 const viewports = [
     { name: "mobile", width: 375, height: 812 },
@@ -93,6 +94,12 @@ async function startStaticServer(files) {
     const server = createServer(async (request, response) => {
         try {
             const pathname = new URL(request.url ?? "/", "http://127.0.0.1").pathname;
+            if (pathname === "/api/checkout" && request.method === "POST") {
+                // Static browser QA uses the same side-effect-free contract as COMMERCE_MODE=mock.
+                response.writeHead(200, { "cache-control": "no-store", "content-type": "application/json; charset=utf-8" });
+                response.end(JSON.stringify({ mode: "mock", checkoutUrl: "/orders/demo-1001", cartId: "qa-mock-cart" }));
+                return;
+            }
             const file = fileForRequest(pathname);
             if (!file) {
                 response.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
@@ -249,10 +256,12 @@ async function exerciseStorefrontInteractions(page, { route, viewport, baseUrl }
     }
 
     if (route === "/checkout/") {
-        await page.getByRole("button", { name: "Tovább a biztonságos fizetéshez" }).click();
-        if (!await page.getByRole("alert").isVisible()) failures.push("unconfigured checkout did not fail clearly");
+        await Promise.all([
+            page.waitForURL(/\/orders\/demo-1001\/?$/),
+            page.getByRole("button", { name: "Tovább a biztonságos fizetéshez" }).click(),
+        ]);
         const persisted = await page.evaluate(() => JSON.parse(localStorage.getItem("valogatott-cart-v1") ?? "[]"));
-        if (persisted.length !== 1) failures.push("checkout fallback did not preserve the cart");
+        if (persisted.length !== 1) failures.push("checkout handoff did not preserve the cart before confirmed order completion");
     }
 
     if (route === "/suti-beallitasok/") {
