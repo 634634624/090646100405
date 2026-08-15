@@ -325,7 +325,7 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
     const shouldCapture =
         route === [...routePaths][0] ||
         Boolean(documentAudit.heroAudit) ||
-        /(?:cart|checkout)/.test(route);
+        /(?:cart|checkout|products\/otthoni-zene-csomag|gyik)/.test(route);
     let screenshot = null;
     if (shouldCapture) {
         screenshot = `${routeSlug(route)}-${viewport.name}-${theme}.png`;
@@ -350,6 +350,70 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
         hero: documentAudit.heroAudit,
         screenshot,
     };
+}
+
+async function auditCriticalFlows(browser, baseUrl) {
+    const failures = [];
+    const evidence = [];
+    const check = (condition, message) => {
+        if (!condition) failures.push(message);
+        else evidence.push(message);
+    };
+
+    const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, colorScheme: "light" });
+    const page = await context.newPage();
+    await page.goto(`${baseUrl}/shop/`, { waitUntil: "networkidle" });
+
+    const search = page.getByPlaceholder("Név, kategória vagy jellemző");
+    await search.fill("sztereó");
+    check(await page.getByText("Kompakt sztereó csomag", { exact: true }).isVisible(), "search finds the compact stereo product");
+    await search.fill("");
+
+    const technical = page.getByText("Műszaki", { exact: true }).first();
+    await technical.click();
+    check(!(await page.getByText("Hálószoba rendezőcsomag", { exact: true }).isVisible()), "category filter hides household products");
+    await page.getByRole("button", { name: "Szűrők törlése" }).first().click();
+
+    await page.getByLabel("Rendezés").click();
+    await page.getByRole("option", { name: "Ár: növekvő" }).click();
+    check(await page.getByLabel("Rendezés").textContent().then((text) => text?.includes("Ár: növekvő")), "price sorting can be selected");
+
+    await page.getByRole("link", { name: "Otthoni zene alapcsomag" }).first().click();
+    check(page.url().includes("/products/otthoni-zene-csomag/"), "product card opens the product detail page");
+    await page.getByRole("button", { name: "Kosárba teszem" }).click();
+    check(await page.getByText("A kosárba került", { exact: true }).isVisible(), "product can be added to cart");
+
+    await page.goto(`${baseUrl}/cart/`, { waitUntil: "networkidle" });
+    const initialTotal = await page.getByText(/Ft/).last().textContent();
+    await page.getByRole("button", { name: /mennyiségének növelése/ }).click();
+    const increasedTotal = await page.getByText(/Ft/).last().textContent();
+    check(initialTotal !== increasedTotal, "cart quantity updates totals");
+    await page.getByRole("button", { name: /eltávolítása/ }).click();
+    check(await page.getByText("A kosár üres", { exact: true }).isVisible(), "cart item can be removed");
+
+    await page.goto(`${baseUrl}/products/otthoni-zene-csomag/`, { waitUntil: "networkidle" });
+    await page.getByRole("button", { name: "Kosárba teszem" }).click();
+    await page.goto(`${baseUrl}/checkout/`, { waitUntil: "networkidle" });
+    await page.getByRole("button", { name: "Tovább a biztonságos fizetéshez" }).click();
+    check(await page.getByRole("alert").getByText(/online fizetés még nem indítható/).isVisible(), "checkout fails safely without provider configuration");
+
+    const themeButton = page.getByRole("button", { name: "Sötét megjelenés" });
+    await themeButton.click();
+    check(await page.locator("html").evaluate((root) => root.classList.contains("dark-mode")), "theme toggle activates dark mode");
+    await context.close();
+
+    const mobile = await browser.newContext({ viewport: { width: 375, height: 812 }, reducedMotion: "reduce" });
+    const mobilePage = await mobile.newPage();
+    await mobilePage.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
+    const menuButton = mobilePage.getByRole("button", { name: "Navigáció megnyitása" });
+    await menuButton.click();
+    check(await mobilePage.getByRole("link", { name: "Műszaki" }).isVisible(), "mobile navigation opens");
+    await mobilePage.keyboard.press("Escape");
+    check(await menuButton.isFocused(), "mobile navigation returns focus after Escape");
+    check(await mobilePage.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "reduced-motion mobile view has no horizontal overflow");
+    await mobile.close();
+
+    return { failures, evidence };
 }
 
 let server;
@@ -390,6 +454,8 @@ try {
     const failures = results.flatMap((result) =>
         result.failures.map((failure) => `${result.route} · ${result.viewport.name} · ${result.theme}: ${failure}`),
     );
+    const criticalFlows = await auditCriticalFlows(browser, server.baseUrl);
+    failures.push(...criticalFlows.failures.map((failure) => `critical flow: ${failure}`));
     const report = {
         schemaVersion: 1,
         kind: "UuiWebBuildQaReceiptV1",
@@ -403,6 +469,7 @@ try {
             checks: results.length,
         },
         results,
+        criticalFlows,
         status: failures.length ? "failed" : "passed",
         failures,
         residualRisk:

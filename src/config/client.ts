@@ -6,5 +6,9 @@ export const CLIENT = {
   "skin": {
     "locale": "hu-HU",
     "preset": "kit"
+  },
+  "identity": {
+    "brand": "Válogatott",
+    "legalCompany": "BestCarTrade Kft."
   }
 } as const;
