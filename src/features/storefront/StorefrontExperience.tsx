@@ -866,9 +866,12 @@ export function SmallShopExperience({
 
             {view === "shop" && (
                 <>
+                    {/* Surface hierarchy (rule 4d): the section is the recessed ground
+                        (bg-secondary), the headline card rises above it (bg-primary +
+                        shadow) — box and background must never share a color. */}
                     <section
                         data-uui-critical-hero
-                        className="bg-primary px-4 py-6 sm:py-10 lg:px-8 lg:py-16"
+                        className="bg-secondary px-4 py-6 sm:py-10 lg:px-8 lg:py-16"
                     >
                         <div className="mx-auto grid max-w-7xl items-center lg:grid-cols-[minmax(0,1.15fr)_minmax(26rem,0.85fr)]">
                             <div className="relative min-h-64 overflow-hidden rounded-3xl bg-secondary shadow-xl ring-1 ring-secondary sm:min-h-96 lg:min-h-150">
