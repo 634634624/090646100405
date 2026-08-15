@@ -269,12 +269,32 @@ function TrustStrip() {
     );
 }
 
+// The one true brand mark — same artwork as public/favicon.svg, so the tab
+// icon and the on-page logo are a single identity. Fixed colors on purpose:
+// the mark is a fixed-color surface and must not flip with the theme.
+function BrandMark({ className = "size-8" }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true" className={`shrink-0 ${className}`}>
+            <rect width="64" height="64" rx="18" fill="#143625" />
+            <circle cx="32" cy="32" r="22" fill="#e8f3ec" />
+            <path
+                d="M22 31c-3.5-6.5.8-12.5 6.8-8.1L32 25l3.2-2.1c6-4.4 10.3 1.6 6.8 8.1-2.4 4.4-7.2 8.3-10 10.2-2.8-1.9-7.6-5.8-10-10.2Z"
+                fill="#2f5a44"
+            />
+            <path d="M22 42c5.8-1.8 14.2-1.8 20 0" stroke="#2f5a44" strokeWidth="3.4" strokeLinecap="round" />
+        </svg>
+    );
+}
+
 function ShopFooter({ brand }: { brand: string }) {
     return (
         <footer className="border-t border-secondary_alt bg-primary-solid">
             <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:grid-cols-[minmax(0,1fr)_auto] lg:px-8">
                 <div className="min-w-0">
-                    <p className="text-lg font-semibold text-primary_on-brand">{brand}</p>
+                    <p className="flex items-center gap-2.5 text-lg font-semibold text-primary_on-brand">
+                        <BrandMark className="size-8 rounded-lg" />
+                        {brand}
+                    </p>
                     <p className="mt-2 max-w-md text-sm text-tertiary_on-brand">
                         {STORE.brand.tagline} A webáruház üzemeltetője: {STORE.legal.companyName}.
                     </p>
@@ -761,7 +781,7 @@ export function SmallShopExperience({
 
     return (
         <div
-            data-uui-brand-palette="violet-terracotta-sky-rose"
+            data-uui-brand-palette="forest-cream-terracotta"
             className="min-h-dvh bg-primary text-primary"
         >
             <div className="border-b border-utility-orange-200 bg-utility-orange-50 px-4 py-2 text-center text-sm font-semibold text-primary">
@@ -781,7 +801,10 @@ export function SmallShopExperience({
                             {({ close }) => (
                                 <>
                                     <SlideoutMenu.Header onClose={close}>
-                                        <p className="text-lg font-semibold text-primary">{brand}</p>
+                                        <p className="flex items-center gap-2.5 text-lg font-semibold text-primary">
+                                            <BrandMark className="size-8 rounded-lg" />
+                                            {brand}
+                                        </p>
                                     </SlideoutMenu.Header>
                                     <SlideoutMenu.Content>
                                         <nav className="grid gap-2 text-md font-semibold">
@@ -801,9 +824,7 @@ export function SmallShopExperience({
                         aria-label={brand}
                         className="flex items-center gap-2.5 whitespace-nowrap text-md font-semibold tracking-tight text-primary sm:text-lg"
                     >
-                        <span className="grid size-8 place-items-center rounded-xl bg-brand-solid text-xs font-bold text-primary_on-brand shadow-sm">
-                            {STORE.brand.shortMark}
-                        </span>
+                        <BrandMark className="size-9 rounded-xl shadow-sm" />
                         <span className="hidden sm:inline">{brand}</span>
                     </a>
                     <nav className="ml-6 hidden items-center gap-6 text-sm font-semibold text-secondary sm:flex">
@@ -876,20 +897,15 @@ export function SmallShopExperience({
                                     aria-hidden="true"
                                     className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10"
                                 />
-                                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 text-white sm:p-7">
-                                    <div>
-                                        <p className="text-sm font-semibold text-white">Kiemelt otthoni válogatás</p>
-                                        <p className="mt-1 text-sm text-white/75">Használható · érthető · rendezett</p>
-                                    </div>
-                                    <span className="rounded-full border border-white/30 bg-black/20 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
-                                        01 / 06
-                                    </span>
+                                <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-7">
+                                    <p className="text-sm font-semibold text-white">Kiemelt otthoni válogatás</p>
+                                    <p className="mt-1 text-sm text-white/75">Használható · érthető · rendezett</p>
                                 </div>
                             </div>
                             <div className="relative z-10 mx-3 -mt-6 overflow-hidden rounded-3xl bg-primary p-5 shadow-2xl ring-1 ring-secondary sm:mx-8 sm:-mt-10 sm:p-8 lg:-ml-20 lg:mr-0 lg:mt-0 lg:p-10">
                                 <span
                                     aria-hidden="true"
-                                    className="absolute inset-x-0 top-0 h-1 bg-utility-pink-500"
+                                    className="absolute inset-x-0 top-0 h-1 bg-brand-solid"
                                 />
                                 <div className="flex flex-wrap items-center gap-2">
                                     <Badge
@@ -934,18 +950,18 @@ export function SmallShopExperience({
                                         Miért Válogatott?
                                     </Button>
                                 </div>
-                                <div className="mt-7 grid grid-cols-3 gap-2.5 border-t border-secondary pt-5">
+                                <ul className="mt-7 grid gap-2.5 border-t border-secondary pt-5 sm:grid-cols-3">
                                     {[
-                                        ["06", "induló termék", "text-utility-orange-700"],
-                                        ["2", "fő kategória", "text-utility-blue-light-700"],
-                                        ["1", "biztonságos kosár", "text-utility-pink-700"],
-                                    ].map(([value, label, tone]) => (
-                                        <div key={label} className="min-w-0 rounded-xl bg-secondary px-3 py-3">
-                                            <p className={`text-lg font-semibold ${tone}`}>{value}</p>
-                                            <p className="mt-0.5 text-xs text-secondary">{label}</p>
-                                        </div>
+                                        "Világos, végleges árak",
+                                        "14 napos elállási jog",
+                                        "Magyar ügyfélszolgálat",
+                                    ].map((claim) => (
+                                        <li key={claim} className="flex items-center gap-2 text-sm font-medium text-secondary">
+                                            <CheckCircle className="size-4 shrink-0 text-fg-brand" aria-hidden="true" />
+                                            {claim}
+                                        </li>
                                     ))}
-                                </div>
+                                </ul>
                             </div>
                         </div>
                     </section>
