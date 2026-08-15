@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { createWebshippyOrder, getWebshippyProducts, getWebshippyTracking, upsertWebshippyProduct, WebshippyError } from "../src/integrations/commerce/webshippy.ts";
+import { createWebshippyOrder, getWebshippyOrder, getWebshippyProducts, getWebshippyTracking, upsertWebshippyProduct, WebshippyError } from "../src/integrations/commerce/webshippy.ts";
 
 const config = { baseUrl: "https://app.webshippy.com/wspyapi", apiKey: "ws-secret" };
 
@@ -46,6 +46,16 @@ test("uses Webshippy numeric order IDs for tracking", async () => {
     await assert.rejects(getWebshippyTracking(config, "reference-name", async () => new Response()), /Numeric/);
 });
 
+test("queries orders by Webshippy numeric ID", async () => {
+    let payload;
+    await getWebshippyOrder(config, "43514460", async (_url, options) => {
+        payload = JSON.parse(options.body.get("request"));
+        return new Response(JSON.stringify({ status: "success", result: [] }), { status: 200 });
+    });
+    assert.equal(payload.filters.wspyId, "43514460");
+    assert.throws(() => getWebshippyOrder(config, "shopify-1001", async () => new Response()), /Numeric/);
+});
+
 test("maps an approved paid order to official Webshippy field names", async () => {
     let payload;
     await createWebshippyOrder(config, {
@@ -60,4 +70,6 @@ test("maps an approved paid order to official Webshippy field names", async () =
     assert.deepEqual(payload.order.shipping, { name: "Test Buyer", email: "buyer@example.test", phone: "+361234567", countryCode: "HU", zip: "1011", city: "Budapest", address1: "Minta utca 1." });
     assert.equal(payload.order.payment.paymentMode, "card");
     assert.equal(payload.order.payment.paymentStatus, "paid");
+    assert.match(payload.order.createdAt, /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
+    assert.equal(payload.order.products[0].vat, 0.27);
 });

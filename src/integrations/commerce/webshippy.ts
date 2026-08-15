@@ -27,7 +27,7 @@ export async function webshippyRequest<T>(config: WebshippyConfig, action: strin
     } finally { clearTimeout(timeout); }
 }
 
-export function getWebshippyProducts(config: WebshippyConfig, filters: Record<string, string> = {}, fetcher?: Fetch) {
+export function getWebshippyProducts(config: WebshippyConfig, filters: Record<string, string | boolean> = {}, fetcher?: Fetch) {
     return webshippyRequest<unknown[]>(config, "GetProduct", { page: 0, limit: 100, filters }, fetcher);
 }
 
@@ -40,13 +40,17 @@ export function getWebshippyStock(config: WebshippyConfig, inventoryUpdatedSince
     return webshippyRequest<string>(config, "getStockInfoCsv", inventoryUpdatedSince ? { inventoryUpdatedSince } : {}, fetcher);
 }
 
-export function getWebshippyOrder(config: WebshippyConfig, referenceId: string, fetcher?: Fetch) {
-    if (!referenceId) throw new WebshippyError("Order reference is required.", 400);
-    return webshippyRequest<unknown[]>(config, "GetOrder", { page: 0, limit: 1, filters: { referenceId } }, fetcher);
+export function getWebshippyOrder(config: WebshippyConfig, wspyId: string, fetcher?: Fetch) {
+    if (!/^\d+$/.test(wspyId)) throw new WebshippyError("Numeric Webshippy order ID is required.", 400);
+    return webshippyRequest<unknown[]>(config, "GetOrder", { page: 0, limit: 1, filters: { wspyId } }, fetcher);
+}
+
+function formatWebshippyDate(value: Date) {
+    return value.toISOString().slice(0, 19).replace("T", " ");
 }
 
 export function createWebshippyOrder(config: WebshippyConfig, order: SupplierOrderDraft, fetcher?: Fetch) {
-    const now = new Date().toISOString();
+    const now = formatWebshippyDate(new Date());
     return webshippyRequest(config, "CreateOrder", { order: {
         referenceId: order.externalOrderId,
         referenceName: order.externalOrderId,
@@ -61,7 +65,7 @@ export function createWebshippyOrder(config: WebshippyConfig, order: SupplierOrd
             address1: order.delivery.addressLine,
         },
         payment: { paymentMode: "card", paymentStatus: "paid", paidDate: now, currency: "HUF" },
-        products: order.lines.map((line) => ({ sku: line.sku, productName: line.sku, priceGross: line.unitPriceHuf, vat: 27, quantity: line.quantity })),
+        products: order.lines.map((line) => ({ sku: line.sku, productName: line.sku, priceGross: line.unitPriceHuf, vat: 0.27, quantity: line.quantity })),
     } }, fetcher);
 }
 
