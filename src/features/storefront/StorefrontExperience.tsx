@@ -148,8 +148,9 @@ function ProductCard({
     return (
         <article
             className={[
-                "group relative flex h-full min-w-0 overflow-hidden rounded-3xl bg-primary shadow-md ring-1 ring-secondary transition duration-200",
-                "hover:-translate-y-1 hover:shadow-xl hover:ring-brand motion-reduce:transition-none motion-reduce:hover:translate-y-0",
+                // Owner hover-law: a card at rest keeps its border and shadow — on hover
+                // only the button and (at most) the image may react. No lift, no ring swap.
+                "group relative flex h-full min-w-0 overflow-hidden rounded-3xl bg-primary shadow-md ring-1 ring-secondary",
                 featured ? "flex-col md:grid md:grid-cols-[minmax(0,1.2fr)_minmax(17rem,0.8fr)]" : "flex-col",
             ].join(" ")}
         >
@@ -169,10 +170,6 @@ function ProductCard({
                     ].join(" ")}
                 />
                 <span className="absolute left-4 top-4"><ProductStatus product={product} /></span>
-                <span
-                    aria-hidden="true"
-                    className={`absolute inset-x-0 bottom-0 h-1.5 ${tone.accent}`}
-                />
             </a>
             <div className={`flex flex-1 flex-col ${featured ? "p-6 md:p-8" : "p-5"}`}>
                 <div className="flex items-center justify-between gap-3">
@@ -271,11 +268,11 @@ function TrustStrip() {
 
 // The one true brand mark — the official UUI logomark "Luckycharm" (Library →
 // Resources → Logos), cropped to its 48x48 mark and adopted as the Válogatott
-// brand: public/brand/valogatott-mark.svg. The favicon is the SAME file, so the
+// brand: public/brand/devshopify-mark.svg. The favicon is the SAME file, so the
 // tab icon and the on-page logo are a single identity. Fixed colors on purpose:
 // a logomark is a fixed-color surface and must not flip with the theme.
 function BrandMark({ className = "size-8" }: { className?: string }) {
-    return <img src="/brand/valogatott-mark.svg" alt="" aria-hidden="true" className={`shrink-0 ${className}`} />;
+    return <img src="/brand/devshopify-mark.svg" alt="" aria-hidden="true" className={`shrink-0 ${className}`} />;
 }
 
 function ShopFooter({ brand }: { brand: string }) {
@@ -889,13 +886,15 @@ export function SmallShopExperience({
                                     aria-hidden="true"
                                     className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10"
                                 />
-                                <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-7">
+                                {/* Mobile hides the caption: the overlapping headline card
+                                    would collide with it (owner-flagged responsive bug). */}
+                                <div className="absolute inset-x-0 bottom-0 hidden p-5 text-white sm:block sm:p-7">
                                     <p className="text-sm font-semibold text-white">Kiemelt otthoni válogatás</p>
                                     <p className="mt-1 text-sm text-white/75">Használható · érthető · rendezett</p>
                                 </div>
                             </div>
                             <div className="relative z-10 mx-3 -mt-6 overflow-hidden rounded-3xl bg-primary p-5 shadow-2xl ring-1 ring-secondary sm:mx-8 sm:-mt-10 sm:p-8 lg:-ml-20 lg:mr-0 lg:mt-0 lg:p-10">
-                                <Badge color="success">Válogatott magyar bolt</Badge>
+                                <Badge color="success">Induló magyar webshop</Badge>
                                 <h1 className="mt-5 max-w-xl text-balance text-display-sm font-semibold tracking-tight text-primary sm:text-display-md lg:text-display-lg">
                                     {initialCategory ? `${initialCategory} termékek, érthetően.` : "Ami kell. Semmi, ami nem."}
                                 </h1>
@@ -922,7 +921,7 @@ export function SmallShopExperience({
                                         size="lg"
                                         className="w-full sm:w-auto"
                                     >
-                                        Miért Válogatott?
+                                        Miért DevShopify?
                                     </Button>
                                 </div>
                                 <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2.5 border-t border-secondary pt-5">

@@ -127,12 +127,12 @@
  * zöld (#406e55) a kontraszt miatt, fehér szöveggel ~5.9:1). A namespaced
  * ikertokeneket itt is kötelező írni (recolor gotcha #3). ---- */
 .dark-mode {
-  --color-bg-primary: #16201a;
-  --color-bg-primary_hover: #1c2820;
-  --color-bg-secondary: #101813;
-  --color-bg-secondary_hover: #182219;
-  --color-bg-tertiary: #1e2b23;
-  --color-bg-quaternary: #27362d;
+  --color-bg-primary: #1b2822;
+  --color-bg-primary_hover: #223129;
+  --color-bg-secondary: #0d1510;
+  --color-bg-secondary_hover: #141d17;
+  --color-bg-tertiary: #26362d;
+  --color-bg-quaternary: #2f4136;
   --color-bg-brand-primary: #1d3a2c;
   --color-bg-brand-secondary: #244736;
   --color-bg-brand-solid: #406e55;
@@ -165,7 +165,7 @@
 
   --color-border-primary: #33443a;
   --color-border-secondary: #273730;
-  --color-border-tertiary: #1e2b23;
+  --color-border-tertiary: #26362d;
   --color-border-brand: #5e8b72;
 
   --color-focus-ring: #5e8b72;
@@ -176,14 +176,14 @@
   --color-accent-amber: #e8a23d;
   --color-accent-amber-soft: #38301c;
 
-  --background-color-primary: #16201a;
-  --background-color-primary_hover: #1c2820;
-  --background-color-primary_alt: #16201a;
-  --background-color-secondary: #101813;
-  --background-color-secondary_hover: #182219;
-  --background-color-secondary_alt: #101813;
-  --background-color-tertiary: #1e2b23;
-  --background-color-quaternary: #27362d;
+  --background-color-primary: #1b2822;
+  --background-color-primary_hover: #223129;
+  --background-color-primary_alt: #1b2822;
+  --background-color-secondary: #0d1510;
+  --background-color-secondary_hover: #141d17;
+  --background-color-secondary_alt: #0d1510;
+  --background-color-tertiary: #26362d;
+  --background-color-quaternary: #2f4136;
   --background-color-brand-primary: #1d3a2c;
   --background-color-brand-primary_alt: #1d3a2c;
   --background-color-brand-secondary: #244736;
@@ -211,7 +211,7 @@
   --border-color-primary: #33443a;
   --border-color-secondary: #273730;
   --border-color-secondary_alt: #33443a;
-  --border-color-tertiary: #1e2b23;
+  --border-color-tertiary: #26362d;
   --border-color-brand: #5e8b72;
   --border-color-brand_alt: #8aad98;
 

@@ -1,7 +1,7 @@
 export const STORE = {
     brand: {
-        name: "Válogatott",
-        shortMark: "V",
+        name: "DevShopify",
+        shortMark: "D",
         tagline: "Hasznos dolgok. Jó döntésekhez.",
         description:
             "Átlátható magyar webáruház gondosan válogatott műszaki és háztartási termékekkel.",
@@ -11,7 +11,7 @@ export const STORE = {
         launchMarket: "Magyarország",
     },
     contact: {
-        email: "kapcsolat@valogatott.example",
+        email: "kapcsolat@devshopify.example",
         phone: "+36 1 000 0000",
         serviceHours: "Hétfő–péntek, 9:00–17:00",
     },
@@ -77,7 +77,7 @@ export const INFO_PAGES: Record<InfoPageKey, {
         title: "Kapcsolat",
         intro: "Rendeléshez mindig add meg a rendelési azonosítót. Így gyorsabban megtaláljuk az ügyet.",
         sections: [
-            { title: "E-mail", copy: "kapcsolat@valogatott.example" },
+            { title: "E-mail", copy: "kapcsolat@devshopify.example" },
             { title: "Telefon", copy: "+36 1 000 0000" },
             { title: "Ügyfélfogadás", copy: "Hétfő–péntek, 9:00–17:00" },
         ],

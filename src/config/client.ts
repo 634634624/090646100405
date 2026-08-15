@@ -8,7 +8,7 @@ export const CLIENT = {
     "preset": "kit"
   },
   "identity": {
-    "brand": "Válogatott",
+    "brand": "DevShopify",
     "legalCompany": "BestCarTrade Kft."
   }
 } as const;
