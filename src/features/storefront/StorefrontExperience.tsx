@@ -269,21 +269,13 @@ function TrustStrip() {
     );
 }
 
-// The one true brand mark — same artwork as public/favicon.svg, so the tab
-// icon and the on-page logo are a single identity. Fixed colors on purpose:
-// the mark is a fixed-color surface and must not flip with the theme.
+// The one true brand mark — the official UUI logomark "Luckycharm" (Library →
+// Resources → Logos), cropped to its 48x48 mark and adopted as the Válogatott
+// brand: public/brand/valogatott-mark.svg. The favicon is the SAME file, so the
+// tab icon and the on-page logo are a single identity. Fixed colors on purpose:
+// a logomark is a fixed-color surface and must not flip with the theme.
 function BrandMark({ className = "size-8" }: { className?: string }) {
-    return (
-        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true" className={`shrink-0 ${className}`}>
-            <rect width="64" height="64" rx="18" fill="#143625" />
-            <circle cx="32" cy="32" r="22" fill="#e8f3ec" />
-            <path
-                d="M22 31c-3.5-6.5.8-12.5 6.8-8.1L32 25l3.2-2.1c6-4.4 10.3 1.6 6.8 8.1-2.4 4.4-7.2 8.3-10 10.2-2.8-1.9-7.6-5.8-10-10.2Z"
-                fill="#2f5a44"
-            />
-            <path d="M22 42c5.8-1.8 14.2-1.8 20 0" stroke="#2f5a44" strokeWidth="3.4" strokeLinecap="round" />
-        </svg>
-    );
+    return <img src="/brand/valogatott-mark.svg" alt="" aria-hidden="true" className={`shrink-0 ${className}`} />;
 }
 
 function ShopFooter({ brand }: { brand: string }) {
@@ -903,24 +895,7 @@ export function SmallShopExperience({
                                 </div>
                             </div>
                             <div className="relative z-10 mx-3 -mt-6 overflow-hidden rounded-3xl bg-primary p-5 shadow-2xl ring-1 ring-secondary sm:mx-8 sm:-mt-10 sm:p-8 lg:-ml-20 lg:mr-0 lg:mt-0 lg:p-10">
-                                <span
-                                    aria-hidden="true"
-                                    className="absolute inset-x-0 top-0 h-1 bg-brand-solid"
-                                />
-                                <div className="flex flex-wrap items-center gap-2">
-                                    <Badge
-                                        color="gray"
-                                        className="bg-utility-orange-50 text-utility-orange-700 ring-utility-orange-200"
-                                    >
-                                        Válogatott kínálat
-                                    </Badge>
-                                    <Badge
-                                        color="gray"
-                                        className="bg-utility-blue-light-50 text-utility-blue-light-700 ring-utility-blue-light-200"
-                                    >
-                                        Induló magyar bolt
-                                    </Badge>
-                                </div>
+                                <Badge color="success">Válogatott magyar bolt</Badge>
                                 <h1 className="mt-5 max-w-xl text-balance text-display-sm font-semibold tracking-tight text-primary sm:text-display-md lg:text-display-lg">
                                     {initialCategory ? `${initialCategory} termékek, érthetően.` : "Ami kell. Semmi, ami nem."}
                                 </h1>
@@ -950,13 +925,13 @@ export function SmallShopExperience({
                                         Miért Válogatott?
                                     </Button>
                                 </div>
-                                <ul className="mt-7 grid gap-2.5 border-t border-secondary pt-5 sm:grid-cols-3">
+                                <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2.5 border-t border-secondary pt-5">
                                     {[
-                                        "Világos, végleges árak",
-                                        "14 napos elállási jog",
+                                        "Világos árak",
+                                        "14 nap elállás",
                                         "Magyar ügyfélszolgálat",
                                     ].map((claim) => (
-                                        <li key={claim} className="flex items-center gap-2 text-sm font-medium text-secondary">
+                                        <li key={claim} className="flex items-center gap-2 whitespace-nowrap text-sm font-medium text-secondary">
                                             <CheckCircle className="size-4 shrink-0 text-fg-brand" aria-hidden="true" />
                                             {claim}
                                         </li>
