@@ -244,13 +244,13 @@ function TrustStrip() {
     return (
         <section
             aria-label="Vásárlási biztosítékok"
-            className="bg-primary px-4 pb-12 lg:px-8 lg:pb-16"
+            className="bg-secondary px-4 pb-12 lg:px-8 lg:pb-16"
         >
-            <div className="mx-auto grid max-w-7xl gap-3 rounded-3xl bg-secondary p-3 shadow-inner ring-1 ring-secondary sm:grid-cols-3">
+            <div className="mx-auto grid max-w-7xl gap-3 sm:grid-cols-3">
                 {items.map(({ icon: Icon, title, detail, tone }) => (
                     <div
                         key={title}
-                        className="flex min-w-0 items-center gap-3 rounded-2xl bg-primary px-4 py-5 shadow-xs ring-1 ring-secondary"
+                        className="flex min-w-0 items-center gap-3 rounded-2xl bg-primary px-4 py-5 shadow-sm ring-1 ring-secondary"
                     >
                         <span className={`flex size-11 shrink-0 items-center justify-center rounded-xl ring-1 ${tone}`}>
                             <Icon className="size-5" aria-hidden="true" />
@@ -316,7 +316,7 @@ function CartLines({
     onRemove: (line: CartLine) => void;
 }) {
     return (
-        <ul className="divide-y divide-secondary" aria-live="polite">
+        <ul className="divide-y divide-secondary rounded-2xl bg-primary px-5 shadow-sm ring-1 ring-secondary" aria-live="polite">
             {cart.lines.map((line) => (
                 <li key={line.id} className="flex gap-4 py-5">
                     {line.image && (
@@ -393,7 +393,7 @@ function CartSummary({
     showCheckoutAction?: boolean;
 }) {
     return (
-        <aside className="rounded-2xl border border-secondary bg-secondary p-5 sm:p-6">
+        <aside className="rounded-2xl bg-primary p-5 shadow-sm ring-1 ring-secondary sm:p-6">
             <h2 className="text-lg font-semibold text-primary">Rendelés összesítése</h2>
             <dl className="mt-5 space-y-3 text-sm">
                 <div className="flex justify-between gap-4">
@@ -771,7 +771,9 @@ export function SmallShopExperience({
     return (
         <div
             data-uui-brand-palette="forest-cream-terracotta"
-            className="min-h-dvh bg-primary text-primary"
+            // Rule 4d ground: the page root is the RECESSED surface — every card
+            // (bg-primary + shadow) rises above it, on every view.
+            className="min-h-dvh bg-secondary text-primary"
         >
             <div className="border-b border-utility-orange-200 bg-utility-orange-50 px-4 py-2 text-center text-sm font-semibold text-primary">
                 Induló válogatás · műszaki és háztartási termékek magyar vásárlóknak
@@ -798,8 +800,6 @@ export function SmallShopExperience({
                                     <SlideoutMenu.Content>
                                         <nav className="grid gap-2 text-md font-semibold">
                                             <a className="rounded-lg p-3 text-primary hover:bg-secondary" href="/shop">Termékek</a>
-                                            <a className="rounded-lg p-3 text-primary hover:bg-secondary" href="/kategoriak/muszaki">Műszaki</a>
-                                            <a className="rounded-lg p-3 text-primary hover:bg-secondary" href="/kategoriak/otthon">Háztartás</a>
                                             <a className="rounded-lg p-3 text-primary hover:bg-secondary" href="/gyik">Segítség</a>
                                             <a className="rounded-lg p-3 text-primary hover:bg-secondary" href="/cart">Kosár</a>
                                         </nav>
@@ -816,10 +816,10 @@ export function SmallShopExperience({
                         <BrandMark className="size-9 rounded-xl shadow-sm" />
                         <span className="hidden sm:inline">{brand}</span>
                     </a>
+                    {/* Owner: Termékek/Műszaki/Háztartás all landed on the same list —
+                        redundant nav. Categories live in the shop filters instead. */}
                     <nav className="ml-6 hidden items-center gap-6 text-sm font-semibold text-secondary sm:flex">
                         <a href="/shop" className="hover:text-primary">Termékek</a>
-                        <a href="/kategoriak/muszaki" className="hover:text-primary">Műszaki</a>
-                        <a href="/kategoriak/otthon" className="hover:text-primary">Háztartás</a>
                         <a href="/gyik" className="hover:text-primary">Segítség</a>
                     </nav>
                     <div className="ml-auto flex items-center gap-1">
@@ -842,7 +842,7 @@ export function SmallShopExperience({
                                 <Badge
                                     color={cart.totalQuantity > 0 ? "success" : "gray"}
                                     size="md"
-                                    className="shop-cart-count ir-badge min-w-7 justify-center font-semibold tabular-nums"
+                                    className="shop-cart-count ir-badge ml-1 min-w-7 justify-center font-semibold tabular-nums"
                                 >
                                     {cart.totalQuantity}
                                 </Badge>
@@ -974,7 +974,9 @@ export function SmallShopExperience({
                                     Szűrők törlése
                                 </Button>
                             </aside>
-                            <div className="min-w-0">
+                            {/* min-h: a shorter filtered list must not collapse the column —
+                                that height snap was the owner-reported "page jumps" bug. */}
+                            <div className="min-h-[60vh] min-w-0">
                                 <div className="rounded-xl bg-primary p-4 shadow-xs ring-1 ring-secondary">
                                     <div className="flex flex-wrap items-end gap-3">
                                         <Input
@@ -1065,7 +1067,12 @@ export function SmallShopExperience({
                                         ))}
                                     </div>
                                 ) : filteredProducts.length ? (
-                                    <ul className="mt-6 grid gap-5 sm:grid-cols-2">
+                                    /* key remounts the grid on any filter change → the shared-axis
+                                       enter animation plays (reduced-motion users get an instant swap) */
+                                    <ul
+                                        key={`${query}|${sort}|${selectedCategories.join(",")}|${availableOnly}`}
+                                        className="uui-axis-x is-in-fwd mt-6 grid gap-5 sm:grid-cols-2"
+                                    >
                                         {filteredProducts.map((product, index) => {
                                             const wide =
                                                 index === 0 ||
@@ -1148,12 +1155,8 @@ export function SmallShopExperience({
                                 </div>
                             </div>
                             <div className="relative grid gap-5 overflow-hidden rounded-3xl bg-primary-solid p-6 shadow-lg ring-1 ring-secondary_alt sm:p-8 lg:p-10">
-                                <span
-                                    aria-hidden="true"
-                                    className="absolute inset-x-0 top-0 h-1 bg-utility-orange-500"
-                                />
                                 <div className="relative z-10">
-                                    <p className="text-sm font-semibold text-primary_on-brand">Miért Válogatott?</p>
+                                    <p className="text-sm font-semibold text-primary_on-brand">Miért DevShopify?</p>
                                     <h2 className="mt-3 max-w-2xl text-balance text-display-sm font-semibold text-primary_on-brand sm:text-display-md">
                                         Az érthető kínálat gyorsabbá és nyugodtabbá teszi a vásárlást.
                                     </h2>
@@ -1317,7 +1320,7 @@ export function SmallShopExperience({
                                     ["Az ár újra ellenőrizhető", "A végleges ár, készlet és szállítás a jóváhagyás előtt látható."],
                                     ["A fizetés külön felületen történik", "A webáruház nem kezel közvetlenül bankkártyaadatot."],
                                 ].map(([title, copy]) => (
-                                    <div key={title} className="flex gap-3 rounded-xl border border-secondary p-4">
+                                    <div key={title} className="flex gap-3 rounded-xl bg-primary p-4 shadow-xs ring-1 ring-secondary">
                                         <CheckCircle className="mt-0.5 size-5 shrink-0 text-fg-success-primary" aria-hidden="true" />
                                         <div>
                                             <h2 className="text-sm font-semibold text-primary">{title}</h2>
@@ -1366,8 +1369,8 @@ export function SmallShopExperience({
                             ["Előkészítés", "A teljesítési partner visszaigazolja a feldolgozást."],
                             ["Szállítási frissítés", "A követési adatot a beállított szolgáltató küldi."],
                         ].map(([title, copy], index) => (
-                            <li key={title} className="flex gap-4 rounded-xl border border-secondary bg-secondary p-4">
-                                <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-section text-sm font-semibold text-brand-secondary">
+                            <li key={title} className="flex gap-4 rounded-xl bg-primary p-4 shadow-xs ring-1 ring-secondary">
+                                <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-section text-sm font-semibold text-primary_on-brand">
                                     {index + 1}
                                 </span>
                                 <div>
