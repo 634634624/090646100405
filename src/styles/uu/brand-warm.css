@@ -127,12 +127,12 @@
  * zöld (#406e55) a kontraszt miatt, fehér szöveggel ~5.9:1). A namespaced
  * ikertokeneket itt is kötelező írni (recolor gotcha #3). ---- */
 .dark-mode {
-  --color-bg-primary: #1b2822;
-  --color-bg-primary_hover: #223129;
-  --color-bg-secondary: #0d1510;
-  --color-bg-secondary_hover: #141d17;
-  --color-bg-tertiary: #26362d;
-  --color-bg-quaternary: #2f4136;
+  --color-bg-primary: #182f24;
+  --color-bg-primary_hover: #1d3a2c;
+  --color-bg-secondary: #0e1c15;
+  --color-bg-secondary_hover: #182f24;
+  --color-bg-tertiary: #1d3a2c;
+  --color-bg-quaternary: #244736;
   --color-bg-brand-primary: #1d3a2c;
   --color-bg-brand-secondary: #244736;
   --color-bg-brand-solid: #406e55;
@@ -140,32 +140,32 @@
   --color-bg-brand-section: #0e1c15;
   --color-bg-brand-section_subtle: #182f24;
 
-  --color-text-primary: #f0f5f1;
-  --color-text-secondary: #c3d1c8;
-  --color-text-secondary_hover: #d8e3dc;
-  --color-text-tertiary: #93a59a;
-  --color-text-tertiary_hover: #aebfb4;
-  --color-text-quaternary: #74857b;
-  --color-text-placeholder: #8a9a90;
+  --color-text-primary: #f5f8f6;
+  --color-text-secondary: #d9e6de;
+  --color-text-secondary_hover: #eef3ef;
+  --color-text-tertiary: #b6ccbf;
+  --color-text-tertiary_hover: #d9e6de;
+  --color-text-quaternary: #8aad98;
+  --color-text-placeholder: #8aad98;
   --color-text-brand-primary: #eef3ef;
   --color-text-brand-secondary: #b6ccbf;
   --color-text-brand-secondary_hover: #d9e6de;
   --color-text-brand-tertiary: #8aad98;
   --color-text-primary_on-brand: #ffffff;
-  --color-text-secondary_on-brand: #e3ede7;
-  --color-text-tertiary_on-brand: #c6d8cd;
-  --color-text-quaternary_on-brand: #aec6b9;
+  --color-text-secondary_on-brand: #d9e6de;
+  --color-text-tertiary_on-brand: #b6ccbf;
+  --color-text-quaternary_on-brand: #8aad98;
 
-  --color-fg-primary: #f0f5f1;
-  --color-fg-secondary: #c3d1c8;
-  --color-fg-tertiary: #93a59a;
-  --color-fg-quaternary: #74857b;
+  --color-fg-primary: #f5f8f6;
+  --color-fg-secondary: #d9e6de;
+  --color-fg-tertiary: #b6ccbf;
+  --color-fg-quaternary: #8aad98;
   --color-fg-brand-primary: #8aad98;
   --color-fg-brand-secondary: #5e8b72;
 
-  --color-border-primary: #33443a;
-  --color-border-secondary: #273730;
-  --color-border-tertiary: #26362d;
+  --color-border-primary: #2f5a44;
+  --color-border-secondary: #244736;
+  --color-border-tertiary: #1d3a2c;
   --color-border-brand: #5e8b72;
 
   --color-focus-ring: #5e8b72;
@@ -176,14 +176,14 @@
   --color-accent-amber: #e8a23d;
   --color-accent-amber-soft: #38301c;
 
-  --background-color-primary: #1b2822;
-  --background-color-primary_hover: #223129;
-  --background-color-primary_alt: #1b2822;
-  --background-color-secondary: #0d1510;
-  --background-color-secondary_hover: #141d17;
-  --background-color-secondary_alt: #0d1510;
-  --background-color-tertiary: #26362d;
-  --background-color-quaternary: #2f4136;
+  --background-color-primary: #182f24;
+  --background-color-primary_hover: #1d3a2c;
+  --background-color-primary_alt: #182f24;
+  --background-color-secondary: #0e1c15;
+  --background-color-secondary_hover: #182f24;
+  --background-color-secondary_alt: #0e1c15;
+  --background-color-tertiary: #1d3a2c;
+  --background-color-quaternary: #244736;
   --background-color-brand-primary: #1d3a2c;
   --background-color-brand-primary_alt: #1d3a2c;
   --background-color-brand-secondary: #244736;
@@ -192,26 +192,26 @@
   --background-color-brand-section: #0e1c15;
   --background-color-brand-section_subtle: #182f24;
 
-  --text-color-primary: #f0f5f1;
-  --text-color-secondary: #c3d1c8;
-  --text-color-secondary_hover: #d8e3dc;
-  --text-color-tertiary: #93a59a;
-  --text-color-tertiary_hover: #aebfb4;
-  --text-color-quaternary: #74857b;
-  --text-color-placeholder: #8a9a90;
+  --text-color-primary: #f5f8f6;
+  --text-color-secondary: #d9e6de;
+  --text-color-secondary_hover: #eef3ef;
+  --text-color-tertiary: #b6ccbf;
+  --text-color-tertiary_hover: #d9e6de;
+  --text-color-quaternary: #8aad98;
+  --text-color-placeholder: #8aad98;
   --text-color-brand-primary: #eef3ef;
   --text-color-brand-secondary: #b6ccbf;
   --text-color-brand-secondary_hover: #d9e6de;
   --text-color-brand-tertiary: #8aad98;
   --text-color-primary_on-brand: #ffffff;
-  --text-color-secondary_on-brand: #e3ede7;
-  --text-color-tertiary_on-brand: #c6d8cd;
-  --text-color-quaternary_on-brand: #aec6b9;
+  --text-color-secondary_on-brand: #d9e6de;
+  --text-color-tertiary_on-brand: #b6ccbf;
+  --text-color-quaternary_on-brand: #8aad98;
 
-  --border-color-primary: #33443a;
-  --border-color-secondary: #273730;
-  --border-color-secondary_alt: #33443a;
-  --border-color-tertiary: #26362d;
+  --border-color-primary: #2f5a44;
+  --border-color-secondary: #244736;
+  --border-color-secondary_alt: #2f5a44;
+  --border-color-tertiary: #1d3a2c;
   --border-color-brand: #5e8b72;
   --border-color-brand_alt: #8aad98;
 
