@@ -1,6 +1,6 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
-import node from "@astrojs/node";
+import cloudflare from "@astrojs/cloudflare";
 import tailwindcss from "@tailwindcss/vite";
 
 let devComponentIdPlugin;
@@ -15,11 +15,8 @@ try {
 
 export default defineConfig({
     output: "server",
-    adapter: node({ mode: "standalone" }),
+    adapter: cloudflare({ imageService: "compile" }),
     integrations: [react()],
-    image: {
-        service: { entrypoint: "astro/assets/services/sharp" },
-    },
     server: {
         host: true,
         allowedHosts: [".app.github.dev", ".fly.dev"],
