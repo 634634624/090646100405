@@ -866,37 +866,15 @@ export function SmallShopExperience({
 
             {view === "shop" && (
                 <>
-                    {/* Surface hierarchy (rule 4d): the section is the recessed ground
-                        (bg-secondary), the headline card rises above it (bg-primary +
-                        shadow) — box and background must never share a color. */}
+                    {/* Simple split hero (owner: the old overlapping-card layout could
+                        never be responsive-solid). No negative margins, no absolute
+                        overlays: text column + image column, stacking cleanly on mobile. */}
                     <section
                         data-uui-critical-hero
-                        className="bg-secondary px-4 py-6 sm:py-10 lg:px-8 lg:py-16"
+                        className="bg-secondary px-4 py-12 sm:py-16 lg:px-8 lg:py-24"
                     >
-                        <div className="mx-auto grid max-w-7xl items-center lg:grid-cols-[minmax(0,1.15fr)_minmax(26rem,0.85fr)]">
-                            <div className="relative min-h-64 overflow-hidden rounded-3xl bg-secondary shadow-xl ring-1 ring-secondary sm:min-h-96 lg:min-h-150">
-                                <img
-                                    data-uui-hero-media
-                                    src="/img/uui/application/listing-01.webp"
-                                    alt="Rendezett nappali műszaki és háztartási termékekkel"
-                                    width={1200}
-                                    height={900}
-                                    loading="eager"
-                                    fetchPriority="high"
-                                    className="absolute inset-0 size-full object-cover transition duration-700 hover:scale-[1.02] motion-reduce:transition-none"
-                                />
-                                <div
-                                    aria-hidden="true"
-                                    className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10"
-                                />
-                                {/* Mobile hides the caption: the overlapping headline card
-                                    would collide with it (owner-flagged responsive bug). */}
-                                <div className="absolute inset-x-0 bottom-0 hidden p-5 text-white sm:block sm:p-7">
-                                    <p className="text-sm font-semibold text-white">Kiemelt otthoni válogatás</p>
-                                    <p className="mt-1 text-sm text-white/75">Használható · érthető · rendezett</p>
-                                </div>
-                            </div>
-                            <div className="relative z-10 mx-3 -mt-6 overflow-hidden rounded-3xl bg-primary p-5 shadow-2xl ring-1 ring-secondary sm:mx-8 sm:-mt-10 sm:p-8 lg:-ml-20 lg:mr-0 lg:mt-0 lg:p-10">
+                        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
+                            <div>
                                 <Badge color="success">Induló magyar webshop</Badge>
                                 <h1 className="mt-5 max-w-xl text-balance text-display-sm font-semibold tracking-tight text-primary sm:text-display-md lg:text-display-lg">
                                     {initialCategory ? `${initialCategory} termékek, érthetően.` : "Ami kell. Semmi, ami nem."}
@@ -940,6 +918,16 @@ export function SmallShopExperience({
                                     ))}
                                 </ul>
                             </div>
+                            <img
+                                data-uui-hero-media
+                                src="/img/uui/application/listing-01.webp"
+                                alt="Rendezett nappali műszaki és háztartási termékekkel"
+                                width={1200}
+                                height={900}
+                                loading="eager"
+                                fetchPriority="high"
+                                className="aspect-[4/3] w-full rounded-3xl object-cover shadow-lg ring-1 ring-secondary"
+                            />
                         </div>
                     </section>
                     <TrustStrip />
