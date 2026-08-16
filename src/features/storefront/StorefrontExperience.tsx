@@ -905,7 +905,7 @@ export function SmallShopExperience({
                                         Miért DevShopify?
                                     </Button>
                                 </div>
-                                <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2.5 border-t border-secondary pt-5">
+                                <ul className="mt-7 hidden flex-wrap gap-x-6 gap-y-2.5 border-t border-secondary pt-5 sm:flex">
                                     {[
                                         "Világos árak",
                                         "14 nap elállás",
