@@ -18,11 +18,12 @@ export const STORE = {
     commerce: {
         currency: "HUF",
         locale: "hu-HU",
-        catalogSource: "demo" as const,
-        checkoutProvider: "unconfigured" as const,
+        catalogSource: "shopify-ucp" as const,
+        checkoutProvider: "shopify-ucp" as const,
+        storeDomain: "devshop-vmthv4tq.myshopify.com",
     },
     promotion: {
-        featuredHandle: "otthoni-zene-csomag",
+        featuredHandle: "otthoni-zene-alapcsomag",
     },
 } as const;
 

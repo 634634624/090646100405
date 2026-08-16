@@ -1,9 +1,12 @@
-// Internal seed data only. Replace through the Webshippy adapter before launch.
+// The three shared demo products. Shopify owns sellable catalog state; Webshippy
+// receives the same SKUs through its Shopify connector.
 import type { Cart, Money, Product } from "@/toolkit/commerce-shopify/lib/contracts";
 
 const money = (amount: number): Money => ({ amount: amount.toFixed(0), currencyCode: "HUF" });
 
 const product = (
+    id: string,
+    variantId: string,
     handle: string,
     title: string,
     description: string,
@@ -17,7 +20,7 @@ const product = (
     const basePrice = money(price);
     const featuredImage = { url: image, altText: title, width: 1200, height: 900 };
     return {
-        id: `demo-product-${handle}`,
+        id,
         handle,
         title,
         description,
@@ -26,7 +29,7 @@ const product = (
         featuredImage,
         images: [featuredImage],
         variants: [{
-            id: `demo-variant-${handle}`,
+            id: variantId,
             title: "Alapváltozat",
             selectedOptions: [{ name: "Változat", value: "Alap" }],
             price: basePrice,
@@ -41,17 +44,21 @@ const product = (
 
 export const MOCK_PRODUCTS: Product[] = [
     product(
-        "otthoni-zene-csomag",
+        "gid://shopify/Product/9251757129866",
+        "gid://shopify/ProductVariant/50016701087882",
+        "otthoni-zene-alapcsomag",
         "Otthoni zene alapcsomag",
         "Átgondolt kiindulópont tiszta hanghoz és rendezett nappali használathoz.",
         "Műszaki",
         "/img/uui/application/listing-01.webp",
         89990,
         99990,
-        8,
+        4,
         ["featured", "trending", "audio", "nappali"],
     ),
     product(
+        "gid://shopify/Product/9251758178442",
+        "gid://shopify/ProductVariant/50016706265226",
         "kompakt-sztereo-csomag",
         "Kompakt sztereó csomag",
         "Kisebb otthonokhoz válogatott, helytakarékos zenehallgató összeállítás.",
@@ -63,28 +70,8 @@ export const MOCK_PRODUCTS: Product[] = [
         ["audio", "kompakt", "otthoni iroda"],
     ),
     product(
-        "haloszoba-rendezo-csomag",
-        "Hálószoba rendezőcsomag",
-        "Egyszerű tárolási és rendszerezési alapok a nyugodtabb reggelekhez.",
-        "Háztartás",
-        "/img/uui/application/listing-03.webp",
-        24990,
-        28990,
-        5,
-        ["rendszerezés", "hálószoba", "otthon"],
-    ),
-    product(
-        "nappali-rendezo-csomag",
-        "Nappali rendezőcsomag",
-        "Praktikus elemek a mindennapi tárgyak és a családi tér átlátható rendjéhez.",
-        "Háztartás",
-        "/img/uui/application/listing-04.webp",
-        32990,
-        undefined,
-        6,
-        ["rendszerezés", "nappali", "featured"],
-    ),
-    product(
+        "gid://shopify/Product/9251758866570",
+        "gid://shopify/ProductVariant/50016709574794",
         "olvasosarok-fenycsomag",
         "Olvasósarok fénycsomag",
         "Meleg fényű, egyszerűen elhelyezhető összeállítás esti olvasáshoz.",
@@ -94,17 +81,6 @@ export const MOCK_PRODUCTS: Product[] = [
         undefined,
         7,
         ["világítás", "olvasás", "kompakt"],
-    ),
-    product(
-        "etkezo-rendszerezo-csomag",
-        "Étkező rendszerezőcsomag",
-        "Helytakarékos tárolási alapok közös étkezésekhez és hétköznapi használathoz.",
-        "Háztartás",
-        "/img/placeholders/interior/interior-2.jpg",
-        21990,
-        undefined,
-        0,
-        ["étkező", "rendszerezés", "elfogyott"],
     ),
 ];
 

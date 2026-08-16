@@ -2,11 +2,11 @@
 
 ## Current local state
 
-- Catalog: internal demo seed in `src/data/demo-catalog.ts`.
-- Cart: local browser storage.
-- Checkout: disabled provider handoff with a visible safe error.
+- Catalog: three pinned demo SKUs, refreshed read-only from Shopify UCP with a checked local fallback.
+- Cart: local browser storage; quantities are revalidated by Shopify before checkout.
+- Checkout: server-side, tokenless Shopify UCP cart handoff. The browser receives only an allow-listed Shopify URL.
 - Measurement: consent-safe hooks, inactive without both consent and a public identifier.
-- Webshippy: validated import contract; no live request or order mutation.
+- Webshippy: Shopify connector owns product/order synchronization; no duplicate direct order write from Astro.
 - Dressa and DropshippingXL: inactive future adapters.
 
 ## Webshippy handoff
@@ -16,13 +16,14 @@ Map supplier records to `SupplierProductRecord` in
 visible catalog. Import must be idempotent by `externalId` and `sku`. Never publish a product
 without title, non-negative HUF price, stock state, and a local approved image.
 
-Order submission stays disabled until the owner approves the exact Webshippy contract, warehouse,
-delivery methods, return ownership, customer-service ownership, retry policy, and reconciliation.
+Astro must not submit the same order directly to Webshippy while the Shopify connector owns the
+handoff. This prevents duplicate fulfillment.
 
 ## Checkout handoff
 
-The storefront must send cart lines to a separately approved server endpoint. The browser never
-receives provider secrets. The endpoint returns one HTTPS checkout URL from an allow-listed host.
+The storefront sends only the three allow-listed Shopify variant IDs and bounded quantities to the
+server endpoint. The browser never receives provider secrets. The endpoint returns one HTTPS
+checkout URL from the exact Shopify store host.
 Failure leaves the local cart intact and shows a Hungarian recovery message.
 
 ## Measurement
@@ -42,6 +43,7 @@ promotion brief without changing page composition.
 - Final company address, company registration number, tax number, official e-mail, and phone.
 - Approved ÁSZF and privacy text.
 - Supplier contract, exact catalog schema, warehouse, delivery, return, support, and order rules.
-- Approved checkout provider, server endpoint, allow-listed host, and test credentials.
+- Remove the Shopify development-store password before public checkout can be used without a login.
+- Enable the Hungarian Shopify market; current UCP cart inventory is available only in the default US market.
 - Final product feed, stock, images, consumer prices, delivery fees, and warranty data.
 - Domain, canonical URLs, production metadata, monitoring, rollback, and deployment approval.
