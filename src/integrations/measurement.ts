@@ -6,14 +6,23 @@ export type StoreEvent =
     | { name: "search"; term: string };
 
 const CONSENT_KEY = "valogatott-consent-v1";
+
 export function readConsent(): ConsentState {
     if (typeof window === "undefined") return { analytics: false, marketing: false };
     try {
-        const value = JSON.parse(window.localStorage.getItem(CONSENT_KEY) ?? "null") as ConsentState | null;
-        return value && typeof value.analytics === "boolean" && typeof value.marketing === "boolean" ? value : { analytics: false, marketing: false };
-    } catch { return { analytics: false, marketing: false }; }
+        const parsed = JSON.parse(window.localStorage.getItem(CONSENT_KEY) ?? "null") as ConsentState | null;
+        return parsed && typeof parsed.analytics === "boolean" && typeof parsed.marketing === "boolean"
+            ? parsed
+            : { analytics: false, marketing: false };
+    } catch {
+        return { analytics: false, marketing: false };
+    }
 }
-export function saveConsent(state: ConsentState) { window.localStorage.setItem(CONSENT_KEY, JSON.stringify(state)); }
+
+export function saveConsent(state: ConsentState) {
+    window.localStorage.setItem(CONSENT_KEY, JSON.stringify(state));
+}
+
 export function emitStoreEvent(event: StoreEvent) {
     if (typeof window === "undefined") return;
     const consent = readConsent();

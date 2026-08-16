@@ -1,125 +1,232 @@
 /* ============================================================
- * brand-warm.css — Példa Kft. brand: KRÉM háttér + SÖTÉTZÖLD (logó színei)
- * + meleg terrakotta accent. UU lila → ez. Import AFTER uu/theme.css.
- * UU recolor gotcha #3: a base (--color-*) ÉS a namespaced (--background-color-* / --text-color-* / --border-color-*) tokeneket is felül kell írni.
+ * brand-warm.css — DevShopify skin: UUI-GYÁRI SZERKEZET.
+ * Semleges alap (fehér / neutral szürkék / dark: neutral-950 fekete),
+ * a ZÖLD kizárólag brand-szerep (gomb, link, brand-tint) — a logó
+ * (UUI Luckycharm) tile-zöldje pontosan a gyári green-700. Meleg
+ * accent: orange/amber ramp. Import AFTER uu/theme.css.
+ * TÖRVÉNY (szerződés 3. szabály): NINCS kézi hex — minden érték a
+ * szállított rampok var() hivatkozása.
+ * UU recolor gotcha #3: a base (--color-*) ÉS a namespaced
+ * (--background-color-* / --text-color-* / --border-color-*) ikreket
+ * is írni kell.
  * ============================================================ */
 :root {
-  /* ---- BRAND ramp: erdőzöld (logó) ---- */
-  --color-brand-25: #f5f8f6;
-  --color-brand-50: #eef3ef;
-  --color-brand-100: #d9e6de;
-  --color-brand-200: #b6ccbf;
-  --color-brand-300: #8aad98;
-  --color-brand-400: #5e8b72;
-  --color-brand-500: #406e55;
-  --color-brand-600: #2f5a44;
-  --color-brand-700: #244736;
-  --color-brand-800: #1d3a2c;
-  --color-brand-900: #182f24;
-  --color-brand-950: #0e1c15;
+  /* ---- BRAND ramp = szállított GREEN ramp (logó: green-700) ---- */
+  --color-brand-25: var(--color-green-50);
+  --color-brand-50: var(--color-green-50);
+  --color-brand-100: var(--color-green-100);
+  --color-brand-200: var(--color-green-200);
+  --color-brand-300: var(--color-green-300);
+  --color-brand-400: var(--color-green-400);
+  --color-brand-500: var(--color-green-500);
+  --color-brand-600: var(--color-green-600);
+  --color-brand-700: var(--color-green-700);
+  --color-brand-800: var(--color-green-800);
+  --color-brand-900: var(--color-green-900);
+  --color-brand-950: var(--color-green-950);
 
-  --color-utility-brand-50: #eef3ef;  --color-utility-brand-100: #d9e6de;
-  --color-utility-brand-200: #b6ccbf; --color-utility-brand-300: #8aad98;
-  --color-utility-brand-400: #5e8b72; --color-utility-brand-500: #406e55;
-  --color-utility-brand-600: #2f5a44; --color-utility-brand-700: #244736;
+  --color-utility-brand-50: var(--color-green-50);
+  --color-utility-brand-100: var(--color-green-100);
+  --color-utility-brand-200: var(--color-green-200);
+  --color-utility-brand-300: var(--color-green-300);
+  --color-utility-brand-400: var(--color-green-400);
+  --color-utility-brand-500: var(--color-green-500);
+  --color-utility-brand-600: var(--color-green-600);
+  --color-utility-brand-700: var(--color-green-700);
 
-  /* ---- BACKGROUNDS: krém ---- */
-  --color-bg-primary: #fcf9f2;        /* kártya / világos szekció (meleg fehér) */
-  --color-bg-primary_hover: #f6f1e6;
-  --color-bg-secondary: #f1e9d8;      /* krém szekció (logó háttér) */
-  --color-bg-secondary_hover: #e9dfca;
-  --color-bg-tertiary: #e7dbc4;
-  --color-bg-quaternary: #dccdb0;
-  --color-bg-brand-primary: #eaf1ec;  /* zöld tint (ikon háttér) */
-  --color-bg-brand-secondary: #d9e6de;
-  --color-bg-brand-solid: #2f5a44;    /* gombok */
-  --color-bg-brand-solid_hover: #244736;
-  --color-bg-brand-section: #1d3a2c;  /* sötét CTA sáv */
-  --color-bg-brand-section_subtle: #244736;
+  /* ---- BACKGROUNDS: meleg krém (amber-ramp világos vége) ---- */
+  --color-bg-primary: var(--color-base-white, #ffffff);
+  --color-bg-primary_hover: var(--color-neutral-50);
+  --color-bg-secondary: var(--color-neutral-50);
+  --color-bg-secondary_hover: var(--color-neutral-100);
+  --color-bg-tertiary: var(--color-neutral-100);
+  --color-bg-quaternary: var(--color-neutral-200);
+  --color-bg-brand-primary: var(--color-green-50);
+  --color-bg-brand-secondary: var(--color-green-100);
+  --color-bg-brand-solid: var(--color-green-700);   /* = logó-zöld */
+  --color-bg-brand-solid_hover: var(--color-green-800);
+  --color-bg-brand-section: var(--color-green-900);
+  --color-bg-brand-section_subtle: var(--color-green-800);
 
-  /* ---- TEXT: sötétzöld-fekete ---- */
-  --color-text-primary: #1e2b23;
-  --color-text-secondary: #3c4a41;
-  --color-text-secondary_hover: #2a352e;
-  --color-text-tertiary: #5e6b61;
-  --color-text-tertiary_hover: #46504a;
-  --color-text-quaternary: #8a9384;
-  --color-text-placeholder: #6c7568; /* AA on cream (was #9aa294 = 2.5:1) */
-  --color-text-brand-primary: #182f24;
-  --color-text-brand-secondary: #244736;
-  --color-text-brand-secondary_hover: #1d3a2c;
-  --color-text-brand-tertiary: #2f5a44;
-  /* ON-BRAND (light text for dark brand bands: brand-solid / brand-section) */
-  --color-text-primary_on-brand: #ffffff;
-  --color-text-secondary_on-brand: #e3ede7;
-  --color-text-tertiary_on-brand: #c6d8cd;
-  --color-text-quaternary_on-brand: #aec6b9;
+  /* ---- TEXT: neutral ramp ---- */
+  --color-text-primary: var(--color-neutral-900);
+  --color-text-secondary: var(--color-neutral-700);
+  --color-text-secondary_hover: var(--color-neutral-800);
+  --color-text-tertiary: var(--color-neutral-600);
+  --color-text-tertiary_hover: var(--color-neutral-700);
+  --color-text-quaternary: var(--color-neutral-500);
+  --color-text-placeholder: var(--color-neutral-500);
+  --color-text-brand-primary: var(--color-green-900);
+  --color-text-brand-secondary: var(--color-green-800);
+  --color-text-brand-secondary_hover: var(--color-green-900);
+  --color-text-brand-tertiary: var(--color-green-700);
+  /* ON-BRAND (világos szöveg sötét brand-sávokon) */
+  --color-text-primary_on-brand: var(--color-base-white, #ffffff);
+  --color-text-secondary_on-brand: var(--color-green-100);
+  --color-text-tertiary_on-brand: var(--color-green-200);
+  --color-text-quaternary_on-brand: var(--color-green-300);
 
   /* ---- FG (ikonok) ---- */
-  --color-fg-primary: #1e2b23;
-  --color-fg-secondary: #3c4a41;
-  --color-fg-tertiary: #5e6b61;
-  --color-fg-quaternary: #8a9384;
-  --color-fg-brand-primary: #2f5a44;
-  --color-fg-brand-secondary: #406e55;
+  --color-fg-primary: var(--color-neutral-900);
+  --color-fg-secondary: var(--color-neutral-700);
+  --color-fg-tertiary: var(--color-neutral-600);
+  --color-fg-quaternary: var(--color-neutral-500);
+  --color-fg-brand-primary: var(--color-green-700);
+  --color-fg-brand-secondary: var(--color-green-600);
 
-  /* ---- BORDERS: meleg ---- */
-  --color-border-primary: #d8cbb0;
-  --color-border-secondary: #e6dac4;
-  --color-border-tertiary: #efe6d4;
-  --color-border-brand: #406e55;
+  /* ---- BORDERS: meleg (amber ramp) ---- */
+  --color-border-primary: var(--color-neutral-300);
+  --color-border-secondary: var(--color-neutral-200);
+  --color-border-tertiary: var(--color-neutral-100);
+  --color-border-brand: var(--color-green-600);
 
-  --color-focus-ring: #406e55;
+  --color-focus-ring: var(--color-green-600);
 
-  /* ---- WARM ACCENT (terrakotta) — saját classokhoz ---- */
-  --color-accent: #d97642;
-  --color-accent-dark: #b95a2c;
-  --color-accent-soft: #fbe7da;
-  --color-accent-amber: #e8a23d;
-  --color-accent-amber-soft: #fcefce;
+  /* ---- WARM ACCENT (terrakotta = orange ramp) — saját classokhoz ---- */
+  --color-accent: var(--color-orange-600);
+  --color-accent-dark: var(--color-orange-700);
+  --color-accent-soft: var(--color-orange-100);
+  --color-accent-amber: var(--color-amber-500);
+  --color-accent-amber-soft: var(--color-amber-100);
 
   /* ============ NAMESPACED (amit a utility-k OLVASNAK) ============ */
-  --background-color-primary: #fcf9f2;
-  --background-color-primary_hover: #f6f1e6;
-  --background-color-primary_alt: #fcf9f2;
-  --background-color-secondary: #f1e9d8;
-  --background-color-secondary_hover: #e9dfca;
-  --background-color-secondary_alt: #f1e9d8;
-  --background-color-tertiary: #e7dbc4;
-  --background-color-quaternary: #dccdb0;
-  --background-color-brand-primary: #eaf1ec;
-  --background-color-brand-primary_alt: #eaf1ec;
-  --background-color-brand-secondary: #d9e6de;
-  --background-color-brand-solid: #2f5a44;
-  --background-color-brand-solid_hover: #244736;
-  --background-color-brand-section: #1d3a2c;
-  --background-color-brand-section_subtle: #244736;
+  --background-color-primary: var(--color-base-white, #ffffff);
+  --background-color-primary_hover: var(--color-neutral-50);
+  --background-color-primary_alt: var(--color-base-white, #ffffff);
+  --background-color-secondary: var(--color-neutral-50);
+  --background-color-secondary_hover: var(--color-neutral-100);
+  --background-color-secondary_alt: var(--color-neutral-50);
+  --background-color-tertiary: var(--color-neutral-100);
+  --background-color-quaternary: var(--color-neutral-200);
+  --background-color-brand-primary: var(--color-green-50);
+  --background-color-brand-primary_alt: var(--color-green-50);
+  --background-color-brand-secondary: var(--color-green-100);
+  --background-color-brand-solid: var(--color-green-700);
+  --background-color-brand-solid_hover: var(--color-green-800);
+  --background-color-brand-section: var(--color-green-900);
+  --background-color-brand-section_subtle: var(--color-green-800);
 
-  --text-color-primary: #1e2b23;
-  --text-color-secondary: #3c4a41;
-  --text-color-secondary_hover: #2a352e;
-  --text-color-tertiary: #5e6b61;
-  --text-color-tertiary_hover: #46504a;
-  --text-color-quaternary: #8a9384;
-  --text-color-placeholder: #6c7568; /* AA on cream (was #9aa294 = 2.5:1) */
-  --text-color-brand-primary: #182f24;
-  --text-color-brand-secondary: #244736;
-  --text-color-brand-secondary_hover: #1d3a2c;
-  --text-color-brand-tertiary: #2f5a44;
-  --text-color-primary_on-brand: #ffffff;
-  --text-color-secondary_on-brand: #e3ede7;
-  --text-color-tertiary_on-brand: #c6d8cd;
-  --text-color-quaternary_on-brand: #aec6b9;
+  --text-color-primary: var(--color-neutral-900);
+  --text-color-secondary: var(--color-neutral-700);
+  --text-color-secondary_hover: var(--color-neutral-800);
+  --text-color-tertiary: var(--color-neutral-600);
+  --text-color-tertiary_hover: var(--color-neutral-700);
+  --text-color-quaternary: var(--color-neutral-500);
+  --text-color-placeholder: var(--color-neutral-500);
+  --text-color-brand-primary: var(--color-green-900);
+  --text-color-brand-secondary: var(--color-green-800);
+  --text-color-brand-secondary_hover: var(--color-green-900);
+  --text-color-brand-tertiary: var(--color-green-700);
+  --text-color-primary_on-brand: var(--color-base-white, #ffffff);
+  --text-color-secondary_on-brand: var(--color-green-100);
+  --text-color-tertiary_on-brand: var(--color-green-200);
+  --text-color-quaternary_on-brand: var(--color-green-300);
 
-  --border-color-primary: #d8cbb0;
-  --border-color-secondary: #e6dac4;
-  --border-color-secondary_alt: #ddd0b6;
-  --border-color-tertiary: #efe6d4;
-  --border-color-brand: #406e55;
-  --border-color-brand_alt: #2f5a44;
+  --border-color-primary: var(--color-neutral-300);
+  --border-color-secondary: var(--color-neutral-200);
+  --border-color-secondary_alt: var(--color-neutral-300);
+  --border-color-tertiary: var(--color-neutral-100);
+  --border-color-brand: var(--color-green-600);
+  --border-color-brand_alt: var(--color-green-700);
 
-  --ring-color-brand: #406e55;
-  --outline-color-brand: #406e55;
+  --ring-color-brand: var(--color-green-600);
+  --outline-color-brand: var(--color-green-600);
+}
+
+/* ---- DARK: UUI-gyári sötét — neutral fekete-szürke alap
+ * (oldal=neutral-950, kártya=neutral-900), zöld csak brand-tokenen
+ * (solid gomb green-600, hover green-500). ---- */
+.dark-mode {
+  --color-bg-primary: var(--color-neutral-900);
+  --color-bg-primary_hover: var(--color-neutral-800);
+  --color-bg-secondary: var(--color-neutral-950);
+  --color-bg-secondary_hover: var(--color-neutral-900);
+  --color-bg-tertiary: var(--color-neutral-800);
+  --color-bg-quaternary: var(--color-neutral-700);
+  --color-bg-brand-primary: var(--color-green-800);
+  --color-bg-brand-secondary: var(--color-green-700);
+  --color-bg-brand-solid: var(--color-green-700);
+  --color-bg-brand-solid_hover: var(--color-green-600);
+  --color-bg-brand-section: var(--color-green-950);
+  --color-bg-brand-section_subtle: var(--color-green-900);
+
+  --color-text-primary: var(--color-neutral-50);
+  --color-text-secondary: var(--color-neutral-300);
+  --color-text-secondary_hover: var(--color-neutral-50);
+  --color-text-tertiary: var(--color-neutral-400);
+  --color-text-tertiary_hover: var(--color-neutral-300);
+  --color-text-quaternary: var(--color-neutral-500);
+  --color-text-placeholder: var(--color-neutral-500);
+  --color-text-brand-primary: var(--color-green-50);
+  --color-text-brand-secondary: var(--color-green-200);
+  --color-text-brand-secondary_hover: var(--color-green-100);
+  --color-text-brand-tertiary: var(--color-green-300);
+  --color-text-primary_on-brand: var(--color-base-white, #ffffff);
+  --color-text-secondary_on-brand: var(--color-green-100);
+  --color-text-tertiary_on-brand: var(--color-green-200);
+  --color-text-quaternary_on-brand: var(--color-green-300);
+
+  --color-fg-primary: var(--color-neutral-50);
+  --color-fg-secondary: var(--color-neutral-300);
+  --color-fg-tertiary: var(--color-neutral-400);
+  --color-fg-quaternary: var(--color-neutral-500);
+  --color-fg-brand-primary: var(--color-green-300);
+  --color-fg-brand-secondary: var(--color-green-400);
+
+  --color-border-primary: var(--color-neutral-700);
+  --color-border-secondary: var(--color-neutral-800);
+  --color-border-tertiary: var(--color-neutral-900);
+  --color-border-brand: var(--color-green-500);
+
+  --color-focus-ring: var(--color-green-500);
+
+  --color-accent: var(--color-orange-500);
+  --color-accent-dark: var(--color-orange-500);
+  --color-accent-soft: var(--color-orange-950, var(--color-orange-700));
+  --color-accent-amber: var(--color-amber-500);
+  --color-accent-amber-soft: var(--color-amber-950, var(--color-amber-700));
+
+  --background-color-primary: var(--color-neutral-900);
+  --background-color-primary_hover: var(--color-neutral-800);
+  --background-color-primary_alt: var(--color-neutral-900);
+  --background-color-secondary: var(--color-neutral-950);
+  --background-color-secondary_hover: var(--color-neutral-900);
+  --background-color-secondary_alt: var(--color-neutral-950);
+  --background-color-tertiary: var(--color-neutral-800);
+  --background-color-quaternary: var(--color-neutral-700);
+  --background-color-brand-primary: var(--color-green-800);
+  --background-color-brand-primary_alt: var(--color-green-800);
+  --background-color-brand-secondary: var(--color-green-700);
+  --background-color-brand-solid: var(--color-green-700);
+  --background-color-brand-solid_hover: var(--color-green-600);
+  --background-color-brand-section: var(--color-green-950);
+  --background-color-brand-section_subtle: var(--color-green-900);
+
+  --text-color-primary: var(--color-neutral-50);
+  --text-color-secondary: var(--color-neutral-300);
+  --text-color-secondary_hover: var(--color-neutral-50);
+  --text-color-tertiary: var(--color-neutral-400);
+  --text-color-tertiary_hover: var(--color-neutral-300);
+  --text-color-quaternary: var(--color-neutral-500);
+  --text-color-placeholder: var(--color-neutral-500);
+  --text-color-brand-primary: var(--color-green-50);
+  --text-color-brand-secondary: var(--color-green-200);
+  --text-color-brand-secondary_hover: var(--color-green-100);
+  --text-color-brand-tertiary: var(--color-green-300);
+  --text-color-primary_on-brand: var(--color-base-white, #ffffff);
+  --text-color-secondary_on-brand: var(--color-green-100);
+  --text-color-tertiary_on-brand: var(--color-green-200);
+  --text-color-quaternary_on-brand: var(--color-green-300);
+
+  --border-color-primary: var(--color-neutral-700);
+  --border-color-secondary: var(--color-neutral-800);
+  --border-color-secondary_alt: var(--color-neutral-700);
+  --border-color-tertiary: var(--color-neutral-900);
+  --border-color-brand: var(--color-green-500);
+  --border-color-brand_alt: var(--color-green-400);
+
+  --ring-color-brand: var(--color-green-500);
+  --outline-color-brand: var(--color-green-500);
 }
 
 /* Warm accent utilities (saját) */
@@ -127,4 +234,4 @@
 @utility bg-accent-soft { background-color: var(--color-accent-soft); }
 @utility text-accent { color: var(--color-accent-dark); }
 @utility bg-amber-soft { background-color: var(--color-accent-amber-soft); }
-@utility text-amber-accent { color: #b27514; }
+@utility text-amber-accent { color: var(--color-amber-700); }

@@ -1,5 +1,7 @@
 ---
+import StorefrontLayout from "@/layouts/StorefrontLayout.astro";
+import StorefrontSection from "@/features/storefront/StorefrontSection.astro";
+
 export const prerender = true;
-import StorefrontLayout from "@/layouts/StorefrontLayout.astro"; import { HelpPage } from "@/features/storefront/HelpPage";
 ---
-<StorefrontLayout title="Adatvédelmi tájékoztató" description="Adatkezelési célok, partnerek és felhasználói jogok."><HelpPage pageKey="privacy" client:load /></StorefrontLayout>
+<StorefrontLayout title="Adatvédelmi tájékoztató" description="Adatkezelési célok, partnerek és felhasználói jogok."><StorefrontSection view="info" infoKey="privacy" /></StorefrontLayout>

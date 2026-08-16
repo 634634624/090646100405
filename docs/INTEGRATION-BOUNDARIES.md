@@ -1,38 +1,47 @@
-# Shopify + Webshippy integration
+# Integration boundaries
 
-## Runtime architecture
+## Current local state
 
-`Astro storefront -> server-only /api/checkout -> Shopify Storefront API -> Shopify hosted checkout -> Webshippy fulfillment`
+- Catalog: internal demo seed in `src/data/demo-catalog.ts`.
+- Cart: local browser storage.
+- Checkout: disabled provider handoff with a visible safe error.
+- Measurement: consent-safe hooks, inactive without both consent and a public identifier.
+- Webshippy: validated import contract; no live request or order mutation.
+- Dressa and DropshippingXL: inactive future adapters.
 
-- Browser code never receives Shopify or Webshippy credentials.
-- The cart contains local product IDs only. The server revalidates quantity, price source and stock cap against the trusted catalog.
-- Shopify `cartCreate` returns the HTTPS hosted checkout URL. Card data never crosses this application.
-- Webshippy requests follow the official form contract: POST field `request` contains the JSON payload.
-- `COMMERCE_MODE=mock` is the default and makes no provider request.
+## Webshippy handoff
 
-## Test 1-3 products
+Map supplier records to `SupplierProductRecord` in
+`src/integrations/providers/contracts.ts`. Validate the complete response before replacing the
+visible catalog. Import must be idempotent by `externalId` and `sku`. Never publish a product
+without title, non-negative HUF price, stock state, and a local approved image.
 
-1. Copy `.env.example` to the deployment secret store; do not commit values.
-2. Set the Shopify domain. The Storefront token and `SHOPIFY_VARIANT_MAP_JSON` are optional: tokenless catalog/cart access and automatic SKU lookup are used by default.
-3. Set the Webshippy API key. Demo SKUs and valid test barcodes are generated automatically; `WEBSHIPPY_TEST_BARCODES_JSON` is only an override.
-4. Start with `COMMERCE_MODE=live` and `COMMERCE_LIVE_WRITE_ENABLED=false`.
-5. Run `npm run commerce:smoke` for Shopify shop + Webshippy product/stock reads.
-6. Only after the read test passes, set `COMMERCE_LIVE_WRITE_ENABLED=true` and run `npm run commerce:smoke -- --write-products`. This upserts exactly the three `DEMO-TECH-*` records by SKU.
-7. Test `/checkout` with one, two and three cart lines. Variant IDs are discovered automatically from the demo SKUs.
+Order submission stays disabled until the owner approves the exact Webshippy contract, warehouse,
+delivery methods, return ownership, customer-service ownership, retry policy, and reconciliation.
 
-## Duplicate-order guard
+## Checkout handoff
 
-Default: `WEBSHIPPY_ORDER_OWNER=shopify-connector`. Shopify's Webshippy connector owns fulfillment, so custom code must not call `CreateOrder` for the same purchase.
+The storefront must send cart lines to a separately approved server endpoint. The browser never
+receives provider secrets. The endpoint returns one HTTPS checkout URL from an allow-listed host.
+Failure leaves the local cart intact and shows a Hungarian recovery message.
 
-Use `WEBSHIPPY_ORDER_OWNER=webshippy-api` only if the native connector is disabled and an approved paid-order webhook is the sole writer. Webshippy `referenceId` is the idempotency key. This repository exposes no public order-write endpoint.
+## Measurement
 
-## Available contracts
+`src/integrations/measurement.ts` sends no event before consent. Meta, Google, and TikTok identifiers
+remain empty by default. Campaign activation, audience creation, and advertising spend are outside
+this repository.
 
-- Shopify: Storefront GraphQL, `cartCreate`, HTTPS checkout validation.
-- Webshippy: `GetProduct`, `CreateProduct`, `getStockInfoCsv`, `GetOrder`, `CreateOrder`, `getTrackInfo` and authenticated push receiver.
-- Push URL: configure `/api/webshippy/push`; the provider must send `x-webshippy-secret`. If Webshippy cannot configure that header, place a secret-preserving gateway in front of the endpoint before live use.
-- Health (no secrets): `/api/commerce/status`.
+## Promotion workflow
+
+`STORE.promotion.featuredHandle` selects the homepage promotion target. Product data also carries
+`featured` and `trending` tags. A later video workflow can read the selected product and build a
+promotion brief without changing page composition.
 
 ## Launch blockers
 
-Account-owned Shopify store domain and Webshippy API key, approved product data, shipping rules, legal/company data, Webshippy channel contract, selected order owner, deployment and rollback approval. Production writes and deployment remain separate approvals.
+- Final company address, company registration number, tax number, official e-mail, and phone.
+- Approved ÁSZF and privacy text.
+- Supplier contract, exact catalog schema, warehouse, delivery, return, support, and order rules.
+- Approved checkout provider, server endpoint, allow-listed host, and test credentials.
+- Final product feed, stock, images, consumer prices, delivery fees, and warranty data.
+- Domain, canonical URLs, production metadata, monitoring, rollback, and deployment approval.

@@ -1,6 +1,6 @@
 export const CLIENT = {
   "target": {
-    "mode": "existing-phantomwp-conversion",
+    "mode": "new-client-repo",
     "repo": "client:bestcartrade-storefront"
   },
   "skin": {
@@ -8,7 +8,7 @@ export const CLIENT = {
     "preset": "kit"
   },
   "identity": {
-    "brand": "Válogatott",
+    "brand": "DevShopify",
     "legalCompany": "BestCarTrade Kft."
   }
 } as const;

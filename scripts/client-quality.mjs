@@ -23,14 +23,14 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const NATIVE_CONTROL_PATTERNS = [
-  { id: "native-button", pattern: /<\s*button\b/gi },
-  { id: "native-input", pattern: /<\s*input\b/gi },
-  { id: "native-select", pattern: /<\s*select\b/gi },
-  { id: "native-textarea", pattern: /<\s*textarea\b/gi },
-  { id: "native-dialog", pattern: /<\s*dialog\b|role\s*=\s*["']dialog["']/gi },
-  { id: "native-radio", pattern: /type\s*=\s*["']radio["']/gi },
-  { id: "native-checkbox", pattern: /type\s*=\s*["']checkbox["']/gi },
-  { id: "handmade-overlay", pattern: /class(?:Name)?\s*=\s*["'][^"']*\b(?:modal|drawer|product-card)\b[^"']*["']/gi },
+  { id: "native-button", pattern: /<\s*button\b/g },
+  { id: "native-input", pattern: /<\s*input\b/g },
+  { id: "native-select", pattern: /<\s*select\b/g },
+  { id: "native-textarea", pattern: /<\s*textarea\b/g },
+  { id: "native-dialog", pattern: /<\s*dialog\b|role\s*=\s*["']dialog["']/g },
+  { id: "native-radio", pattern: /type\s*=\s*["']radio["']/g },
+  { id: "native-checkbox", pattern: /type\s*=\s*["']checkbox["']/g },
+  { id: "handmade-overlay", pattern: /class(?:Name)?\s*=\s*["'][^"']*\b(?:modal|drawer|product-card)\b[^"']*["']/g },
 ];
 const ALLOW = /uui-native-allow:\s*\S/;
 const COLOR_ALLOW = /uui-color-allow:\s*\S/;
@@ -88,19 +88,58 @@ export function runClientQuality(root = process.cwd()) {
       failures.push(".uui/artifact-manifest.json is not valid JSON");
     }
   } else failures.push(".uui/artifact-manifest.json missing — provenance is required");
-  const emittedHashByPath = new Map(
-    (manifest?.files ?? [])
-      .filter((file) => typeof file.path === "string" && /^sha256:[a-f0-9]{64}$/.test(file.sha256 ?? ""))
-      .map((file) => [file.path, file.sha256]),
-  );
+  const artifactFilesByPath = new Map((manifest?.files ?? []).map((file) => [file.path, file]));
   const factoryModePath = path.join(root, ".uui/factory-mode.json");
   let factoryMode = null;
+  const emittedHashByPath = new Map();
   if (existsSync(factoryModePath)) {
     try {
       const receipt = JSON.parse(readFileSync(factoryModePath, "utf8"));
       if (receipt.kind !== "FactoryModeReceiptV1" || receipt.mode !== "ASSEMBLY") {
         failures.push(".uui/factory-mode.json must declare FactoryModeReceiptV1 ASSEMBLY");
-      } else factoryMode = receipt.mode;
+      } else {
+        factoryMode = receipt.mode;
+        const { receiptFingerprint, ...receiptBody } = receipt;
+        if (receiptFingerprint !== sha(Buffer.from(JSON.stringify(receiptBody)))) {
+          failures.push(".uui/factory-mode.json receipt fingerprint mismatch");
+        }
+        if (!Array.isArray(receipt.ownedSources)) {
+          failures.push(".uui/factory-mode.json ownedSources must be an array");
+        } else {
+          const seen = new Set();
+          for (const source of receipt.ownedSources) {
+            const ownedPath =
+              typeof source.path === "string" &&
+              (source.path.startsWith("src/components/") || source.path.startsWith("toolkit/"));
+            if (!ownedPath || !/^sha256:[a-f0-9]{64}$/.test(source.sha256 ?? "") || seen.has(source.path)) {
+              failures.push(".uui/factory-mode.json contains invalid or duplicate owned source evidence");
+              continue;
+            }
+            seen.add(source.path);
+            const artifact = artifactFilesByPath.get(source.path);
+            if (
+              artifact?.kind !== "copy" ||
+              artifact?.sourceRoot !== "starter" ||
+              artifact?.sourcePath !== source.path ||
+              artifact?.sha256 !== source.sha256
+            ) {
+              failures.push(`${source.path} — assembly provenance mismatch between Factory receipt and artifact manifest`);
+              continue;
+            }
+            emittedHashByPath.set(source.path, source.sha256);
+          }
+          for (const artifact of manifest?.files ?? []) {
+            const artifactOwned =
+              artifact?.kind === "copy" &&
+              artifact?.sourceRoot === "starter" &&
+              typeof artifact.path === "string" &&
+              (artifact.path.startsWith("src/components/") || artifact.path.startsWith("toolkit/"));
+            if (artifactOwned && !seen.has(artifact.path)) {
+              failures.push(`${artifact.path} — artifact manifest has unreceipted ASSEMBLY owned source`);
+            }
+          }
+        }
+      }
     } catch {
       failures.push(".uui/factory-mode.json is not valid JSON");
     }

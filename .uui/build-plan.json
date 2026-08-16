@@ -31,16 +31,16 @@
     },
     "prototype": {
       "approval": {
-        "fingerprint": "sha256:08f7885da0973f966766d453aa75b4737abee034e40e0bb0dad79e4780eb4ee1",
-        "id": "prototype-approval:agency:small-shop:fieldwork-living"
+        "fingerprint": "sha256:e6278926bc427e7de3e3a146768aba6805562e4f581fb6872259385ea9b7f714",
+        "id": "prototype-approval:agency:small-shop:bestcartrade-storefront"
       },
       "plan": {
-        "fingerprint": "sha256:dd3daea780e3980afa4dc8b4079e003a35812a6375ef7f908aa3568f8d4d8324",
-        "id": "prototype-plan:agency:small-shop:fieldwork-living"
+        "fingerprint": "sha256:5f43517f8888576c2e197f868ade51f70c7b74729c6a89e0d0ec36d3f65e4711",
+        "id": "prototype-plan:agency:small-shop:bestcartrade-storefront"
       },
       "spec": {
-        "fingerprint": "sha256:09f09ed3d9b5b99c61a4cd0681a04bd3d4f38c21345e4fa926ed92b6e987dc07",
-        "id": "prototype-spec:agency:small-shop:fieldwork-living"
+        "fingerprint": "sha256:13ccdcfee2924bd126cca98fcf2d73059cd0a90f008c0710c134ffc79bc966ee",
+        "id": "prototype-spec:agency:small-shop:bestcartrade-storefront"
       }
     },
     "selectedRouteId": "route:agency:small-shop"
@@ -82,7 +82,7 @@
   "kind": "ResolvedBuildPlanV1",
   "provenance": {
     "agencyRecipe": {
-      "catalogSha256": "9a4043c3d574be72993f7ab4ca24d99567f24689afbb7003c58ce5439084c26e",
+      "catalogSha256": "23352f82cb085947bf520aed256b499b043b66bbf7af1d3fb6d97a4264779e64",
       "id": "small-shop",
       "resolvedLibraryRefs": 10
     },
@@ -297,7 +297,7 @@
   },
   "registries": {
     "browserCatalog": {
-      "revision": "sha256:0dd969a752e0088e",
+      "revision": "sha256:729663ea17e08adb",
       "source": "src/catalog.generated.json"
     },
     "canonicalPrompts": {
@@ -305,7 +305,7 @@
       "source": "docs/design/uui-canonical-prompts"
     },
     "figmaCoverage": {
-      "revision": "sha256:95a125bee7949529",
+      "revision": "sha256:b700bb8c54adfff8",
       "source": "figma/coverage/integration.generated.json"
     },
     "starterAssets": {
@@ -313,11 +313,11 @@
       "source": "toolkit/knowledge-graph/data/asset-manifest.generated.json"
     },
     "starterCapabilities": {
-      "revision": "sha256:9bf1da9ec4fa144bc9fff693454890c2ae0c2d42bd9c10cf27c7378ecc0f0c49",
+      "revision": "sha256:2c7da5cc1ee92b57c05d5962ed828d8df92047cd022833d73061f19833878f37",
       "source": "toolkit/knowledge-graph/data/asset-capabilities.generated.json"
     }
   },
-  "resolutionFingerprint": "sha256:fa8de166475d55373fc852c1f0640c32ea669df658ca517f4fe246588ee706fa",
+  "resolutionFingerprint": "sha256:b422016fb3a30574d3f75bf31d610a0494a773b05489f0e39ef8f6125717533c",
   "routes": [
     {
       "components": [
@@ -592,16 +592,16 @@
   ],
   "schemaVersion": 1,
   "skin": {
-    "locale": "en",
+    "locale": "hu-HU",
     "preset": "kit"
   },
   "sourcePlan": {
-    "fingerprint": "sha256:8ac22765f4c9e850acf01fee81443df2e27f766cbac97841d7a26cf6a864c8ae",
-    "id": "build-plan:agency:small-shop:fieldwork-living"
+    "fingerprint": "sha256:2f0b4d2177767ca9ad78236a78cc2ded198e59466844e9db5d97cd859151a89c",
+    "id": "build-plan:agency:small-shop:bestcartrade-storefront"
   },
   "target": {
     "mode": "new-client-repo",
-    "repo": "client:fieldwork-living"
+    "repo": "client:bestcartrade-storefront"
   },
   "workflow": {
     "gapDecisions": [],

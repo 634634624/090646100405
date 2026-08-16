@@ -1,15 +1,19 @@
-# BestCarTrade Kft. · Válogatott storefront
+# Generated UUI client site
 
-The accepted PhantomWP/Astro storefront converted for a Hungarian technical and household launch.
+Independent Astro client emitted by the canonical UUI Site Factory in
+`634634624/uui-components-browser`.
 
 ## Start
 
 1. Read `AGENTS.md`.
 2. Inspect `.uui/build-plan.json`, `.uui/prompt-receipt.json`, and
    `.uui/artifact-manifest.json`; read `.uui/WEB-BUILD-GAUNTLET.md`.
-3. Install with Node 22: `npm install`.
+3. Activate the pinned runtime and install exactly: `nvm use && npm ci`.
 4. Verify before and after changes:
    `npm run quality:closeout`.
+
+Every push to `main` and every pull request runs the same closeout through
+`.github/workflows/quality.yml`.
 
 The repository contains only its resolved UUI source closure, token layers,
 assets, and receipts—not the complete Brand Library or Agency OS.
@@ -23,5 +27,3 @@ assets, and receipts—not the complete Brand Library or Agency OS.
   not replace this repository, its receipts, Agency OS, or the canonical
   Factory.
 - Production deployment is never implicit.
-- Demo catalog data is internal and must be replaced by an approved Webshippy feed before launch.
-- See `docs/INTEGRATION-BOUNDARIES.md` for provider and credential boundaries.

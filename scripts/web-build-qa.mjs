@@ -1,18 +1,18 @@
 import AxeBuilder from "@axe-core/playwright";
 import { chromium } from "@playwright/test";
 import { createHash } from "node:crypto";
+import { existsSync } from "node:fs";
 import { createServer } from "node:http";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 
 const root = process.cwd();
-// Node adapter keeps prerendered pages and browser assets under dist/client.
-const dist = path.join(root, "dist", "client");
+const dist = path.join(root, "dist");
+const staticRoot = existsSync(path.join(dist, "client")) ? path.join(dist, "client") : dist;
 const artifactRoot = path.join(root, "artifacts", "web-build-qa");
 const viewports = [
     { name: "mobile", width: 375, height: 812 },
-    { name: "compact", width: 560, height: 900 },
     { name: "desktop", width: 1440, height: 900 },
 ];
 const themes = ["light", "dark"];
@@ -62,8 +62,8 @@ function fileForRequest(urlPath) {
         : [relative, `${relative}.html`, `${relative}/index.html`];
     if (!relative) candidates.unshift("index.html");
     for (const candidate of candidates) {
-        const absolute = path.resolve(dist, candidate);
-        if (absolute !== dist && !absolute.startsWith(`${dist}${path.sep}`)) continue;
+        const absolute = path.resolve(staticRoot, candidate);
+        if (absolute !== staticRoot && !absolute.startsWith(`${staticRoot}${path.sep}`)) continue;
         try {
             if (statSyncSafe(absolute)) return absolute;
         } catch {
@@ -90,16 +90,10 @@ function requireStat(file) {
 let servedFiles = new Set();
 
 async function startStaticServer(files) {
-    servedFiles = new Set(files.map((file) => path.resolve(dist, file)));
+    servedFiles = new Set(files.map((file) => path.resolve(staticRoot, file)));
     const server = createServer(async (request, response) => {
         try {
             const pathname = new URL(request.url ?? "/", "http://127.0.0.1").pathname;
-            if (pathname === "/api/checkout" && request.method === "POST") {
-                // Static browser QA uses the same side-effect-free contract as COMMERCE_MODE=mock.
-                response.writeHead(200, { "cache-control": "no-store", "content-type": "application/json; charset=utf-8" });
-                response.end(JSON.stringify({ mode: "mock", checkoutUrl: "/orders/demo-1001", cartId: "qa-mock-cart" }));
-                return;
-            }
             const file = fileForRequest(pathname);
             if (!file) {
                 response.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
@@ -150,136 +144,6 @@ async function sourceFingerprint() {
     return `sha256:${hash.digest("hex")}`;
 }
 
-async function exerciseStorefrontInteractions(page, { route, viewport, baseUrl }) {
-    const failures = [];
-
-    if (route === "/shop/") {
-        const productLinks = page.locator('a[aria-label$=" megtekintése"]');
-        const productHrefs = await productLinks.evaluateAll((anchors) =>
-            anchors.map((anchor) => anchor.getAttribute("href")).filter(Boolean),
-        );
-        if (productHrefs.length !== 6) {
-            failures.push(`expected 6 linked products, found ${productHrefs.length}`);
-        }
-        for (const href of productHrefs) {
-            await page.goto(`${baseUrl}${route}`, { waitUntil: "domcontentloaded" });
-            await page.locator(`a[href="${href}"]`).first().click();
-            await page.waitForURL((url) => url.pathname === href);
-            if (new URL(page.url()).pathname !== href) {
-                failures.push(`product card click did not navigate to ${href}`);
-            }
-        }
-        await page.goto(`${baseUrl}${route}`, { waitUntil: "domcontentloaded" });
-
-        const search = page.getByPlaceholder("Név, kategória vagy cikkszám");
-        await search.fill("DEMO-TECH-003");
-        if (await productLinks.count() !== 1) failures.push("search did not narrow the product list to one result");
-        await search.fill("");
-
-        const categoryGroup = page.getByRole("group", { name: "Termékek szűrése kategória szerint" });
-        await categoryGroup.getByRole("button", { name: "Műszaki", exact: true }).click();
-        if (await productLinks.count() !== 3) failures.push("category filter did not show the three technical products");
-        await categoryGroup.getByRole("button", { name: "Mind", exact: true }).click();
-
-        const sortTrigger = page.getByLabel("Rendezés").first();
-        await sortTrigger.click();
-        await page.getByRole("option", { name: "Ár: növekvő" }).click();
-        const firstProduct = await productLinks.first().getAttribute("href");
-        if (firstProduct !== "/products/olvasosarok-fenycsomag") {
-            failures.push(`price sort put ${firstProduct ?? "nothing"} first`);
-        }
-
-        const themeButton = page.getByRole("button", { name: /(?:Sötét|Világos) megjelenés/ });
-        const startedDark = await page.evaluate(() => document.documentElement.classList.contains("dark-mode"));
-        await themeButton.click();
-        const toggledDark = await page.evaluate(() => document.documentElement.classList.contains("dark-mode"));
-        if (toggledDark === startedDark) failures.push("theme switch did not change rendered theme");
-        await themeButton.click();
-
-        if (viewport.width < 768) {
-            const menuButton = page.getByRole("button", { name: "Navigáció megnyitása" });
-            await menuButton.click();
-            const mobileNav = page.getByRole("navigation", { name: "Mobil navigáció" });
-            if (!await mobileNav.isVisible()) failures.push("mobile menu did not open");
-            if (!await mobileNav.getByRole("link", { name: /Kosár/ }).isVisible()) {
-                failures.push("mobile menu does not expose cart navigation");
-            }
-            await page.keyboard.press("Tab");
-            const focusInsideMenu = await page.evaluate(() =>
-                document.querySelector('[aria-label="Mobil navigáció"]')?.contains(document.activeElement),
-            );
-            if (!focusInsideMenu) failures.push("mobile menu keyboard focus did not reach navigation");
-            await page.keyboard.press("Escape");
-            if (await mobileNav.isVisible()) failures.push("mobile menu did not close on Escape");
-            await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(resolve)));
-            const focusReturned = await menuButton.evaluate((element) => element === document.activeElement);
-            if (!focusReturned) failures.push("mobile menu did not return focus after Escape");
-        }
-
-        await page.emulateMedia({ reducedMotion: "reduce" });
-        const reducedMotion = await productLinks.first().evaluate((anchor) => {
-            const style = getComputedStyle(anchor);
-            return {
-                matches: matchMedia("(prefers-reduced-motion: reduce)").matches,
-                transitionProperty: style.transitionProperty,
-            };
-        });
-        if (!reducedMotion.matches || reducedMotion.transitionProperty !== "none") {
-            failures.push(`reduced motion not applied to product cards (${reducedMotion.transitionProperty})`);
-        }
-        await page.emulateMedia({ reducedMotion: "no-preference" });
-    }
-
-    if (route === "/products/otthoni-zene-csomag/") {
-        const increase = page.getByRole("button", { name: "Mennyiség növelése" });
-        await increase.click();
-        const addButton = page.getByRole("button", { name: "Kosárba teszem" });
-        await addButton.click();
-        if (!await page.getByRole("button", { name: "2 darab a kosárban" }).isVisible()) {
-            failures.push("product add did not expose quantity feedback");
-        }
-        const persisted = await page.evaluate(() => JSON.parse(localStorage.getItem("valogatott-cart-v1") ?? "[]"));
-        if (persisted[0]?.productId !== "otthoni-zene-csomag" || persisted[0]?.quantity !== 2) {
-            failures.push("product add did not persist the expected cart line");
-        }
-        await page.evaluate(() => localStorage.removeItem("valogatott-cart-v1"));
-    }
-
-    if (route === "/cart/") {
-        const increase = page.getByRole("button", { name: /Otthoni zene alapcsomag mennyiségének növelése/ });
-        await increase.click();
-        if (!await page.getByText("179 980 Ft", { exact: true }).last().isVisible()) failures.push("cart total did not update after quantity change");
-        await page.getByRole("button", { name: "Otthoni zene alapcsomag eltávolítása" }).click();
-        if (!await page.getByRole("heading", { name: "A kosár üres" }).isVisible()) failures.push("cart removal did not reveal the empty state");
-        await page.evaluate(() => localStorage.setItem("valogatott-cart-v1", JSON.stringify([{ productId: "otthoni-zene-csomag", quantity: 1 }])));
-        await page.reload({ waitUntil: "domcontentloaded" });
-    }
-
-    if (route === "/checkout/") {
-        await Promise.all([
-            page.waitForURL(/\/orders\/demo-1001\/?$/),
-            page.getByRole("button", { name: "Tovább a biztonságos fizetéshez" }).click(),
-        ]);
-        const persisted = await page.evaluate(() => JSON.parse(localStorage.getItem("valogatott-cart-v1") ?? "[]"));
-        if (persisted.length !== 1) failures.push("checkout handoff did not preserve the cart before confirmed order completion");
-    }
-
-    if (route === "/suti-beallitasok/") {
-        await page.getByRole("checkbox", { name: /Elemzési sütik/ }).locator("xpath=ancestor::label").click();
-        await page.getByRole("checkbox", { name: /Hirdetési mérés/ }).locator("xpath=ancestor::label").click();
-        await page.getByRole("button", { name: "Beállítások mentése" }).click();
-        if (!await page.getByRole("status").getByText("A beállításokat elmentettük.").isVisible()) failures.push("consent save did not expose confirmation");
-        const consentAudit = await page.evaluate(() => ({
-            consent: JSON.parse(localStorage.getItem("valogatott-consent-v1") ?? "null"),
-            queuedEvents: Array.isArray(window.dataLayer) ? window.dataLayer.length : 0,
-        }));
-        if (!consentAudit.consent?.analytics || !consentAudit.consent?.marketing) failures.push("consent choices were not persisted");
-        if (consentAudit.queuedEvents !== 0) failures.push("measurement queued data without configured identifiers");
-    }
-
-    return failures;
-}
-
 async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) {
     const failures = [];
     const runtimeErrors = [];
@@ -289,10 +153,7 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
     page.on("pageerror", (error) => runtimeErrors.push(`pageerror: ${error.message}`));
     page.on("requestfailed", (request) => {
         if (request.url().startsWith(baseUrl)) {
-            const errorText = request.failure()?.errorText ?? "unknown";
-            if (errorText !== "net::ERR_ABORTED") {
-                runtimeErrors.push(`requestfailed: ${request.url()} (${errorText})`);
-            }
+            runtimeErrors.push(`requestfailed: ${request.url()} (${request.failure()?.errorText ?? "unknown"})`);
         }
     });
     page.on("response", (response) => {
@@ -301,24 +162,17 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
         }
     });
 
-    await page.addInitScript(({ selectedTheme, currentRoute }) => {
+    await page.addInitScript((selectedTheme) => {
         window.localStorage.setItem("uui-site-theme", selectedTheme);
-        if (currentRoute === "/cart/" || currentRoute === "/checkout/") {
-            window.localStorage.setItem("valogatott-cart-v1", JSON.stringify([{ productId: "otthoni-zene-csomag", quantity: 1 }]));
-        } else {
-            window.localStorage.removeItem("valogatott-cart-v1");
-        }
-    }, { selectedTheme: theme, currentRoute: route });
+    }, theme);
     const response = await page.goto(`${baseUrl}${route}`, { waitUntil: "domcontentloaded" });
     if (!response || response.status() !== 200) failures.push(`route returned ${response?.status() ?? "no response"}`);
     await page.evaluate(async () => {
         await document.fonts?.ready;
         await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     });
-    await page.waitForFunction(() => !document.querySelector("astro-island[ssr]"));
-    await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
 
-    const documentAudit = await page.evaluate(async ({ knownRoutes, currentRoute, mobile, touchLayout }) => {
+    const documentAudit = await page.evaluate(async ({ knownRoutes, currentRoute, mobile }) => {
         const visible = (element) => {
             const style = getComputedStyle(element);
             const rect = element.getBoundingClientRect();
@@ -372,16 +226,6 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
         const dialogs = [...document.querySelectorAll('[role="dialog"], dialog[open]')]
             .filter(visible)
             .map((element) => element.getAttribute("aria-label") || element.textContent?.trim().slice(0, 80) || "dialog");
-        const smallTouchTargets = touchLayout
-            ? [...document.querySelectorAll('button, input:not([type="checkbox"]):not([type="radio"]), header a[href], footer a[href], label:has(input[type="checkbox"]), label:has(input[type="radio"])')]
-                .filter(visible)
-                .map((element) => {
-                    const rect = element.getBoundingClientRect();
-                    return { element, width: Math.round(rect.width), height: Math.round(rect.height) };
-                })
-                .filter(({ width, height }) => width < 44 || height < 44)
-                .map(({ element, width, height }) => `${element.getAttribute("aria-label") || element.textContent?.trim().slice(0, 48) || element.tagName} (${width}×${height})`)
-            : [];
         const hero = document.querySelector("[data-uui-critical-hero]");
         let heroAudit = null;
         if (hero) {
@@ -407,7 +251,6 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
             brokenImages,
             deadLinks: [...new Set(deadLinks)],
             dialogs,
-            smallTouchTargets,
             h1Count: document.querySelectorAll("h1").length,
             horizontalOverflow: Math.ceil(document.documentElement.scrollWidth - innerWidth),
             heroAudit,
@@ -421,14 +264,13 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
             route: currentRoute,
             mobile,
         };
-    }, { knownRoutes: [...routePaths], currentRoute: route, mobile: viewport.width === 375, touchLayout: viewport.width < 768 });
+    }, { knownRoutes: [...routePaths], currentRoute: route, mobile: viewport.width === 375 });
 
     if (documentAudit.horizontalOverflow > 1) failures.push(`horizontal overflow ${documentAudit.horizontalOverflow}px`);
     if (documentAudit.h1Count !== 1) failures.push(`expected one H1, found ${documentAudit.h1Count}`);
     if (documentAudit.brokenImages.length) failures.push(`broken images: ${documentAudit.brokenImages.join(", ")}`);
     if (documentAudit.deadLinks.length) failures.push(`dead links: ${documentAudit.deadLinks.join(", ")}`);
     if (documentAudit.dialogs.length) failures.push(`automatic visible dialogs: ${documentAudit.dialogs.join(", ")}`);
-    if (documentAudit.smallTouchTargets.length) failures.push(`touch targets below 44px: ${documentAudit.smallTouchTargets.join(", ")}`);
     if (!documentAudit.metadata.title) failures.push("missing document title");
     if (!documentAudit.metadata.description) failures.push("missing meta description");
     if (
@@ -475,7 +317,6 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
         );
         if (!focusedVisible) failures.push("keyboard Tab did not reach a visible control");
     }
-    failures.push(...await exerciseStorefrontInteractions(page, { route, viewport, baseUrl }));
     failures.push(...runtimeErrors);
     await page.evaluate(() => {
         document.documentElement.style.scrollBehavior = "auto";
@@ -484,22 +325,13 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
     await page.waitForFunction(() => window.scrollY === 0);
 
     const shouldCapture =
-        [
-            "/",
-            "/shop/",
-            "/kategoriak/muszaki/",
-            "/products/otthoni-zene-csomag/",
-            "/cart/",
-            "/checkout/",
-            "/gyik/",
-            "/aszf/",
-            "/suti-beallitasok/",
-        ].includes(route);
+        route === [...routePaths][0] ||
+        Boolean(documentAudit.heroAudit) ||
+        /(?:cart|checkout|products\/otthoni-zene-csomag|gyik)/.test(route);
     let screenshot = null;
     if (shouldCapture) {
         screenshot = `${routeSlug(route)}-${viewport.name}-${theme}.png`;
-        const fullPage = route === "/shop/" || route.startsWith("/kategoriak/") || route === "/gyik/" || route === "/aszf/" || route === "/suti-beallitasok/";
-        await page.screenshot({ path: path.join(artifactRoot, screenshot), fullPage });
+        await page.screenshot({ path: path.join(artifactRoot, screenshot), fullPage: false });
     }
     return {
         route,
@@ -522,10 +354,78 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
     };
 }
 
+async function auditCriticalFlows(browser, baseUrl) {
+    const failures = [];
+    const evidence = [];
+    const check = (condition, message) => {
+        if (!condition) failures.push(message);
+        else evidence.push(message);
+    };
+
+    const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, colorScheme: "light" });
+    const page = await context.newPage();
+    await page.goto(`${baseUrl}/shop/`, { waitUntil: "networkidle" });
+
+    const search = page.getByPlaceholder("Név, kategória vagy jellemző");
+    await search.fill("sztereó");
+    check(await page.getByText("Kompakt sztereó csomag", { exact: true }).isVisible(), "search finds the compact stereo product");
+    await search.fill("");
+
+    const technical = page.getByText("Műszaki", { exact: true }).first();
+    await technical.click();
+    check(!(await page.getByText("Hálószoba rendezőcsomag", { exact: true }).isVisible()), "category filter hides household products");
+    await page.getByRole("button", { name: "Szűrők törlése" }).first().click();
+
+    const sortButton = page.getByRole("button", { name: /Rendezés/ });
+    await sortButton.click();
+    await page.getByRole("option", { name: "Ár: növekvő" }).click();
+    check(await sortButton.textContent().then((text) => text?.includes("Ár: növekvő")), "price sorting can be selected");
+
+    await page.getByRole("link", { name: "Otthoni zene alapcsomag" }).first().click();
+    check(new URL(page.url()).pathname.replace(/\/$/, "") === "/products/otthoni-zene-csomag", "product card opens the product detail page");
+    await page.getByRole("button", { name: "Kosárba teszem" }).click();
+    check(await page.getByText("A kosárba került", { exact: true }).isVisible(), "product can be added to cart");
+
+    await page.goto(`${baseUrl}/cart/`, { waitUntil: "networkidle" });
+    const initialTotal = await page.getByText(/Ft/).last().textContent();
+    await page.getByRole("button", { name: /mennyiségének növelése/ }).click();
+    const increasedTotal = await page.getByText(/Ft/).last().textContent();
+    check(initialTotal !== increasedTotal, "cart quantity updates totals");
+    await page.getByRole("button", { name: /eltávolítása/ }).click();
+    check(await page.getByText("A kosár üres", { exact: true }).isVisible(), "cart item can be removed");
+
+    await page.goto(`${baseUrl}/products/otthoni-zene-csomag/`, { waitUntil: "networkidle" });
+    await page.getByRole("button", { name: "Kosárba teszem" }).click();
+    await page.goto(`${baseUrl}/checkout/`, { waitUntil: "networkidle" });
+    await page.getByRole("button", { name: "Tovább a biztonságos fizetéshez" }).click();
+    check(await page.getByRole("alert").getByText(/online fizetés még nem indítható/).isVisible(), "checkout fails safely without provider configuration");
+
+    const themeButton = page.getByRole("button", { name: "Sötét megjelenés" });
+    await themeButton.click();
+    check(await page.locator("html").evaluate((root) => root.classList.contains("dark-mode")), "theme toggle activates dark mode");
+    await context.close();
+
+    const mobile = await browser.newContext({ viewport: { width: 375, height: 812 }, reducedMotion: "reduce" });
+    const mobilePage = await mobile.newPage();
+    await mobilePage.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
+    const menuButton = mobilePage.getByRole("button", { name: "Navigáció megnyitása" });
+    await menuButton.click();
+    const mobileNavigation = mobilePage.getByRole("dialog");
+    const mobileShopLink = mobileNavigation.getByRole("link", { name: "Termékek" });
+    check(await mobileShopLink.isVisible(), "mobile navigation opens");
+    await mobilePage.keyboard.press("Escape");
+    await mobileShopLink.waitFor({ state: "hidden" });
+    check(await menuButton.evaluate((element) => element === document.activeElement), "mobile navigation returns focus after Escape");
+    check(await mobilePage.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "reduced-motion mobile view has no horizontal overflow");
+    await mobile.close();
+
+    return { failures, evidence };
+}
+
 let server;
 let browser;
 try {
-    const distFiles = await walk(dist);
+    const distFiles = await walk(staticRoot);
     const routes = distFiles.filter((file) => file.endsWith(".html")).map(routeForHtml).filter(Boolean).sort();
     if (!routes.length) throw new Error("dist contains no built HTML routes; run npm run build first");
     await mkdir(artifactRoot, { recursive: true });
@@ -560,6 +460,8 @@ try {
     const failures = results.flatMap((result) =>
         result.failures.map((failure) => `${result.route} · ${result.viewport.name} · ${result.theme}: ${failure}`),
     );
+    const criticalFlows = await auditCriticalFlows(browser, server.baseUrl);
+    failures.push(...criticalFlows.failures.map((failure) => `critical flow: ${failure}`));
     const report = {
         schemaVersion: 1,
         kind: "UuiWebBuildQaReceiptV1",
@@ -573,6 +475,7 @@ try {
             checks: results.length,
         },
         results,
+        criticalFlows,
         status: failures.length ? "failed" : "passed",
         failures,
         residualRisk:

@@ -1,0 +1,9 @@
+---
+import StorefrontLayout from "@/layouts/StorefrontLayout.astro";
+import StorefrontSection from "@/features/storefront/StorefrontSection.astro";
+
+export const prerender = true;
+---
+<StorefrontLayout title="Háztartási termékek" description="Válogatott háztartási termékek érthető leírással és forintárakkal.">
+    <StorefrontSection view="shop" initialCategory="Háztartás" />
+</StorefrontLayout>

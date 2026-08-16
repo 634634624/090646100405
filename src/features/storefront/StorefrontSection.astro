@@ -1,0 +1,24 @@
+---
+// @uui-source: ADAPT toolkit/commerce-shopify/components/SmallShopSection.astro
+import { SmallShopExperience, type StorefrontView } from "./StorefrontExperience";
+import type { InfoPageKey } from "@/config/store";
+import { STORE } from "@/config/store";
+import "@/toolkit/interaction-recipes/celebrations.css";
+
+interface Props {
+    view?: StorefrontView;
+    initialCategory?: "Műszaki" | "Háztartás";
+    infoKey?: InfoPageKey;
+}
+
+const { view = "shop", initialCategory, infoKey } = Astro.props;
+---
+
+<SmallShopExperience
+    client:load
+    view={view}
+    brand={STORE.brand.name}
+    mode="demo"
+    initialCategory={initialCategory}
+    infoKey={infoKey}
+/>

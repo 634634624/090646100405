@@ -1,9 +1,16 @@
 ---
-export const prerender = true;
 import StorefrontLayout from "@/layouts/StorefrontLayout.astro";
-import { ProductDetail } from "@/features/storefront/ProductDetail";
-import { storeProducts, type StoreProduct } from "@/features/storefront/catalog";
-export function getStaticPaths() { return storeProducts.map((product) => ({ params: { slug: product.id }, props: { product } })); }
-const { product } = Astro.props as { product: StoreProduct };
+import StorefrontSection from "@/features/storefront/StorefrontSection.astro";
+import { MOCK_PRODUCTS } from "@/data/demo-catalog";
+
+export const prerender = true;
+
+export function getStaticPaths() {
+    return MOCK_PRODUCTS.map((product) => ({ params: { slug: product.handle }, props: { title: product.title, description: product.description } }));
+}
+
+const { title, description } = Astro.props;
 ---
-<StorefrontLayout title={product.name} description={product.description}><ProductDetail product={product} client:load /></StorefrontLayout>
+<StorefrontLayout title={title} description={description}>
+    <StorefrontSection view="product" />
+</StorefrontLayout>

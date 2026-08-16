@@ -1,6 +1,9 @@
 ---
-export const prerender = true;
 import StorefrontLayout from "@/layouts/StorefrontLayout.astro";
-import { CheckoutPage } from "@/features/storefront/CheckoutPage";
+import StorefrontSection from "@/features/storefront/StorefrontSection.astro";
+
+export const prerender = true;
 ---
-<StorefrontLayout title="Pénztár" description="Biztonságos átadás a jóváhagyott pénztárszolgáltatóhoz."><CheckoutPage client:load /></StorefrontLayout>
+<StorefrontLayout title="Pénztár" description="Biztonságos átadás a jóváhagyott pénztárszolgáltatóhoz.">
+    <StorefrontSection view="checkout" />
+</StorefrontLayout>
