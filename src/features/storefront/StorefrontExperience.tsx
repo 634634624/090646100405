@@ -48,9 +48,10 @@ import {
 } from "@/data/demo-catalog";
 import { INFO_PAGES, STORE, type InfoPageKey } from "@/config/store";
 import { readConsent, saveConsent } from "@/integrations/measurement";
+import { SHOPIFY_STORE_DOMAIN } from "@/integrations/commerce/shopify-ucp";
 
 export type StorefrontView = "shop" | "product" | "cart" | "checkout" | "order" | "info";
-type StorefrontMode = "demo" | "provider";
+type StorefrontMode = "demo" | "shopify" | "provider";
 
 interface Props {
     view: StorefrontView;
@@ -59,7 +60,7 @@ interface Props {
     initialCategory?: "Műszaki" | "Háztartás";
     infoKey?: InfoPageKey;
 }
-const MOCK_CART_KEY = "valogatott-demo-cart-v1";
+const MOCK_CART_KEY = "devshopify-shopify-cart-v2";
 
 function formatMoney(amount: string | number, currencyCode = "HUF") {
     return new Intl.NumberFormat("hu-HU", {
@@ -438,7 +439,7 @@ export function SmallShopExperience({
     initialCategory,
     infoKey = "faq",
 }: Props) {
-    const products = MOCK_PRODUCTS;
+    const [products, setProducts] = useState<Product[]>(MOCK_PRODUCTS);
     const [cart, setCart] = useState<Cart>(EMPTY_CART);
     const [loading, setLoading] = useState(false);
     const [pending, setPending] = useState(false);
@@ -478,8 +479,24 @@ export function SmallShopExperience({
         async function hydrateStore() {
             if (!active) return;
             setCart(readMockCart());
-            setLoading(false);
-            if (mode === "provider") setError("A beszállítói kapcsolat még nincs beállítva.");
+            if (mode !== "shopify") {
+                setLoading(false);
+                if (mode === "provider") setError("A beszállítói kapcsolat még nincs beállítva.");
+                return;
+            }
+            setLoading(true);
+            try {
+                const response = await fetch("/api/commerce/shopify", { headers: { Accept: "application/json" } });
+                const payload = await response.json() as { products?: Product[]; error?: string; stale?: boolean };
+                if (!response.ok || !Array.isArray(payload.products) || payload.products.length !== 3) {
+                    throw new Error(payload.error || "A Shopify katalógus most nem frissíthető.");
+                }
+                if (active) setProducts(payload.products);
+            } catch {
+                if (active) setError("A pillanatnyi Shopify készlet nem frissült. A pénztár újra ellenőrzi a kosarat.");
+            } finally {
+                if (active) setLoading(false);
+            }
         }
         void hydrateStore();
         return () => {
@@ -584,7 +601,7 @@ export function SmallShopExperience({
         setPendingProductId(product.id);
         setError("");
         try {
-            if (mode === "demo") {
+            if (mode === "demo" || mode === "shopify") {
                 const existing = cart.lines.find(
                     (line) => line.merchandiseId === selected.id,
                 );
@@ -625,7 +642,7 @@ export function SmallShopExperience({
         setPending(true);
         setError("");
         try {
-            if (mode === "demo") {
+            if (mode === "demo" || mode === "shopify") {
                 const lines =
                     quantity <= 0
                         ? cart.lines.filter((entry) => entry.id !== line.id)
@@ -644,7 +661,7 @@ export function SmallShopExperience({
     }
 
     async function removeLine(line: CartLine) {
-        if (mode === "demo") return changeQuantity(line, 0);
+        if (mode === "demo" || mode === "shopify") return changeQuantity(line, 0);
         setError("A kosárszolgáltató még nincs beállítva.");
     }
 
@@ -653,10 +670,21 @@ export function SmallShopExperience({
         setPending(true);
         setError("");
         try {
-            if (mode === "demo") {
-                throw new Error("Az online fizetés még nem indítható. A kosár megmaradt; kérjük, próbáld később.");
+            if (mode !== "shopify") throw new Error("Az online fizetés még nem indítható. A kosár megmaradt; kérjük, próbáld később.");
+            const response = await fetch("/api/commerce/shopify", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", Accept: "application/json" },
+                body: JSON.stringify({
+                    lines: cart.lines.map((line) => ({ variantId: line.merchandiseId, quantity: line.quantity })),
+                }),
+            });
+            const payload = await response.json() as { checkoutUrl?: string; error?: string };
+            if (!response.ok || !payload.checkoutUrl) throw new Error(payload.error || "A Shopify pénztár most nem indítható.");
+            const checkout = new URL(payload.checkoutUrl);
+            if (checkout.protocol !== "https:" || checkout.hostname !== SHOPIFY_STORE_DOMAIN || !checkout.pathname.startsWith("/cart/")) {
+                throw new Error("A Shopify érvénytelen pénztárhivatkozást adott vissza.");
             }
-            throw new Error("Az online fizetés még nem indítható. A kosár megmaradt; kérjük, próbáld később.");
+            window.location.assign(checkout.href);
         } catch (cause) {
             setError(cause instanceof Error ? cause.message : "A pénztár most nem indítható.");
         } finally {
@@ -1294,8 +1322,8 @@ export function SmallShopExperience({
                 <main className="mx-auto max-w-5xl px-4 py-12 lg:px-8 lg:py-16">
                     <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
                         <section>
-                            <BadgeWithDot color={mode === "provider" ? "success" : "warning"}>
-                                {mode === "provider" ? "Pénztárkapcsolat aktív" : "Előnézeti pénztár"}
+                            <BadgeWithDot color={mode === "shopify" ? "success" : "warning"}>
+                                {mode === "shopify" ? "Shopify pénztárkapcsolat aktív" : "Előnézeti pénztár"}
                             </BadgeWithDot>
                             <h1 className="mt-5 text-display-md font-semibold text-primary">Biztonságos pénztári átadás</h1>
                             <p className="mt-4 max-w-2xl text-lg text-tertiary">

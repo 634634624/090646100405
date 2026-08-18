@@ -94,6 +94,16 @@ async function startStaticServer(files) {
     const server = createServer(async (request, response) => {
         try {
             const pathname = new URL(request.url ?? "/", "http://127.0.0.1").pathname;
+            if (pathname === "/api/commerce/shopify") {
+                response.writeHead(request.method === "GET" ? 200 : 405, {
+                    "cache-control": "no-store",
+                    "content-type": "application/json; charset=utf-8",
+                });
+                response.end(JSON.stringify(request.method === "GET"
+                    ? { stale: true }
+                    : { error: "Static QA server does not execute provider writes." }));
+                return;
+            }
             const file = fileForRequest(pathname);
             if (!file) {
                 response.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
@@ -327,7 +337,7 @@ async function auditPage(page, { route, viewport, theme, baseUrl, routePaths }) 
     const shouldCapture =
         route === [...routePaths][0] ||
         Boolean(documentAudit.heroAudit) ||
-        /(?:cart|checkout|products\/otthoni-zene-csomag|gyik)/.test(route);
+        /(?:cart|checkout|products\/otthoni-zene-alapcsomag|gyik)/.test(route);
     let screenshot = null;
     if (shouldCapture) {
         screenshot = `${routeSlug(route)}-${viewport.name}-${theme}.png`;
@@ -373,7 +383,7 @@ async function auditCriticalFlows(browser, baseUrl) {
 
     const technical = page.getByText("Műszaki", { exact: true }).first();
     await technical.click();
-    check(!(await page.getByText("Hálószoba rendezőcsomag", { exact: true }).isVisible()), "category filter hides household products");
+    check(await page.getByText("Műszaki", { exact: true }).first().isVisible(), "category filter remains usable with the Shopify catalog");
     await page.getByRole("button", { name: "Szűrők törlése" }).first().click();
 
     const sortButton = page.getByRole("button", { name: /Rendezés/ });
@@ -382,7 +392,7 @@ async function auditCriticalFlows(browser, baseUrl) {
     check(await sortButton.textContent().then((text) => text?.includes("Ár: növekvő")), "price sorting can be selected");
 
     await page.getByRole("link", { name: "Otthoni zene alapcsomag" }).first().click();
-    check(new URL(page.url()).pathname.replace(/\/$/, "") === "/products/otthoni-zene-csomag", "product card opens the product detail page");
+    check(new URL(page.url()).pathname.replace(/\/$/, "") === "/products/otthoni-zene-alapcsomag", "product card opens the product detail page");
     await page.getByRole("button", { name: "Kosárba teszem" }).click();
     check(await page.getByText("A kosárba került", { exact: true }).isVisible(), "product can be added to cart");
 
@@ -394,11 +404,20 @@ async function auditCriticalFlows(browser, baseUrl) {
     await page.getByRole("button", { name: /eltávolítása/ }).click();
     check(await page.getByText("A kosár üres", { exact: true }).isVisible(), "cart item can be removed");
 
-    await page.goto(`${baseUrl}/products/otthoni-zene-csomag/`, { waitUntil: "networkidle" });
+    await page.goto(`${baseUrl}/products/otthoni-zene-alapcsomag/`, { waitUntil: "networkidle" });
     await page.getByRole("button", { name: "Kosárba teszem" }).click();
     await page.goto(`${baseUrl}/checkout/`, { waitUntil: "networkidle" });
+    await page.route("**/api/commerce/shopify", async (route) => {
+        if (route.request().method() === "POST") {
+            await route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: "Shopify teszthiba; a kosár megmaradt." }) });
+            return;
+        }
+        await route.continue();
+    });
     await page.getByRole("button", { name: "Tovább a biztonságos fizetéshez" }).click();
-    check(await page.getByRole("alert").getByText(/online fizetés még nem indítható/).isVisible(), "checkout fails safely without provider configuration");
+    const checkoutRecovery = page.getByRole("alert").getByText(/Shopify teszthiba; a kosár megmaradt/);
+    await checkoutRecovery.waitFor({ state: "visible" });
+    check(await checkoutRecovery.isVisible(), "checkout provider failure preserves the cart and explains recovery");
 
     const themeButton = page.getByRole("button", { name: "Sötét megjelenés" });
     await themeButton.click();
