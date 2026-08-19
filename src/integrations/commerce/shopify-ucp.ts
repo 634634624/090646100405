@@ -74,8 +74,7 @@ export function checkoutRequest(lines: CheckoutLineInput[]) {
                         quantity,
                         item: { id: variantId },
                     })),
-                    // The demo store currently sells these variants only in its default US market.
-                    context: { address_country: "US" },
+                    context: { address_country: "HU" },
                     attribution: {
                         utm_source: "devshopify_astro",
                         utm_medium: "storefront",

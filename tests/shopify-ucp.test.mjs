@@ -26,6 +26,7 @@ test("builds current capability-specific UCP requests without secrets", () => {
     const checkout = checkoutRequest([{ variantId: DEMO_VARIANT_IDS[1], quantity: 3 }]);
     assert.equal(checkout.params.name, "create_cart");
     assert.deepEqual(checkout.params.arguments.cart.line_items, [{ quantity: 3, item: { id: DEMO_VARIANT_IDS[1] } }]);
+    assert.equal(checkout.params.arguments.cart.context.address_country, "HU");
     assert.equal(JSON.stringify(checkout).includes("token"), false);
     assert.match(catalog.params.arguments.meta["ucp-agent"].profile, /valid-with-capabilities/);
     assert.match(checkout.params.arguments.meta["ucp-agent"].profile, /cart-and-checkout/);
