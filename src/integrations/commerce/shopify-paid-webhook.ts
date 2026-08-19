@@ -251,6 +251,16 @@ type ShopifyBridgeEnv = {
     SHOPIFY_WEBHOOK_SECRET?: string;
     WEBSHIPPY_API_KEY?: string;
     WEBSHIPPY_WRITE_MODE?: string;
+    COMMERCE_COORDINATOR?: {
+        getByName(name: string): {
+            claim(webhookId: string): Promise<{
+                acquired: boolean;
+                state: "creating" | "complete";
+                wspyId?: string;
+            }>;
+            complete(webhookId: string, wspyId: string): Promise<void>;
+        };
+    };
 };
 
 const responseHeaders = {
@@ -302,7 +312,8 @@ export async function handleShopifyPaidWebhook(
 ) {
     const secret = runtimeEnv.SHOPIFY_WEBHOOK_SECRET?.trim();
     const apiKey = runtimeEnv.WEBSHIPPY_API_KEY?.trim();
-    if (!secret || !apiKey || runtimeEnv.WEBSHIPPY_WRITE_MODE !== "test") {
+    const coordinatorNamespace = runtimeEnv.COMMERCE_COORDINATOR;
+    if (!secret || !apiKey || runtimeEnv.WEBSHIPPY_WRITE_MODE !== "test" || !coordinatorNamespace) {
         return json({ error: "Bridge unavailable." }, 503);
     }
 
@@ -331,10 +342,12 @@ export async function handleShopifyPaidWebhook(
         return json({ accepted: true, skipped: message });
     }
     if (!order) return json({ accepted: true, skipped: "non-test-order", webhookId });
+    const coordinator = coordinatorNamespace.getByName(`shopify-order:${order.referenceId}`);
 
     try {
         const existing = await findWebshippyOrder(fetchProvider, apiKey, order.referenceId, order.referenceName);
         if (existing) {
+            await coordinator.complete(webhookId, existing.wspyId);
             return json({
                 accepted: true,
                 webhookId,
@@ -343,7 +356,26 @@ export async function handleShopifyPaidWebhook(
                 existing: true,
             });
         }
+        const claim = await coordinator.claim(webhookId);
+        if (!claim.acquired) {
+            if (claim.state === "complete" && claim.wspyId) {
+                return json({
+                    accepted: true,
+                    webhookId,
+                    referenceId: order.referenceId,
+                    wspyId: claim.wspyId,
+                    existing: true,
+                });
+            }
+            return json({
+                accepted: true,
+                webhookId,
+                referenceId: order.referenceId,
+                pending: true,
+            }, 202);
+        }
         const result = safeWebshippyResult(await webshippyRequest(fetchProvider, apiKey, "CreateOrder", { order }));
+        await coordinator.complete(webhookId, result.wspyId);
         return json({ accepted: true, webhookId, referenceId: order.referenceId, ...result });
     } catch {
         return json({ error: "Webshippy unavailable." }, 503);

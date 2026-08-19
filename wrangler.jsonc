@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "090646100405",
+  "main": "./src/worker.ts",
   "compatibility_date": "2026-08-16",
   "compatibility_flags": ["nodejs_compat"],
   "cache": {
@@ -20,6 +21,20 @@
   "assets": {
     "run_worker_first": ["/api/*"]
   },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "COMMERCE_COORDINATOR",
+        "class_name": "CommerceCoordinator"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["CommerceCoordinator"]
+    }
+  ],
   "vars": {
     "WEBSHIPPY_WRITE_MODE": "test"
   }

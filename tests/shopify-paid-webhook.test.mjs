@@ -9,11 +9,29 @@ import {
     verifyShopifyWebhook,
 } from "../src/integrations/commerce/shopify-paid-webhook.ts";
 
-const bridgeEnv = {
-    SHOPIFY_WEBHOOK_SECRET: "secret",
-    WEBSHIPPY_API_KEY: "private-api-key",
-    WEBSHIPPY_WRITE_MODE: "test",
-};
+function bridgeEnv() {
+    const records = new Map();
+    return {
+        SHOPIFY_WEBHOOK_SECRET: "secret",
+        WEBSHIPPY_API_KEY: "private-api-key",
+        WEBSHIPPY_WRITE_MODE: "test",
+        COMMERCE_COORDINATOR: {
+            getByName(name) {
+                return {
+                    async claim(webhookId) {
+                        const current = records.get(name);
+                        if (current) return { acquired: false, ...current };
+                        records.set(name, { state: "creating", webhookId });
+                        return { acquired: true, state: "creating" };
+                    },
+                    async complete(webhookId, wspyId) {
+                        records.set(name, { state: "complete", webhookId, wspyId });
+                    },
+                };
+            },
+        },
+    };
+}
 
 async function signedRequest(body, overrides = {}) {
     const raw = typeof body === "string" ? body : JSON.stringify(body);
@@ -97,7 +115,7 @@ test("accepts only successful numeric Webshippy IDs", () => {
 
 test("submits a valid signed test order without exposing credentials", async () => {
     let submitted;
-    const response = await handleShopifyPaidWebhook(await signedRequest(payload), bridgeEnv, async (url, init) => {
+    const response = await handleShopifyPaidWebhook(await signedRequest(payload), bridgeEnv(), async (url, init) => {
         if (String(url).includes("/GetOrder/")) {
             return Response.json({ status: "success", result: [] });
         }
@@ -121,15 +139,15 @@ test("rejects forged and oversized requests before calling Webshippy", async () 
         return Response.json({ status: "success", wspyId: 1 });
     };
     const forged = await signedRequest(payload, { "x-shopify-hmac-sha256": "forged" });
-    assert.equal((await handleShopifyPaidWebhook(forged, bridgeEnv, provider)).status, 401);
+    assert.equal((await handleShopifyPaidWebhook(forged, bridgeEnv(), provider)).status, 401);
     const oversized = await signedRequest(payload, { "content-length": String(256 * 1024 + 1) });
-    assert.equal((await handleShopifyPaidWebhook(oversized, bridgeEnv, provider)).status, 413);
+    assert.equal((await handleShopifyPaidWebhook(oversized, bridgeEnv(), provider)).status, 413);
     assert.equal(calls, 0);
 });
 
 test("acknowledges permanent payload errors but retries transient Webshippy errors", async () => {
     const unsupported = await signedRequest({ ...payload, line_items: [{ sku: "REAL-1", quantity: 1 }] });
-    const skipped = await handleShopifyPaidWebhook(unsupported, bridgeEnv);
+    const skipped = await handleShopifyPaidWebhook(unsupported, bridgeEnv());
     assert.equal(skipped.status, 200);
     assert.match((await skipped.json()).skipped, /unsupported product/);
 
@@ -137,9 +155,9 @@ test("acknowledges permanent payload errors but retries transient Webshippy erro
         ...payload,
         shipping_address: { ...payload.shipping_address, country_code: "US" },
     });
-    assert.equal((await handleShopifyPaidWebhook(unsupportedCountry, bridgeEnv)).status, 422);
+    assert.equal((await handleShopifyPaidWebhook(unsupportedCountry, bridgeEnv())).status, 422);
 
-    const unavailable = await handleShopifyPaidWebhook(await signedRequest(payload), bridgeEnv, async () => {
+    const unavailable = await handleShopifyPaidWebhook(await signedRequest(payload), bridgeEnv(), async () => {
         throw new Error("timeout");
     });
     assert.equal(unavailable.status, 503);
@@ -165,10 +183,11 @@ test("reconciles an accepted timeout before retrying CreateOrder", async () => {
         throw new Error("accepted upstream, response lost");
     };
 
-    assert.equal((await handleShopifyPaidWebhook(await signedRequest(payload), bridgeEnv, provider)).status, 503);
+    const env = bridgeEnv();
+    assert.equal((await handleShopifyPaidWebhook(await signedRequest(payload), env, provider)).status, 503);
     const retry = await handleShopifyPaidWebhook(
         await signedRequest(payload, { "x-shopify-webhook-id": "delivery-1-retry" }),
-        bridgeEnv,
+        env,
         provider,
     );
     assert.equal(retry.status, 200);
@@ -180,6 +199,33 @@ test("reconciles an accepted timeout before retrying CreateOrder", async () => {
         existing: true,
     });
     assert.equal(createCalls, 1);
+});
+
+test("serializes concurrent paid deliveries before Webshippy order creation", async () => {
+    const env = bridgeEnv();
+    const firstRequest = await signedRequest(payload, { "x-shopify-webhook-id": "delivery-concurrent-1" });
+    const secondRequest = await signedRequest(payload, { "x-shopify-webhook-id": "delivery-concurrent-2" });
+    let getCalls = 0;
+    let createCalls = 0;
+    let releaseGets;
+    const bothGets = new Promise((resolve) => { releaseGets = resolve; });
+    const provider = async (url) => {
+        if (String(url).includes("/GetOrder/")) {
+            getCalls += 1;
+            if (getCalls === 2) releaseGets();
+            await bothGets;
+            return Response.json({ status: "success", result: [] });
+        }
+        createCalls += 1;
+        return Response.json({ status: "success", wspyId: 43530120 });
+    };
+
+    const responses = await Promise.all([
+        handleShopifyPaidWebhook(firstRequest, env, provider),
+        handleShopifyPaidWebhook(secondRequest, env, provider),
+    ]);
+    assert.equal(createCalls, 1);
+    assert.deepEqual(responses.map((response) => response.status).sort(), [200, 202]);
 });
 
 test("deletes a new Webshippy test order after a signed Shopify cancellation", async () => {
@@ -203,7 +249,7 @@ test("deletes a new Webshippy test order after a signed Shopify cancellation", a
         "x-shopify-topic": "orders/cancelled",
         "x-shopify-webhook-id": "cancel-delivery-1",
     });
-    const response = await handleShopifyCancelledWebhook(request, bridgeEnv, provider);
+    const response = await handleShopifyCancelledWebhook(request, bridgeEnv(), provider);
     assert.equal(response.status, 200);
     assert.deepEqual(await response.json(), {
         accepted: true,
@@ -220,7 +266,7 @@ test("cancellation is idempotent when the Webshippy order is already absent", as
         "x-shopify-topic": "orders/cancelled",
         "x-shopify-webhook-id": "cancel-delivery-absent",
     });
-    const response = await handleShopifyCancelledWebhook(request, bridgeEnv, async () =>
+    const response = await handleShopifyCancelledWebhook(request, bridgeEnv(), async () =>
         Response.json({ status: "success", result: [] }));
     assert.equal(response.status, 200);
     assert.deepEqual(await response.json(), {
@@ -237,7 +283,7 @@ test("refuses to delete a Webshippy order that has entered fulfilment", async ()
         "x-shopify-topic": "orders/cancelled",
         "x-shopify-webhook-id": "cancel-delivery-locked",
     });
-    const response = await handleShopifyCancelledWebhook(request, bridgeEnv, async (url) => {
+    const response = await handleShopifyCancelledWebhook(request, bridgeEnv(), async (url) => {
         if (String(url).includes("/deleteOrder/")) deleteCalls += 1;
         return Response.json({ status: "success", result: [{
             wspyId: 43530113,

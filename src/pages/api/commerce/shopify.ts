@@ -15,12 +15,39 @@ import {
     fetchWebshippyStock,
 } from "@/integrations/commerce/webshippy-stock";
 import { UpstreamHttpError, withTransientRetry } from "@/integrations/commerce/transient-retry";
+import {
+    canonicalCatalogRequest,
+    commerceRequestAllowed,
+    readBoundedText,
+} from "@/integrations/commerce/request-security";
 import { MOCK_PRODUCTS } from "@/data/demo-catalog";
 
 export const prerender = false;
 
 const jsonHeaders = { "Content-Type": "application/json; charset=utf-8" };
 const catalogCacheControl = "public, max-age=10, must-revalidate";
+const checkoutBodyLimit = 4_096;
+
+type WorkerCacheStorage = CacheStorage & { default: Cache };
+
+function workerCache() {
+    return (globalThis as typeof globalThis & { caches?: WorkerCacheStorage }).caches?.default;
+}
+
+function unavailable(status = 503) {
+    return Response.json({ error: "A szolgáltatás átmenetileg nem érhető el." }, {
+        status,
+        headers: { ...jsonHeaders, "Cache-Control": "no-store" },
+    });
+}
+
+async function requestAllowed(request: Request, scope: "catalog" | "checkout", limit: number) {
+    try {
+        return await commerceRequestAllowed(env.COMMERCE_COORDINATOR, request, scope, limit);
+    } catch {
+        return null;
+    }
+}
 
 async function shopify(body: unknown) {
     return withTransientRetry(async () => {
@@ -38,20 +65,37 @@ async function shopify(body: unknown) {
     });
 }
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ request }) => {
+    const cache = workerCache();
+    const cacheKey = canonicalCatalogRequest(request);
+    const cached = await cache?.match(cacheKey);
+    if (cached) return cached;
+
+    const allowed = await requestAllowed(request, "catalog", 30);
+    if (allowed === null) return unavailable();
+    if (!allowed) return unavailable(429);
+
     try {
         const [payload, stock] = await Promise.all([
             shopify(catalogRequest()),
             fetchWebshippyStock(env.WEBSHIPPY_API_KEY ?? ""),
         ]);
         const products = applyWebshippyStock(applyShopifyCatalog(MOCK_PRODUCTS, payload), stock);
-        return Response.json({ products }, {
+        const response = Response.json({ products }, {
             headers: {
                 ...jsonHeaders,
                 "Cache-Control": catalogCacheControl,
                 "X-DevShop-Catalog-State": "fresh",
             },
         });
+        if (cache) {
+            try {
+                await cache.put(cacheKey, response.clone());
+            } catch {
+                console.error(JSON.stringify({ event: "catalog_cache_write_failure" }));
+            }
+        }
+        return response;
     } catch (cause) {
         console.error(JSON.stringify({
             event: "catalog_upstream_failure",
@@ -70,11 +114,12 @@ export const GET: APIRoute = async () => {
 };
 
 export const POST: APIRoute = async ({ request }) => {
+    const allowed = await requestAllowed(request, "checkout", 12);
+    if (allowed === null) return unavailable();
+    if (!allowed) return unavailable(429);
+
     try {
-        const declaredLength = Number(request.headers.get("content-length") ?? "0");
-        if (!Number.isFinite(declaredLength) || declaredLength > 4_096) throw new Error("Túl nagy kérés.");
-        const rawBody = await request.text();
-        if (new TextEncoder().encode(rawBody).byteLength > 4_096) throw new Error("Túl nagy kérés.");
+        const rawBody = await readBoundedText(request, checkoutBodyLimit);
         const body = JSON.parse(rawBody) as { lines?: unknown };
         const lines = validateCheckoutLines(body.lines);
         const stock = await fetchWebshippyStock(env.WEBSHIPPY_API_KEY ?? "");
@@ -83,6 +128,7 @@ export const POST: APIRoute = async ({ request }) => {
         const checkoutUrl = checkoutUrlFromResponse(payload, lines);
         return Response.json({ checkoutUrl }, { headers: { ...jsonHeaders, "Cache-Control": "no-store" } });
     } catch (cause) {
+        if (cause instanceof RangeError) return unavailable(413);
         const message = cause instanceof Error ? cause.message : "A Shopify pénztár most nem indítható.";
         return Response.json({ error: message }, { status: 400, headers: { ...jsonHeaders, "Cache-Control": "no-store" } });
     }
