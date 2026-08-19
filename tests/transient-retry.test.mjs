@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+    retryAfterMilliseconds,
     UpstreamHttpError,
     withTransientRetry,
 } from "../src/integrations/commerce/transient-retry.ts";
@@ -19,7 +20,22 @@ test("retries transient provider failures with bounded exponential delays", asyn
 
     assert.equal(result, "ok");
     assert.equal(calls, 3);
-    assert.deepEqual(delays, [100, 200]);
+    assert.deepEqual(delays, [250, 500]);
+});
+
+test("honours bounded Retry-After seconds and dates", async () => {
+    assert.equal(retryAfterMilliseconds("2"), 2_000);
+    assert.equal(retryAfterMilliseconds("Wed, 19 Aug 2026 12:00:02 GMT", Date.parse("Wed, 19 Aug 2026 12:00:00 GMT")), 2_000);
+    assert.equal(retryAfterMilliseconds("invalid"), 0);
+
+    let calls = 0;
+    const delays = [];
+    await withTransientRetry(async () => {
+        calls += 1;
+        if (calls === 1) throw new UpstreamHttpError("Webshippy", 429, "7");
+        return "ok";
+    }, { sleep: async (delayMs) => { delays.push(delayMs); } });
+    assert.deepEqual(delays, [2_000]);
 });
 
 test("does not retry permanent provider failures", async () => {

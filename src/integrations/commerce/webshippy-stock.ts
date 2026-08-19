@@ -73,7 +73,7 @@ export async function fetchWebshippyStock(
         });
         if (!response.ok) {
             await response.body?.cancel();
-            throw new UpstreamHttpError("Webshippy", response.status);
+            throw new UpstreamHttpError("Webshippy", response.status, response.headers.get("retry-after"));
         }
         return parseWebshippyStockCsv(await response.text());
     });

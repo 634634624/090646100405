@@ -32,7 +32,7 @@ async function shopify(body: unknown) {
         });
         if (!response.ok) {
             await response.body?.cancel();
-            throw new UpstreamHttpError("Shopify", response.status);
+            throw new UpstreamHttpError("Shopify", response.status, response.headers.get("retry-after"));
         }
         return response.json() as Promise<unknown>;
     });
@@ -56,6 +56,8 @@ export const GET: APIRoute = async () => {
         console.error(JSON.stringify({
             event: "catalog_upstream_failure",
             error: cause instanceof Error ? cause.name : "UnknownError",
+            provider: cause instanceof UpstreamHttpError ? cause.provider : "catalog",
+            status: cause instanceof UpstreamHttpError ? cause.status : undefined,
         }));
         return Response.json({ products: unavailableCatalog(MOCK_PRODUCTS), stale: true }, {
             headers: {

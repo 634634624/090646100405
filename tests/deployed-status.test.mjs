@@ -15,6 +15,7 @@ test("reports the deployed Shopify and Webshippy connector architecture", () => 
         storefrontProducts: 3,
         storefrontCatalogCache: "cloudflare-workers-10s",
         storefrontProviderRetry: "bounded-transient-retry",
+        storefrontMonitoring: "cloudflare-logs-traces",
         webshippyConnection: "shopify-connector",
         webshippyTestBridge: "shopify-orders-paid-webhook",
         webshippyCancellationBridge: "shopify-orders-cancelled-webhook",
