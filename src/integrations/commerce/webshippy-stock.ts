@@ -80,11 +80,16 @@ export function applyWebshippyStock(products: Product[], stock: WebshippyStockRe
         const sku = SKU_BY_VARIANT_ID[variant.id];
         const quantity = sku === undefined ? undefined : quantityBySku.get(sku);
         if (quantity === undefined) throw new Error("Hiányzó Webshippy demókészlet.");
-        const availableForSale = variant.availableForSale && quantity > 0;
+        const shopifyQuantity = variant.quantityAvailable;
+        if (!Number.isSafeInteger(shopifyQuantity) || Number(shopifyQuantity) < 0) {
+            throw new Error("Hibás Shopify készletadat.");
+        }
+        const combinedQuantity = Math.min(Number(shopifyQuantity), quantity);
+        const availableForSale = variant.availableForSale && combinedQuantity > 0;
         return {
             ...product,
-            variants: [{ ...variant, availableForSale, quantityAvailable: availableForSale ? quantity : 0 }],
-            inventoryState: !availableForSale ? "sold-out" : quantity <= 3 ? "low-stock" : "available",
+            variants: [{ ...variant, availableForSale, quantityAvailable: availableForSale ? combinedQuantity : 0 }],
+            inventoryState: !availableForSale ? "sold-out" : combinedQuantity <= 3 ? "low-stock" : "available",
         } satisfies Product;
     });
 }

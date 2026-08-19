@@ -38,6 +38,18 @@ test("merges Webshippy quantities while Shopify availability remains a hard gate
     assert.throws(() => applyWebshippyStock(shopifyProducts, []), /Hiányzó/);
 });
 
+test("uses the lower Shopify and Webshippy quantity so the storefront cannot oversell", () => {
+    const shopifyProducts = MOCK_PRODUCTS.map((product) => ({
+        ...product,
+        variants: [{ ...product.variants[0], availableForSale: true, quantityAvailable: 1 }],
+    }));
+    const products = applyWebshippyStock(shopifyProducts, parseWebshippyStockCsv(CSV));
+    assert.equal(products[0].variants[0].quantityAvailable, 1);
+    assert.equal(products[0].inventoryState, "low-stock");
+    assert.equal(products[1].variants[0].quantityAvailable, 1);
+    assert.equal(products[2].variants[0].quantityAvailable, 0);
+});
+
 test("blocks checkout quantities that Webshippy cannot fulfil", () => {
     const stock = parseWebshippyStockCsv(CSV);
     assert.doesNotThrow(() => assertWebshippyStock([

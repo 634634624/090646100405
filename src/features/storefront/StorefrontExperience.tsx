@@ -50,6 +50,11 @@ import {
 import { INFO_PAGES, STORE, type InfoPageKey } from "@/config/store";
 import { readConsent, saveConsent } from "@/integrations/measurement";
 import { SHOPIFY_STORE_DOMAIN, unavailableCatalog } from "@/integrations/commerce/shopify-ucp";
+import {
+    quantityForVariant,
+    reconcileCartLinesWithCatalog,
+    sellableQuantity,
+} from "@/integrations/commerce/cart-inventory";
 
 export type StorefrontView = "shop" | "product" | "cart" | "checkout" | "order" | "info";
 type StorefrontMode = "demo" | "shopify" | "provider";
@@ -308,11 +313,13 @@ function ShopFooter({ brand }: { brand: string }) {
 
 function CartLines({
     cart,
+    products,
     pending,
     onQuantity,
     onRemove,
 }: {
     cart: Cart;
+    products: Product[];
     pending: boolean;
     onQuantity: (line: CartLine, quantity: number) => void;
     onRemove: (line: CartLine) => void;
@@ -368,7 +375,7 @@ function CartLines({
                                     size="xs"
                                     aria-label={`${line.productTitle} mennyiségének növelése`}
                                     iconLeading={Plus}
-                                    isDisabled={pending}
+                                    isDisabled={pending || line.quantity >= quantityForVariant(products, line.merchandiseId)}
                                     onPress={() => onQuantity(line, line.quantity + 1)}
                                 />
                             </div>
@@ -494,7 +501,13 @@ export function SmallShopExperience({
                 if (!response.ok || !Array.isArray(payload.products) || payload.products.length !== 3) {
                     throw new Error(payload.error || "A Shopify katalógus most nem frissíthető.");
                 }
-                if (active) setProducts(payload.products);
+                if (active) {
+                    setProducts(payload.products);
+                    const currentCart = readMockCart();
+                    setCart(writeMockCart(calculateMockCart(
+                        reconcileCartLinesWithCatalog(currentCart.lines, payload.products),
+                    )));
+                }
             } catch {
                 if (active) {
                     setProducts(unavailableCatalog(MOCK_PRODUCTS));
@@ -611,10 +624,15 @@ export function SmallShopExperience({
                 const existing = cart.lines.find(
                     (line) => line.merchandiseId === selected.id,
                 );
+                const maximum = sellableQuantity(selected);
+                if (existing && existing.quantity >= maximum) {
+                    setError("Ebből a termékből most nem tehető több a kosárba.");
+                    return;
+                }
                 const nextLines = existing
                     ? cart.lines.map((line) =>
                           line.id === existing.id
-                              ? { ...line, quantity: line.quantity + 1 }
+                              ? { ...line, quantity: Math.min(line.quantity + 1, maximum) }
                               : line,
                       )
                     : [
@@ -649,11 +667,13 @@ export function SmallShopExperience({
         setError("");
         try {
             if (mode === "demo" || mode === "shopify") {
+                const maximum = quantityForVariant(products, line.merchandiseId);
+                const nextQuantity = Math.min(quantity, maximum);
                 const lines =
-                    quantity <= 0
+                    nextQuantity <= 0
                         ? cart.lines.filter((entry) => entry.id !== line.id)
                         : cart.lines.map((entry) =>
-                              entry.id === line.id ? { ...entry, quantity } : entry,
+                              entry.id === line.id ? { ...entry, quantity: nextQuantity } : entry,
                           );
                 setCart(writeMockCart(calculateMockCart(lines)));
                 return;
@@ -766,6 +786,7 @@ export function SmallShopExperience({
                         {cart.lines.length ? (
                             <CartLines
                                 cart={cart}
+                                products={products}
                                 pending={pending}
                                 onQuantity={changeQuantity}
                                 onRemove={removeLine}
@@ -1298,7 +1319,7 @@ export function SmallShopExperience({
                     <h1 className="mt-2 text-display-md font-semibold text-primary">Kosár</h1>
                     {cart.lines.length ? (
                         <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
-                            <CartLines cart={cart} pending={pending} onQuantity={changeQuantity} onRemove={removeLine} />
+                            <CartLines cart={cart} products={products} pending={pending} onQuantity={changeQuantity} onRemove={removeLine} />
                             <CartSummary cart={cart} />
                         </div>
                     ) : (
