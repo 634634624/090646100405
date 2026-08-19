@@ -19,6 +19,6 @@ test("reports the deployed Shopify and Webshippy connector architecture", () => 
         webshippyConnection: "shopify-connector",
         webshippyTestBridge: "shopify-orders-paid-webhook",
         webshippyCancellationBridge: "shopify-orders-cancelled-webhook",
-        webshippyIdempotency: "reference-reconciliation",
+        webshippyIdempotency: "durable-order-lock+reference-reconciliation",
     });
 });

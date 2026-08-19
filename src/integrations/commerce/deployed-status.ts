@@ -14,5 +14,5 @@ export const DEPLOYED_COMMERCE_STATUS = {
     webshippyConnection: "shopify-connector",
     webshippyTestBridge: "shopify-orders-paid-webhook",
     webshippyCancellationBridge: "shopify-orders-cancelled-webhook",
-    webshippyIdempotency: "reference-reconciliation",
+    webshippyIdempotency: "durable-order-lock+reference-reconciliation",
 } as const;
