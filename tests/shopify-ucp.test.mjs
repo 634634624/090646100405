@@ -7,6 +7,7 @@ import {
     checkoutRequest,
     checkoutUrlFromResponse,
     DEMO_VARIANT_IDS,
+    unavailableCatalog,
     validateCheckoutLines,
 } from "../src/integrations/commerce/shopify-ucp.ts";
 
@@ -46,6 +47,16 @@ test("maps Shopify minor-unit prices and availability onto the checked seed", ()
     assert.equal(products[0].variants[0].price.amount, "89990");
     assert.equal(products[1].inventoryState, "sold-out");
     assert.equal(products[2].variants[0].availableForSale, true);
+});
+
+test("fails closed when the live Shopify catalog is unavailable", () => {
+    const products = unavailableCatalog(MOCK_PRODUCTS);
+    assert.equal(products.length, MOCK_PRODUCTS.length);
+    assert.equal(products.every((product) => product.inventoryState === "sold-out"), true);
+    assert.equal(products.every((product) => product.variants.every((variant) =>
+        variant.availableForSale === false && variant.quantityAvailable === 0,
+    )), true);
+    assert.equal(MOCK_PRODUCTS.some((product) => product.variants[0].availableForSale), true);
 });
 
 test("accepts only the exact Shopify cart host and rejects sold-out outcomes", () => {

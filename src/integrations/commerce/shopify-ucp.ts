@@ -136,6 +136,18 @@ export function applyShopifyCatalog(seed: Product[], payload: unknown): Product[
     });
 }
 
+export function unavailableCatalog(seed: Product[]): Product[] {
+    return seed.map((product) => ({
+        ...product,
+        variants: product.variants.map((variant) => ({
+            ...variant,
+            availableForSale: false,
+            quantityAvailable: 0,
+        })),
+        inventoryState: "sold-out",
+    }));
+}
+
 export function checkoutUrlFromResponse(payload: unknown, expectedLines?: CheckoutLineInput[]): string {
     const root = asObject(payload);
     if (root?.error) throw new Error("A Shopify pénztár nem érhető el.");

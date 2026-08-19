@@ -5,6 +5,7 @@ import {
     checkoutRequest,
     checkoutUrlFromResponse,
     SHOPIFY_UCP_ENDPOINT,
+    unavailableCatalog,
     validateCheckoutLines,
 } from "@/integrations/commerce/shopify-ucp";
 import { MOCK_PRODUCTS } from "@/data/demo-catalog";
@@ -32,7 +33,7 @@ export const GET: APIRoute = async () => {
             headers: { ...jsonHeaders, "Cache-Control": "public, max-age=60, stale-while-revalidate=300" },
         });
     } catch {
-        return Response.json({ products: MOCK_PRODUCTS, stale: true }, {
+        return Response.json({ products: unavailableCatalog(MOCK_PRODUCTS), stale: true }, {
             headers: { ...jsonHeaders, "Cache-Control": "no-store" },
         });
     }

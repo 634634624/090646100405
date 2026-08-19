@@ -16,6 +16,39 @@ const viewports = [
     { name: "desktop", width: 1440, height: 900 },
 ];
 const themes = ["light", "dark"];
+const qaProducts = [
+    ["9251757129866", "50016701087882", "otthoni-zene-alapcsomag", "Otthoni zene alapcsomag", 89_990],
+    ["9251758178442", "50016706265226", "kompakt-sztereo-csomag", "Kompakt sztereó csomag", 119_990],
+    ["9251758866570", "50016709574794", "olvasosarok-fenycsomag", "Olvasósarok fénycsomag", 18_990],
+].map(([productId, variantId, handle, title, amount], index) => {
+    const price = { amount: String(amount), currencyCode: "HUF" };
+    const featuredImage = {
+        url: index === 2 ? "/img/placeholders/interior/interior-4.jpg" : `/img/uui/application/listing-0${index + 1}.webp`,
+        altText: title,
+        width: 1200,
+        height: 900,
+    };
+    return {
+        id: `gid://shopify/Product/${productId}`,
+        handle,
+        title,
+        description: "QA catalog product",
+        productType: "Műszaki",
+        tags: [],
+        featuredImage,
+        images: [featuredImage],
+        variants: [{
+            id: `gid://shopify/ProductVariant/${variantId}`,
+            title: "Alapváltozat",
+            selectedOptions: [{ name: "Változat", value: "Alap" }],
+            price,
+            availableForSale: true,
+            quantityAvailable: 10,
+        }],
+        priceRange: { minVariantPrice: price, maxVariantPrice: price },
+        inventoryState: "available",
+    };
+});
 const contentTypes = new Map([
     [".css", "text/css; charset=utf-8"],
     [".gif", "image/gif"],
@@ -100,7 +133,7 @@ async function startStaticServer(files) {
                     "content-type": "application/json; charset=utf-8",
                 });
                 response.end(JSON.stringify(request.method === "GET"
-                    ? { stale: true }
+                    ? { products: qaProducts }
                     : { error: "Static QA server does not execute provider writes." }));
                 return;
             }

@@ -1,7 +1,9 @@
 import { SHOPIFY_STORE_DOMAIN } from "./shopify-ucp.ts";
 
 export const SHOPIFY_PAID_TOPIC = "orders/paid";
+export const SHOPIFY_CANCELLED_TOPIC = "orders/cancelled";
 export const SHOPIFY_WEBHOOK_BODY_LIMIT = 256 * 1024;
+const WEBSHIPPY_API_URL = "https://app.webshippy.com/wspyapi";
 
 const TEST_PRODUCT_BY_SKU = {
     "DEMO-TECH-001": { productName: "Otthoni zene alapcsomag", priceGross: 89_990 },
@@ -71,8 +73,8 @@ export async function verifyShopifyWebhook(rawBody: string | Uint8Array, receive
     return equalText(base64(new Uint8Array(signature)), receivedHmac);
 }
 
-export function validateShopifyWebhookHeaders(headers: Headers) {
-    if (headers.get("x-shopify-topic") !== SHOPIFY_PAID_TOPIC) throw new Error("Unexpected Shopify topic.");
+export function validateShopifyWebhookHeaders(headers: Headers, expectedTopic = SHOPIFY_PAID_TOPIC) {
+    if (headers.get("x-shopify-topic") !== expectedTopic) throw new Error("Unexpected Shopify topic.");
     if (headers.get("x-shopify-shop-domain") !== SHOPIFY_STORE_DOMAIN) throw new Error("Unexpected Shopify store.");
     const webhookId = headers.get("x-shopify-webhook-id")?.trim();
     if (!webhookId || webhookId.length > 100) throw new Error("Missing Shopify delivery ID.");
@@ -86,8 +88,8 @@ export function buildWebshippyTestOrderFromShopify(payload: unknown) {
 
     const orderId = text(String(order.id ?? ""), 30);
     if (!/^\d{1,30}$/.test(orderId)) throw new Error("Invalid Shopify order ID.");
-    const referenceId = `shopify-${orderId}`;
-    if (referenceId.length > 50) throw new Error("Shopify order ID is too long.");
+    const referenceId = orderId;
+    const referenceName = `[TESZT] Shopify ${text(order.name, 30) || orderId}`;
 
     const address = (order.shipping_address ?? order.billing_address) as ShopifyAddress | undefined;
     if (!address || typeof address !== "object") throw new Error("Shopify order has no address.");
@@ -131,7 +133,7 @@ export function buildWebshippyTestOrderFromShopify(payload: unknown) {
     const shopMoney = shippingSet?.shop_money as Record<string, unknown> | undefined;
     return {
         referenceId,
-        referenceName: `[TESZT] Shopify ${text(order.name, 30) || orderId}`,
+        referenceName,
         createdAt: webshippyDate(order.created_at),
         shipping: {
             name: `QA TESZT - ${name}`.slice(0, 200),
@@ -164,6 +166,85 @@ export function safeWebshippyResult(payload: unknown) {
     const wspyId = String(result.wspyId ?? "");
     if (!/^\d+$/.test(wspyId)) throw new Error("Webshippy did not return an order ID.");
     return { wspyId };
+}
+
+type WebshippyOrderRecord = {
+    wspyId: string;
+    referenceId: string;
+    referenceName: string;
+    status: string;
+};
+
+function safeWebshippyOrders(payload: unknown): WebshippyOrderRecord[] {
+    if (!payload || typeof payload !== "object" || Array.isArray(payload)) throw new Error("Invalid Webshippy response.");
+    const envelope = payload as Record<string, unknown>;
+    if (envelope.status !== "success" || !Array.isArray(envelope.result)) throw new Error("Webshippy order lookup failed.");
+    return envelope.result.map((raw) => {
+        if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("Invalid Webshippy order.");
+        const record = raw as Record<string, unknown>;
+        const wspyId = String(record.wspyId ?? "");
+        if (!/^\d+$/.test(wspyId)) throw new Error("Invalid Webshippy order ID.");
+        return {
+            wspyId,
+            referenceId: String(record.referenceId ?? ""),
+            referenceName: String(record.referenceName ?? ""),
+            status: String(record.status ?? ""),
+        };
+    });
+}
+
+function safeWebshippyDelete(payload: unknown) {
+    if (!payload || typeof payload !== "object" || Array.isArray(payload)) throw new Error("Invalid Webshippy response.");
+    if ((payload as Record<string, unknown>).status !== "success") throw new Error("Webshippy did not delete the order.");
+}
+
+async function webshippyRequest(
+    fetchProvider: typeof fetch,
+    apiKey: string,
+    action: string,
+    input: Record<string, unknown>,
+) {
+    const body = new URLSearchParams({ request: JSON.stringify({ apiKey, ...input }) });
+    const response = await fetchProvider(`${WEBSHIPPY_API_URL}/${action}/json`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body,
+        signal: AbortSignal.timeout(4_000),
+    });
+    if (!response.ok) throw new Error("Webshippy unavailable.");
+    return response.json() as Promise<unknown>;
+}
+
+async function findWebshippyOrder(
+    fetchProvider: typeof fetch,
+    apiKey: string,
+    referenceId: string,
+    referenceName: string,
+) {
+    const payload = await webshippyRequest(fetchProvider, apiKey, "GetOrder", {
+        page: 0,
+        limit: 10,
+        filters: { referenceName },
+    });
+    const legacyReferenceId = `shopify-${referenceId}`;
+    const matches = safeWebshippyOrders(payload).filter((order) =>
+        order.referenceName === referenceName &&
+        (order.referenceId === referenceId || order.referenceId === legacyReferenceId),
+    );
+    if (matches.length > 1) throw new Error("Duplicate Webshippy orders require manual review.");
+    return matches[0] ?? null;
+}
+
+function shopifyOrderIdentity(payload: unknown) {
+    if (!payload || typeof payload !== "object" || Array.isArray(payload)) throw new Error("Invalid Shopify order.");
+    const order = payload as Record<string, unknown>;
+    if (order.test !== true) return null;
+    const orderId = text(String(order.id ?? order.order_id ?? ""), 30);
+    if (!/^\d{1,30}$/.test(orderId)) throw new Error("Invalid Shopify order ID.");
+    return {
+        referenceId: orderId,
+        referenceName: `[TESZT] Shopify ${text(order.name, 30) || orderId}`,
+    };
 }
 
 type ShopifyBridgeEnv = {
@@ -244,21 +325,88 @@ export async function handleShopifyPaidWebhook(
         order = buildWebshippyTestOrderFromShopify(JSON.parse(rawBody));
     } catch (cause) {
         const message = cause instanceof Error ? cause.message : "Invalid webhook.";
+        if (message === "Shopify order has an unsupported delivery address.") {
+            return json({ error: "Unsupported delivery country." }, 422);
+        }
         return json({ accepted: true, skipped: message });
     }
     if (!order) return json({ accepted: true, skipped: "non-test-order", webhookId });
 
     try {
-        const body = new URLSearchParams({ request: JSON.stringify({ apiKey, order }) });
-        const response = await fetchProvider("https://app.webshippy.com/wspyapi/CreateOrder/json", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-            body,
-            signal: AbortSignal.timeout(4_000),
-        });
-        if (!response.ok) return json({ error: "Webshippy unavailable." }, 503);
-        const result = safeWebshippyResult(await response.json());
+        const existing = await findWebshippyOrder(fetchProvider, apiKey, order.referenceId, order.referenceName);
+        if (existing) {
+            return json({
+                accepted: true,
+                webhookId,
+                referenceId: order.referenceId,
+                wspyId: existing.wspyId,
+                existing: true,
+            });
+        }
+        const result = safeWebshippyResult(await webshippyRequest(fetchProvider, apiKey, "CreateOrder", { order }));
         return json({ accepted: true, webhookId, referenceId: order.referenceId, ...result });
+    } catch {
+        return json({ error: "Webshippy unavailable." }, 503);
+    }
+}
+
+export async function handleShopifyCancelledWebhook(
+    request: Request,
+    runtimeEnv: ShopifyBridgeEnv,
+    fetchProvider: typeof fetch = fetch,
+) {
+    const secret = runtimeEnv.SHOPIFY_WEBHOOK_SECRET?.trim();
+    const apiKey = runtimeEnv.WEBSHIPPY_API_KEY?.trim();
+    if (!secret || !apiKey || runtimeEnv.WEBSHIPPY_WRITE_MODE !== "test") {
+        return json({ error: "Bridge unavailable." }, 503);
+    }
+
+    let rawBytes: Uint8Array;
+    try {
+        rawBytes = await readBoundedBody(request);
+    } catch (cause) {
+        if (cause instanceof RangeError) return json({ error: "Payload too large." }, 413);
+        return json({ error: "Invalid payload." }, 400);
+    }
+    if (!await verifyShopifyWebhook(rawBytes, request.headers.get("x-shopify-hmac-sha256") ?? "", secret)) {
+        return json({ error: "Invalid signature." }, 401);
+    }
+
+    let webhookId = "";
+    let identity: ReturnType<typeof shopifyOrderIdentity>;
+    try {
+        ({ webhookId } = validateShopifyWebhookHeaders(request.headers, SHOPIFY_CANCELLED_TOPIC));
+        const rawBody = new TextDecoder("utf-8", { fatal: true }).decode(rawBytes);
+        identity = shopifyOrderIdentity(JSON.parse(rawBody));
+    } catch (cause) {
+        const message = cause instanceof Error ? cause.message : "Invalid webhook.";
+        return json({ accepted: true, skipped: message });
+    }
+    if (!identity) return json({ accepted: true, skipped: "non-test-order", webhookId });
+
+    try {
+        const existing = await findWebshippyOrder(
+            fetchProvider,
+            apiKey,
+            identity.referenceId,
+            identity.referenceName,
+        );
+        if (!existing) {
+            return json({ accepted: true, webhookId, referenceId: identity.referenceId, alreadyAbsent: true });
+        }
+        if (existing.status !== "new" && existing.status !== "draft") {
+            return json({ error: "Webshippy order can no longer be cancelled automatically." }, 409);
+        }
+        safeWebshippyDelete(await webshippyRequest(fetchProvider, apiKey, "deleteOrder", {
+            filters: { wspyId: Number(existing.wspyId) },
+        }));
+        return json({
+            accepted: true,
+            webhookId,
+            referenceId: identity.referenceId,
+            wspyId: existing.wspyId,
+            deleted: true,
+        });
     } catch {
         return json({ error: "Webshippy unavailable." }, 503);
     }

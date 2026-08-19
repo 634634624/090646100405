@@ -49,7 +49,7 @@ import {
 } from "@/data/demo-catalog";
 import { INFO_PAGES, STORE, type InfoPageKey } from "@/config/store";
 import { readConsent, saveConsent } from "@/integrations/measurement";
-import { SHOPIFY_STORE_DOMAIN } from "@/integrations/commerce/shopify-ucp";
+import { SHOPIFY_STORE_DOMAIN, unavailableCatalog } from "@/integrations/commerce/shopify-ucp";
 
 export type StorefrontView = "shop" | "product" | "cart" | "checkout" | "order" | "info";
 type StorefrontMode = "demo" | "shopify" | "provider";
@@ -440,7 +440,9 @@ export function SmallShopExperience({
     initialCategory,
     infoKey = "faq",
 }: Props) {
-    const [products, setProducts] = useState<Product[]>(MOCK_PRODUCTS);
+    const [products, setProducts] = useState<Product[]>(
+        mode === "shopify" ? unavailableCatalog(MOCK_PRODUCTS) : MOCK_PRODUCTS,
+    );
     const [cart, setCart] = useState<Cart>(EMPTY_CART);
     const [loading, setLoading] = useState(false);
     const [pending, setPending] = useState(false);
@@ -494,8 +496,10 @@ export function SmallShopExperience({
                 }
                 if (active) setProducts(payload.products);
             } catch {
-                // The checked local seed remains visible; checkout revalidates all lines in Shopify.
-                if (active) setError("A pillanatnyi Shopify készlet nem frissült. A pénztár újra ellenőrzi a kosarat.");
+                if (active) {
+                    setProducts(unavailableCatalog(MOCK_PRODUCTS));
+                    setError("A pillanatnyi Shopify készlet nem frissült, ezért a vásárlást biztonságból leállítottuk.");
+                }
             } finally {
                 if (active) setLoading(false);
             }

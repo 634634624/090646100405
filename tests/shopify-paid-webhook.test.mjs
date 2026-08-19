@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
     buildWebshippyTestOrderFromShopify,
+    handleShopifyCancelledWebhook,
     handleShopifyPaidWebhook,
     safeWebshippyResult,
     validateShopifyWebhookHeaders,
@@ -73,7 +74,7 @@ test("requires the paid topic, exact store, and delivery id", () => {
 
 test("maps only trusted demo SKUs and server-owned prices", () => {
     const order = buildWebshippyTestOrderFromShopify(payload);
-    assert.equal(order.referenceId, "shopify-6123456789012");
+    assert.equal(order.referenceId, "6123456789012");
     assert.equal(order.shipping.mode, "GLS-HU");
     assert.match(order.shipping.note, /TILOS TELJESÍTENI/);
     assert.equal(order.payment.paymentStatus, "pending");
@@ -95,7 +96,10 @@ test("accepts only successful numeric Webshippy IDs", () => {
 
 test("submits a valid signed test order without exposing credentials", async () => {
     let submitted;
-    const response = await handleShopifyPaidWebhook(await signedRequest(payload), bridgeEnv, async (_url, init) => {
+    const response = await handleShopifyPaidWebhook(await signedRequest(payload), bridgeEnv, async (url, init) => {
+        if (String(url).includes("/GetOrder/")) {
+            return Response.json({ status: "success", result: [] });
+        }
         submitted = new URLSearchParams(init.body).get("request");
         return Response.json({ status: "success", wspyId: 43530099 });
     });
@@ -103,7 +107,7 @@ test("submits a valid signed test order without exposing credentials", async () 
     assert.deepEqual(await response.json(), {
         accepted: true,
         webhookId: "delivery-1",
-        referenceId: "shopify-6123456789012",
+        referenceId: "6123456789012",
         wspyId: "43530099",
     });
     assert.match(submitted, /private-api-key/);
@@ -128,8 +132,84 @@ test("acknowledges permanent payload errors but retries transient Webshippy erro
     assert.equal(skipped.status, 200);
     assert.match((await skipped.json()).skipped, /unsupported product/);
 
+    const unsupportedCountry = await signedRequest({
+        ...payload,
+        shipping_address: { ...payload.shipping_address, country_code: "US" },
+    });
+    assert.equal((await handleShopifyPaidWebhook(unsupportedCountry, bridgeEnv)).status, 422);
+
     const unavailable = await handleShopifyPaidWebhook(await signedRequest(payload), bridgeEnv, async () => {
         throw new Error("timeout");
     });
     assert.equal(unavailable.status, 503);
+});
+
+test("reconciles an accepted timeout before retrying CreateOrder", async () => {
+    let created = false;
+    let createCalls = 0;
+    const provider = async (url) => {
+        if (String(url).includes("/GetOrder/")) {
+            return Response.json({
+                status: "success",
+                result: created ? [{
+                    wspyId: 43530111,
+                    referenceId: "6123456789012",
+                    referenceName: "[TESZT] Shopify #1008",
+                    status: "new",
+                }] : [],
+            });
+        }
+        createCalls += 1;
+        created = true;
+        throw new Error("accepted upstream, response lost");
+    };
+
+    assert.equal((await handleShopifyPaidWebhook(await signedRequest(payload), bridgeEnv, provider)).status, 503);
+    const retry = await handleShopifyPaidWebhook(
+        await signedRequest(payload, { "x-shopify-webhook-id": "delivery-1-retry" }),
+        bridgeEnv,
+        provider,
+    );
+    assert.equal(retry.status, 200);
+    assert.deepEqual(await retry.json(), {
+        accepted: true,
+        webhookId: "delivery-1-retry",
+        referenceId: "6123456789012",
+        wspyId: "43530111",
+        existing: true,
+    });
+    assert.equal(createCalls, 1);
+});
+
+test("deletes a new Webshippy test order after a signed Shopify cancellation", async () => {
+    const actions = [];
+    const provider = async (url, init) => {
+        actions.push(String(url).split("/").at(-2));
+        const request = JSON.parse(new URLSearchParams(init.body).get("request"));
+        if (String(url).includes("/GetOrder/")) {
+            assert.deepEqual(request.filters, { referenceName: "[TESZT] Shopify #1008" });
+            return Response.json({ status: "success", result: [{
+                wspyId: 43530112,
+                referenceId: "6123456789012",
+                referenceName: "[TESZT] Shopify #1008",
+                status: "new",
+            }] });
+        }
+        assert.deepEqual(request.filters, { wspyId: 43530112 });
+        return Response.json({ status: "success", message: [] });
+    };
+    const request = await signedRequest(payload, {
+        "x-shopify-topic": "orders/cancelled",
+        "x-shopify-webhook-id": "cancel-delivery-1",
+    });
+    const response = await handleShopifyCancelledWebhook(request, bridgeEnv, provider);
+    assert.equal(response.status, 200);
+    assert.deepEqual(await response.json(), {
+        accepted: true,
+        webhookId: "cancel-delivery-1",
+        referenceId: "6123456789012",
+        wspyId: "43530112",
+        deleted: true,
+    });
+    assert.deepEqual(actions, ["GetOrder", "deleteOrder"]);
 });
