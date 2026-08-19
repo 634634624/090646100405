@@ -8,6 +8,8 @@ export const DEPLOYED_COMMERCE_STATUS = {
     storefrontInventory: "webshippy-stock+shopify-availability",
     storefrontCheckout: "shopify-ucp",
     storefrontProducts: 3,
+    storefrontCatalogCache: "cloudflare-workers-10s",
+    storefrontProviderRetry: "bounded-transient-retry",
     webshippyConnection: "shopify-connector",
     webshippyTestBridge: "shopify-orders-paid-webhook",
     webshippyCancellationBridge: "shopify-orders-cancelled-webhook",

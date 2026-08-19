@@ -79,6 +79,17 @@ test("fetches stock server-side without exposing the API key in the URL", async 
     assert.equal(stock.length, 3);
 });
 
+test("recovers when Webshippy briefly rate-limits the stock feed", async () => {
+    let calls = 0;
+    const stock = await fetchWebshippyStock("private-key", async () => {
+        calls += 1;
+        if (calls < 3) return new Response("busy", { status: 429 });
+        return new Response(CSV, { status: 200 });
+    });
+    assert.equal(calls, 3);
+    assert.equal(stock[0].availableQuantity, 9);
+});
+
 test("rejects missing credentials, provider errors, and malformed stock", async () => {
     let calls = 0;
     await assert.rejects(

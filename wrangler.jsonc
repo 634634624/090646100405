@@ -3,6 +3,9 @@
   "name": "090646100405",
   "compatibility_date": "2026-08-16",
   "compatibility_flags": ["nodejs_compat"],
+  "cache": {
+    "enabled": true
+  },
   "assets": {
     "run_worker_first": ["/api/*"]
   },

@@ -1,5 +1,6 @@
 import type { Product } from "@/toolkit/commerce-shopify/lib/contracts";
 import type { CheckoutLineInput } from "./shopify-ucp.ts";
+import { UpstreamHttpError, withTransientRetry } from "./transient-retry.ts";
 
 export interface WebshippyStockRecord {
     sku: string;
@@ -63,14 +64,19 @@ export async function fetchWebshippyStock(
 ) {
     if (!apiKey.trim()) throw new Error("Hiányzó Webshippy API kulcs.");
     const body = new URLSearchParams({ request: JSON.stringify({ apiKey }) });
-    const response = await fetchProvider(`${baseUrl.replace(/\/$/, "")}/getStockInfoCsv/json/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-        body,
-        signal: AbortSignal.timeout(8_000),
+    return withTransientRetry(async () => {
+        const response = await fetchProvider(`${baseUrl.replace(/\/$/, "")}/getStockInfoCsv/json/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+            body,
+            signal: AbortSignal.timeout(5_000),
+        });
+        if (!response.ok) {
+            await response.body?.cancel();
+            throw new UpstreamHttpError("Webshippy", response.status);
+        }
+        return parseWebshippyStockCsv(await response.text());
     });
-    if (!response.ok) throw new Error(`Webshippy HTTP ${response.status}`);
-    return parseWebshippyStockCsv(await response.text());
 }
 
 export function applyWebshippyStock(products: Product[], stock: WebshippyStockRecord[]): Product[] {

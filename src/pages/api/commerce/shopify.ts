@@ -14,21 +14,28 @@ import {
     assertWebshippyStock,
     fetchWebshippyStock,
 } from "@/integrations/commerce/webshippy-stock";
+import { UpstreamHttpError, withTransientRetry } from "@/integrations/commerce/transient-retry";
 import { MOCK_PRODUCTS } from "@/data/demo-catalog";
 
 export const prerender = false;
 
 const jsonHeaders = { "Content-Type": "application/json; charset=utf-8" };
+const catalogCacheControl = "public, max-age=10, must-revalidate";
 
 async function shopify(body: unknown) {
-    const response = await fetch(SHOPIFY_UCP_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(body),
-        signal: AbortSignal.timeout(8_000),
+    return withTransientRetry(async () => {
+        const response = await fetch(SHOPIFY_UCP_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify(body),
+            signal: AbortSignal.timeout(5_000),
+        });
+        if (!response.ok) {
+            await response.body?.cancel();
+            throw new UpstreamHttpError("Shopify", response.status);
+        }
+        return response.json() as Promise<unknown>;
     });
-    if (!response.ok) throw new Error(`Shopify HTTP ${response.status}`);
-    return response.json() as Promise<unknown>;
 }
 
 export const GET: APIRoute = async () => {
@@ -39,11 +46,23 @@ export const GET: APIRoute = async () => {
         ]);
         const products = applyWebshippyStock(applyShopifyCatalog(MOCK_PRODUCTS, payload), stock);
         return Response.json({ products }, {
-            headers: { ...jsonHeaders, "Cache-Control": "public, max-age=60, stale-while-revalidate=300" },
+            headers: {
+                ...jsonHeaders,
+                "Cache-Control": catalogCacheControl,
+                "X-DevShop-Catalog-State": "fresh",
+            },
         });
-    } catch {
+    } catch (cause) {
+        console.error(JSON.stringify({
+            event: "catalog_upstream_failure",
+            error: cause instanceof Error ? cause.name : "UnknownError",
+        }));
         return Response.json({ products: unavailableCatalog(MOCK_PRODUCTS), stale: true }, {
-            headers: { ...jsonHeaders, "Cache-Control": "no-store" },
+            headers: {
+                ...jsonHeaders,
+                "Cache-Control": "no-store",
+                "X-DevShop-Catalog-State": "fail-closed",
+            },
         });
     }
 };
