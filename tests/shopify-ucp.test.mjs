@@ -50,15 +50,25 @@ test("maps Shopify minor-unit prices and availability onto the checked seed", ()
 
 test("accepts only the exact Shopify cart host and rejects sold-out outcomes", () => {
     const valid = { result: { structuredContent: {
-        line_items: [{ id: "line-1" }],
+        line_items: [{ id: "line-1", item: { id: DEMO_VARIANT_IDS[0] }, quantity: 1 }],
         messages: [],
         continue_url: "https://devshop-vmthv4tq.myshopify.com/cart/c/test?key=ok",
     } } };
-    assert.match(checkoutUrlFromResponse(valid), /^https:\/\/devshop-vmthv4tq\.myshopify\.com\/cart\//);
+    assert.match(checkoutUrlFromResponse(valid, [{ variantId: DEMO_VARIANT_IDS[0], quantity: 1 }]), /^https:\/\/devshop-vmthv4tq\.myshopify\.com\/cart\//);
     assert.throws(() => checkoutUrlFromResponse({ result: { structuredContent: {
         line_items: [],
         messages: [{ type: "warning", code: "merchandise_out_of_stock", content: "Sold out" }],
     } } }), /Sold out/);
+    assert.throws(() => checkoutUrlFromResponse({ result: { structuredContent: {
+        line_items: [{ id: "line-1", item: { id: DEMO_VARIANT_IDS[0] }, quantity: 1 }],
+        messages: [{ type: "warning", code: "merchandise_not_enough_stock", content: "Only 1 item was added." }],
+        continue_url: "https://devshop-vmthv4tq.myshopify.com/cart/c/test?key=ok",
+    } } }, [{ variantId: DEMO_VARIANT_IDS[0], quantity: 10 }]), /Only 1 item/);
+    assert.throws(() => checkoutUrlFromResponse({ result: { structuredContent: {
+        line_items: [{ id: "line-1", item: { id: DEMO_VARIANT_IDS[0] }, quantity: 1 }],
+        messages: [],
+        continue_url: "https://devshop-vmthv4tq.myshopify.com/cart/c/test?key=ok",
+    } } }, [{ variantId: DEMO_VARIANT_IDS[0], quantity: 2 }]), /nincs készleten/);
     assert.throws(() => checkoutUrlFromResponse({ result: { structuredContent: {
         line_items: [{}],
         messages: [],

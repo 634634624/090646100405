@@ -47,7 +47,7 @@ export const POST: APIRoute = async ({ request }) => {
         const body = JSON.parse(rawBody) as { lines?: unknown };
         const lines = validateCheckoutLines(body.lines);
         const payload = await shopify(checkoutRequest(lines));
-        const checkoutUrl = checkoutUrlFromResponse(payload);
+        const checkoutUrl = checkoutUrlFromResponse(payload, lines);
         return Response.json({ checkoutUrl }, { headers: { ...jsonHeaders, "Cache-Control": "no-store" } });
     } catch (cause) {
         const message = cause instanceof Error ? cause.message : "A Shopify pénztár most nem indítható.";

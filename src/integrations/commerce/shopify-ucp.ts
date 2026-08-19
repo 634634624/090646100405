@@ -136,7 +136,7 @@ export function applyShopifyCatalog(seed: Product[], payload: unknown): Product[
     });
 }
 
-export function checkoutUrlFromResponse(payload: unknown): string {
+export function checkoutUrlFromResponse(payload: unknown, expectedLines?: CheckoutLineInput[]): string {
     const root = asObject(payload);
     if (root?.error) throw new Error("A Shopify pénztár nem érhető el.");
     const result = asObject(root?.result);
@@ -146,11 +146,27 @@ export function checkoutUrlFromResponse(payload: unknown): string {
     const blocking = messages.map(asObject).find((message) =>
         message?.type === "error" ||
         message?.severity === "unrecoverable" ||
-        message?.code === "merchandise_out_of_stock",
+        message?.code === "merchandise_out_of_stock" ||
+        message?.code === "merchandise_not_enough_stock",
     );
     if (blocking) throw new Error(typeof blocking.content === "string" ? blocking.content : "A Shopify elutasította a kosarat.");
     const lines = Array.isArray(cart?.line_items) ? cart.line_items : [];
     if (!lines.length || typeof cart?.continue_url !== "string") throw new Error("A Shopify nem hozott létre használható kosarat.");
+    if (expectedLines) {
+        const returned = new Map<string, number>();
+        for (const rawLine of lines) {
+            const line = asObject(rawLine);
+            const item = asObject(line?.item);
+            const quantity = line?.quantity;
+            if (typeof item?.id === "string" && Number.isInteger(quantity)) {
+                returned.set(item.id, Number(quantity));
+            }
+        }
+        const exactMatch = returned.size === expectedLines.length && expectedLines.every(({ variantId, quantity }) =>
+            returned.get(variantId) === quantity,
+        );
+        if (!exactMatch) throw new Error("A kért mennyiség nincs készleten.");
+    }
     const url = new URL(cart.continue_url);
     if (url.protocol !== "https:" || url.hostname !== SHOPIFY_STORE_DOMAIN || !url.pathname.startsWith("/cart/")) {
         throw new Error("A Shopify érvénytelen pénztárhivatkozást adott vissza.");
