@@ -43,6 +43,7 @@ promotion brief without changing page composition.
 - Final company address, company registration number, tax number, official e-mail, and phone.
 - Approved ÁSZF and privacy text.
 - Supplier contract, exact catalog schema, warehouse, delivery, return, support, and order rules.
-- Enable the Hungarian Shopify market; the demo store currently exposes these variants only in its default US market.
+- Remove the Shopify development-store password before public checkout can be used without a login.
+- Recheck the Hungarian market and International Shipping settings before launch.
 - Final product feed, stock, images, consumer prices, delivery fees, and warranty data.
 - Domain, canonical URLs, production metadata, monitoring, rollback, and deployment approval.

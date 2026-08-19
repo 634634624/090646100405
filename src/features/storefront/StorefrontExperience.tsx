@@ -1,5 +1,6 @@
 "use client";
 
+// @uui-source: ADAPT src/catalog/custom/shadcn-store-storefront-hero/05-storefront-hero5.tsx (hero: card section, 1fr/1.3fr split, stat strip)
 // @uui-source: ADAPT src/catalog/custom/uui-prompt-ecommerce/01-editorial-storefront.tsx
 // @uui-source: ADAPT src/catalog/custom/shadcn-store-category-filters/02-category-filter2.tsx
 // @uui-source: ADAPT src/catalog/components/slideout-menus/filters-menu.tsx
@@ -493,6 +494,7 @@ export function SmallShopExperience({
                 }
                 if (active) setProducts(payload.products);
             } catch {
+                // The checked local seed remains visible; checkout revalidates all lines in Shopify.
                 if (active) setError("A pillanatnyi Shopify készlet nem frissült. A pénztár újra ellenőrzi a kosarat.");
             } finally {
                 if (active) setLoading(false);
@@ -894,68 +896,61 @@ export function SmallShopExperience({
 
             {view === "shop" && (
                 <>
-                    {/* Simple split hero (owner: the old overlapping-card layout could
-                        never be responsive-solid). No negative margins, no absolute
-                        overlays: text column + image column, stacking cleanly on mobile. */}
+                    {/* Hero = ADAPT of catalog storefront-hero5 (see @uui-source header):
+                        card section on the recessed ground, 1fr/1.3fr split, stat strip.
+                        Mobile stat-hide carried over from the release-branch fix (Codex). */}
                     <section
                         data-uui-critical-hero
-                        className="bg-secondary px-4 py-12 sm:py-16 lg:px-8 lg:py-24"
+                        className="bg-secondary px-4 py-8 sm:py-12 lg:px-8 lg:py-16"
                     >
-                        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
-                            <div>
-                                <Badge color="success">Induló magyar webshop</Badge>
-                                <h1 className="mt-5 max-w-xl text-balance text-display-sm font-semibold tracking-tight text-primary sm:text-display-md lg:text-display-lg">
-                                    {initialCategory ? `${initialCategory} termékek, érthetően.` : "Ami kell. Semmi, ami nem."}
-                                </h1>
-                                <p className="mt-5 max-w-xl text-pretty text-md leading-7 text-secondary sm:text-lg">
-                                    {initialCategory
-                                        ? `Válogatott ${initialCategory.toLowerCase()} kínálat világos árakkal és egyszerű vásárlással.`
-                                        : "Hasznos műszaki és háztartási termékek, világos árakkal és egyszerű vásárlással."}
-                                </p>
-                                <div
-                                    data-uui-hero-actions
-                                    className="mt-7 flex flex-col gap-3 sm:flex-row"
-                                >
-                                    <Button
-                                        href="#collections"
-                                        size="lg"
-                                        className="w-full sm:w-auto"
-                                        iconTrailing={ArrowRight}
-                                    >
-                                        Termékek megtekintése
-                                    </Button>
-                                    <Button
-                                        href="#about"
-                                        color="secondary"
-                                        size="lg"
-                                        className="w-full sm:w-auto"
-                                    >
-                                        Miért DevShopify?
-                                    </Button>
+                        <div className="mx-auto max-w-7xl overflow-hidden rounded-2xl bg-primary shadow-sm ring-1 ring-secondary">
+                            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr]">
+                                <div className="p-7 lg:p-12">
+                                    <div className="relative z-10 max-w-xl">
+                                        <Badge color="success" size="sm">Induló magyar webshop</Badge>
+                                        <h1 className="mt-5 text-balance text-display-sm font-semibold text-primary md:text-display-lg">
+                                            {initialCategory ? `${initialCategory} termékek, érthetően.` : "Ami kell. Semmi, ami nem."}
+                                        </h1>
+                                        <p className="mt-5 max-w-2xl text-lg text-tertiary">
+                                            {initialCategory
+                                                ? `Válogatott ${initialCategory.toLowerCase()} kínálat világos árakkal és egyszerű vásárlással.`
+                                                : "Hasznos műszaki és háztartási termékek, világos árakkal és egyszerű vásárlással."}
+                                        </p>
+                                        <div data-uui-hero-actions className="mt-7 flex flex-wrap gap-3">
+                                            <Button href="#collections" size="lg" iconTrailing={ArrowRight}>
+                                                Termékek megtekintése
+                                            </Button>
+                                            <Button href="#about" size="lg" color="secondary">
+                                                Miért DevShopify?
+                                            </Button>
+                                        </div>
+                                    </div>
+                                    <div className="mt-10 hidden grid-cols-3 gap-3 text-sm sm:grid">
+                                        <span>
+                                            <strong className="block text-xl text-primary">0 Ft</strong>
+                                            <span className="text-tertiary">rejtett költség</span>
+                                        </span>
+                                        <span>
+                                            <strong className="block text-xl text-primary">14 nap</strong>
+                                            <span className="text-tertiary">elállási jog</span>
+                                        </span>
+                                        <span>
+                                            <strong className="block text-xl text-primary">H–P</strong>
+                                            <span className="text-tertiary">magyar ügyfélszolgálat</span>
+                                        </span>
+                                    </div>
                                 </div>
-                                <ul className="mt-7 hidden flex-wrap gap-x-6 gap-y-2.5 border-t border-secondary pt-5 sm:flex">
-                                    {[
-                                        "Világos árak",
-                                        "14 nap elállás",
-                                        "Magyar ügyfélszolgálat",
-                                    ].map((claim) => (
-                                        <li key={claim} className="flex items-center gap-2 whitespace-nowrap text-sm font-medium text-secondary">
-                                            <CheckCircle className="size-4 shrink-0 text-fg-brand" aria-hidden="true" />
-                                            {claim}
-                                        </li>
-                                    ))}
-                                </ul>
+                                <img
+                                    data-uui-hero-media
+                                    src="/img/uui/application/listing-01.webp"
+                                    alt="Rendezett nappali műszaki és háztartási termékekkel"
+                                    width={1200}
+                                    height={900}
+                                    loading="eager"
+                                    fetchPriority="high"
+                                    className="h-full min-h-96 w-full object-cover"
+                                />
                             </div>
-                            <img
-                                data-uui-hero-media
-                                src="/img/uui/application/listing-01.webp"
-                                alt="Rendezett nappali műszaki és háztartási termékekkel"
-                                width={1200}
-                                height={900}
-                                loading="eager"
-                                fetchPriority="high"
-                                className="aspect-[4/3] w-full rounded-3xl object-cover shadow-lg ring-1 ring-secondary"
-                            />
                         </div>
                     </section>
                     <TrustStrip />
