@@ -796,12 +796,12 @@ export function SmallShopExperience({
                                 <EmptyState.Header pattern="circle" patternSize="sm">
                                     <EmptyState.FeaturedIcon color="gray" icon={ShoppingBag03} />
                                 </EmptyState.Header>
-                                <EmptyState.Content>
+                                <div className="z-10 mb-6 flex w-full max-w-88 flex-col items-center justify-center gap-1">
                                     <h2 className="text-md font-semibold text-primary">A kosár üres</h2>
                                     <EmptyState.Description>
                                         Tegyél egy terméket a kosárba, hogy itt átnézhesd.
                                     </EmptyState.Description>
-                                </EmptyState.Content>
+                                </div>
                             </EmptyState>
                         )}
                     </SlideoutMenu.Content>
@@ -1145,12 +1145,12 @@ export function SmallShopExperience({
                                         <EmptyState.Header pattern="circle">
                                             <EmptyState.FeaturedIcon color="gray" icon={SearchLg} />
                                         </EmptyState.Header>
-                                        <EmptyState.Content>
+                                        <div className="z-10 mb-8 flex w-full max-w-88 flex-col items-center justify-center gap-2">
                                             <h2 className="text-md font-semibold text-primary">Nincs találat</h2>
                                             <EmptyState.Description>
                                                 Töröld a szűrőket, vagy próbálj más keresést.
                                             </EmptyState.Description>
-                                        </EmptyState.Content>
+                                        </div>
                                         <EmptyState.Footer>
                                             <Button
                                                 color="secondary"
@@ -1327,12 +1327,12 @@ export function SmallShopExperience({
                             <EmptyState.Header pattern="circle">
                                 <EmptyState.FeaturedIcon color="gray" icon={ShoppingBag03} />
                             </EmptyState.Header>
-                            <EmptyState.Content>
+                            <div className="z-10 mb-8 flex w-full max-w-88 flex-col items-center justify-center gap-2">
                                 <h2 className="text-md font-semibold text-primary">A kosár üres</h2>
                                 <EmptyState.Description>
                                     Nézd meg a kínálatot, és tedd kosárba, ami valóban hasznos.
                                 </EmptyState.Description>
-                            </EmptyState.Content>
+                            </div>
                             <EmptyState.Footer>
                                 <Button href="/shop" iconTrailing={ArrowRight}>Termékek megtekintése</Button>
                             </EmptyState.Footer>
