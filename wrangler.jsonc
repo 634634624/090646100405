@@ -5,5 +5,8 @@
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "run_worker_first": ["/api/*"]
+  },
+  "vars": {
+    "WEBSHIPPY_WRITE_MODE": "test"
   }
 }

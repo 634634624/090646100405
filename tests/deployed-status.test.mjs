@@ -13,5 +13,6 @@ test("reports the deployed Shopify and Webshippy connector architecture", () => 
         storefrontCheckout: "shopify-ucp",
         storefrontProducts: 3,
         webshippyConnection: "shopify-connector",
+        webshippyTestBridge: "shopify-orders-paid-webhook",
     });
 });

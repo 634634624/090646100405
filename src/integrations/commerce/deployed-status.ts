@@ -8,4 +8,5 @@ export const DEPLOYED_COMMERCE_STATUS = {
     storefrontCheckout: "shopify-ucp",
     storefrontProducts: 3,
     webshippyConnection: "shopify-connector",
+    webshippyTestBridge: "shopify-orders-paid-webhook",
 } as const;
