@@ -45,6 +45,8 @@ test("maps Shopify minor-unit prices and availability onto the checked seed", ()
     };
     const products = applyShopifyCatalog(MOCK_PRODUCTS, payload);
     assert.equal(products[0].variants[0].price.amount, "89990");
+    assert.equal(products[0].variants[0].quantityAvailable, 1);
+    assert.equal(products[0].inventoryState, "available");
     assert.equal(products[1].inventoryState, "sold-out");
     assert.equal(products[2].variants[0].availableForSale, true);
 });

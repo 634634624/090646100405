@@ -123,15 +123,16 @@ export function applyShopifyCatalog(seed: Product[], payload: unknown): Product[
             ...product.variants[0],
             price: money,
             availableForSale: available,
-            quantityAvailable: available ? product.variants[0].quantityAvailable : 0,
+            // UCP exposes reliable sellability here, but not the exact Webshippy
+            // quantity. Avoid carrying the demo seed into the live catalog; the
+            // Webshippy stock merge supplies the real count afterwards.
+            quantityAvailable: available ? 1 : 0,
         };
         return {
             ...product,
             variants: [variant],
             priceRange: { minVariantPrice: money, maxVariantPrice: money },
-            inventoryState: available
-                ? product.inventoryState === "sold-out" ? "available" : product.inventoryState
-                : "sold-out",
+            inventoryState: available ? "available" : "sold-out",
         } satisfies Product;
     });
 }

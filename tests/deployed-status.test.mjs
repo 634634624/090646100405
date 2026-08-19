@@ -10,6 +10,7 @@ test("reports the deployed Shopify and Webshippy connector architecture", () => 
         webshippyOrderOwner: "shopify-connector",
         liveWritesEnabled: true,
         storefrontCatalog: "shopify-ucp",
+        storefrontInventory: "webshippy-stock+shopify-availability",
         storefrontCheckout: "shopify-ucp",
         storefrontProducts: 3,
         webshippyConnection: "shopify-connector",

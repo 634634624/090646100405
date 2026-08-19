@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { env } from "cloudflare:workers";
 import {
     applyShopifyCatalog,
     catalogRequest,
@@ -8,6 +9,7 @@ import {
     unavailableCatalog,
     validateCheckoutLines,
 } from "@/integrations/commerce/shopify-ucp";
+import { applyWebshippyStock, fetchWebshippyStock } from "@/integrations/commerce/webshippy-stock";
 import { MOCK_PRODUCTS } from "@/data/demo-catalog";
 
 export const prerender = false;
@@ -27,8 +29,11 @@ async function shopify(body: unknown) {
 
 export const GET: APIRoute = async () => {
     try {
-        const payload = await shopify(catalogRequest());
-        const products = applyShopifyCatalog(MOCK_PRODUCTS, payload);
+        const [payload, stock] = await Promise.all([
+            shopify(catalogRequest()),
+            fetchWebshippyStock(env.WEBSHIPPY_API_KEY ?? ""),
+        ]);
+        const products = applyWebshippyStock(applyShopifyCatalog(MOCK_PRODUCTS, payload), stock);
         return Response.json({ products }, {
             headers: { ...jsonHeaders, "Cache-Control": "public, max-age=60, stale-while-revalidate=300" },
         });
