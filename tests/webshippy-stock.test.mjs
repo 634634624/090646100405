@@ -1,8 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { MOCK_PRODUCTS } from "../src/data/demo-catalog.ts";
+import { DEMO_VARIANT_IDS } from "../src/integrations/commerce/shopify-ucp.ts";
 import {
     applyWebshippyStock,
+    assertWebshippyStock,
     fetchWebshippyStock,
     parseWebshippyStockCsv,
 } from "../src/integrations/commerce/webshippy-stock.ts";
@@ -36,6 +38,23 @@ test("merges Webshippy quantities while Shopify availability remains a hard gate
     assert.throws(() => applyWebshippyStock(shopifyProducts, []), /Hiányzó/);
 });
 
+test("blocks checkout quantities that Webshippy cannot fulfil", () => {
+    const stock = parseWebshippyStockCsv(CSV);
+    assert.doesNotThrow(() => assertWebshippyStock([
+        { variantId: DEMO_VARIANT_IDS[0], quantity: 9 },
+        { variantId: DEMO_VARIANT_IDS[1], quantity: 3 },
+    ], stock));
+    assert.throws(() => assertWebshippyStock([
+        { variantId: DEMO_VARIANT_IDS[1], quantity: 4 },
+    ], stock), /nincs Webshippy-készleten/);
+    assert.throws(() => assertWebshippyStock([
+        { variantId: DEMO_VARIANT_IDS[2], quantity: 1 },
+    ], stock), /nincs Webshippy-készleten/);
+    assert.throws(() => assertWebshippyStock([
+        { variantId: "gid://shopify/ProductVariant/unknown", quantity: 1 },
+    ], stock), /nincs Webshippy-készleten/);
+});
+
 test("fetches stock server-side without exposing the API key in the URL", async () => {
     let captured;
     const stock = await fetchWebshippyStock("private-key", async (url, options) => {
@@ -46,4 +65,30 @@ test("fetches stock server-side without exposing the API key in the URL", async 
     assert.equal(captured.url.includes("private-key"), false);
     assert.equal(captured.request.apiKey, "private-key");
     assert.equal(stock.length, 3);
+});
+
+test("rejects missing credentials, provider errors, and malformed stock", async () => {
+    let calls = 0;
+    await assert.rejects(
+        fetchWebshippyStock("", async () => {
+            calls += 1;
+            return new Response(CSV);
+        }),
+        /Hiányzó/,
+    );
+    assert.equal(calls, 0);
+    await assert.rejects(
+        fetchWebshippyStock("private-key", async () => new Response("unavailable", { status: 503 })),
+        /HTTP 503/,
+    );
+    await assert.rejects(
+        fetchWebshippyStock("private-key", async () => new Response('"sku"\n"DEMO-TECH-001"')),
+        /Hibás/,
+    );
+    await assert.rejects(
+        fetchWebshippyStock("private-key", async () => {
+            throw new DOMException("Timed out", "AbortError");
+        }),
+        { name: "AbortError" },
+    );
 });

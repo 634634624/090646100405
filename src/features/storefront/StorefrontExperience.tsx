@@ -809,9 +809,12 @@ export function SmallShopExperience({
             // (bg-primary + shadow) rises above it, on every view.
             className="min-h-dvh bg-secondary text-primary"
         >
-            <div className="border-b border-utility-orange-200 bg-utility-orange-50 px-4 py-2 text-center text-sm font-semibold text-primary">
+            <aside
+                aria-label="Webshop állapota"
+                className="border-b border-utility-orange-200 bg-utility-orange-50 px-4 py-2 text-center text-sm font-semibold text-primary"
+            >
                 Induló válogatás · műszaki és háztartási termékek magyar vásárlóknak
-            </div>
+            </aside>
             <header className="sticky top-0 z-40 border-b border-secondary bg-primary/90 shadow-xs backdrop-blur-lg">
                 <div className="mx-auto flex h-18 max-w-7xl items-center gap-3 px-4 lg:px-8">
                     <SlideoutMenu.Trigger>
@@ -899,7 +902,7 @@ export function SmallShopExperience({
             </p>
 
             {view === "shop" && (
-                <>
+                <main>
                     {/* Hero = ADAPT of catalog storefront-hero5 (see @uui-source header):
                         card section on the recessed ground, 1fr/1.3fr split, stat strip.
                         Mobile stat-hide carried over from the release-branch fix (Codex). */}
@@ -1198,7 +1201,7 @@ export function SmallShopExperience({
                             </div>
                         </div>
                     </section>
-                </>
+                </main>
             )}
 
             {view === "product" && currentProduct && selectedVariant && (

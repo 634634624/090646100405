@@ -78,6 +78,7 @@ test("maps only trusted demo SKUs and server-owned prices", () => {
     assert.equal(order.shipping.mode, "GLS-HU");
     assert.match(order.shipping.note, /TILOS TELJESÍTENI/);
     assert.equal(order.payment.paymentStatus, "pending");
+    assert.equal(order.shipping.email, "qa@example.com");
     assert.equal(order.products[0].priceGross, 18_990);
     assert.equal(order.products[0].quantity, 2);
 });
@@ -212,4 +213,39 @@ test("deletes a new Webshippy test order after a signed Shopify cancellation", a
         deleted: true,
     });
     assert.deepEqual(actions, ["GetOrder", "deleteOrder"]);
+});
+
+test("cancellation is idempotent when the Webshippy order is already absent", async () => {
+    const request = await signedRequest(payload, {
+        "x-shopify-topic": "orders/cancelled",
+        "x-shopify-webhook-id": "cancel-delivery-absent",
+    });
+    const response = await handleShopifyCancelledWebhook(request, bridgeEnv, async () =>
+        Response.json({ status: "success", result: [] }));
+    assert.equal(response.status, 200);
+    assert.deepEqual(await response.json(), {
+        accepted: true,
+        webhookId: "cancel-delivery-absent",
+        referenceId: "6123456789012",
+        alreadyAbsent: true,
+    });
+});
+
+test("refuses to delete a Webshippy order that has entered fulfilment", async () => {
+    let deleteCalls = 0;
+    const request = await signedRequest(payload, {
+        "x-shopify-topic": "orders/cancelled",
+        "x-shopify-webhook-id": "cancel-delivery-locked",
+    });
+    const response = await handleShopifyCancelledWebhook(request, bridgeEnv, async (url) => {
+        if (String(url).includes("/deleteOrder/")) deleteCalls += 1;
+        return Response.json({ status: "success", result: [{
+            wspyId: 43530113,
+            referenceId: "6123456789012",
+            referenceName: "[TESZT] Shopify #1008",
+            status: "processing",
+        }] });
+    });
+    assert.equal(response.status, 409);
+    assert.equal(deleteCalls, 0);
 });

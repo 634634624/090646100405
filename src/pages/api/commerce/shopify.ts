@@ -9,7 +9,11 @@ import {
     unavailableCatalog,
     validateCheckoutLines,
 } from "@/integrations/commerce/shopify-ucp";
-import { applyWebshippyStock, fetchWebshippyStock } from "@/integrations/commerce/webshippy-stock";
+import {
+    applyWebshippyStock,
+    assertWebshippyStock,
+    fetchWebshippyStock,
+} from "@/integrations/commerce/webshippy-stock";
 import { MOCK_PRODUCTS } from "@/data/demo-catalog";
 
 export const prerender = false;
@@ -52,6 +56,8 @@ export const POST: APIRoute = async ({ request }) => {
         if (new TextEncoder().encode(rawBody).byteLength > 4_096) throw new Error("Túl nagy kérés.");
         const body = JSON.parse(rawBody) as { lines?: unknown };
         const lines = validateCheckoutLines(body.lines);
+        const stock = await fetchWebshippyStock(env.WEBSHIPPY_API_KEY ?? "");
+        assertWebshippyStock(lines, stock);
         const payload = await shopify(checkoutRequest(lines));
         const checkoutUrl = checkoutUrlFromResponse(payload, lines);
         return Response.json({ checkoutUrl }, { headers: { ...jsonHeaders, "Cache-Control": "no-store" } });

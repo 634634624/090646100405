@@ -1,4 +1,5 @@
 import type { Product } from "@/toolkit/commerce-shopify/lib/contracts";
+import type { CheckoutLineInput } from "./shopify-ucp.ts";
 
 export interface WebshippyStockRecord {
     sku: string;
@@ -86,4 +87,15 @@ export function applyWebshippyStock(products: Product[], stock: WebshippyStockRe
             inventoryState: !availableForSale ? "sold-out" : quantity <= 3 ? "low-stock" : "available",
         } satisfies Product;
     });
+}
+
+export function assertWebshippyStock(lines: CheckoutLineInput[], stock: WebshippyStockRecord[]) {
+    const quantityBySku = new Map(stock.map((record) => [record.sku, record.availableQuantity]));
+    for (const line of lines) {
+        const sku = SKU_BY_VARIANT_ID[line.variantId];
+        const available = sku === undefined ? undefined : quantityBySku.get(sku);
+        if (available === undefined || line.quantity > available) {
+            throw new Error("A kért mennyiség nincs Webshippy-készleten.");
+        }
+    }
 }
